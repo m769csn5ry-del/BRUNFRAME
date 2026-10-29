@@ -1,6 +1,7 @@
 """Assemble UN SEUL fichier HTML autonome de la démo (CSS, JS, données publiques inclus ; images = CDN officiel).
 Routeur à hash : #/  #/collection?k=Collier  #/product?h=<handle>  #/404. Sortie : dist-single/breslev-gang-demo.html"""
-import re, json, os
+import re, json, os, sys
+ARTIFACT = '--artifact' in sys.argv
 R = lambda p: open(p, encoding='utf-8').read()
 def rw(s):  # liens multi-pages -> routes à hash
     s = re.sub(r"product\.html\?", "#/product?", s)
@@ -48,7 +49,22 @@ head = ('<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="
  '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
  '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Manrope:wght@400;500;600&display=swap">'
  '<link rel="preconnect" href="https://cdn.shopify.com"><style>' + css + '</style></head><body><main id="app"></main>')
+if ARTIFACT:
+    router = router.replace("BG.q = function () { var h = location.hash.split('?')[1] || ''; return new URLSearchParams(h); };",
+      "var cur = (location.hash.replace(/^#\\/?/, '')) || 'index'; BG.q = function () { return new URLSearchParams(cur.split('?')[1] || ''); };")
+    router = router.replace("var r = (location.hash.replace(/^#\\/?/, '').split('?')[0]) || 'index';", "var r = cur.split('?')[0] || 'index';")
+    router = router.replace("var first = (location.hash.replace(/^#\\/?/, '').split('?')[0]) || 'index';", "var first = cur.split('?')[0] || 'index';")
+    router = router.replace("window.addEventListener('hashchange', route); route();",
+      "document.addEventListener('click', function (e) { var a = e.target.closest('a[href^=\"#/\"]'); if (!a) return; e.preventDefault(); cur = a.getAttribute('href').slice(2); try { history.replaceState(null, '', '#' + cur.split('?')[0].replace(/[^a-z0-9-]/g, '')); } catch (_) { } route(); }); route();")
 out = head + '<script>' + js.replace('</script', '<\\/script') + router + '</script></body></html>'
 os.makedirs('dist-single', exist_ok=True)
-open('dist-single/breslev-gang-demo.html', 'w', encoding='utf-8').write(out)
+if ARTIFACT:
+    m = re.search(r'<style>(.*?)</style>', out, re.S)
+    body = out[out.index('<main id="app">'):out.rindex('</body>')]
+    art = ('<title>Breslev Gang 2100</title><meta name="robots" content="noindex">'
+      '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Manrope:wght@400;500;600&display=swap">'
+      '<style>:root{color-scheme:dark}html{background:#050606}' + m.group(1) + '\nbody{background:var(--bg-0);color:var(--ink)}</style><script>document.documentElement.classList.add("js")</script>' + body)
+    open(sys.argv[sys.argv.index('--artifact') + 1], 'w', encoding='utf-8').write(art)
+else:
+    open('dist-single/breslev-gang-demo.html', 'w', encoding='utf-8').write(out)
 print(len(out) // 1024, 'Ko')
