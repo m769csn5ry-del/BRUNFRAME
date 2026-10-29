@@ -1,0 +1,54 @@
+{%- liquid
+  assign shown = 0
+-%}
+<section class="bg-hero" aria-label="Accueil">
+  <div class="bg-wrap bg-hero__top">
+    <p class="bg-kicker">{{ section.settings.kicker | escape }}</p>
+    <h1 class="bg-display">{{ section.settings.title }}</h1>
+    <p class="bg-hero__sub">{{ section.settings.sub | escape }}</p>
+    <div class="bg-hero__cta"><a class="bg-btn" href="{{ section.settings.cta_url | default: routes.collections_url }}">{{ section.settings.cta | escape }}</a></div>
+  </div>
+  <div class="bg-rail" data-bg-rail tabindex="0" role="group" aria-label="Tringle de colliers interactive. Flèches gauche/droite pour parcourir, Entrée pour ouvrir.">
+    <canvas aria-hidden="true"></canvas>
+    <p class="bg-rail__hint">Glissez pour faire balancer</p>
+    <script type="application/json" data-rail-items>
+      [{% for block in section.blocks %}{% assign p = block.settings.product %}{% if p != blank %}{% unless shown == 0 %},{% endunless %}{% assign shown = shown | plus: 1 %}
+      {"handle":{{ p.handle | json }},"title":{{ p.title | json }},"priceLabel":{{ p.price | money | json }},"url":{{ p.url | json }},"shape":{{ block.settings.shape | json }},
+       "variantId":{{ p.selected_or_first_available_variant.id | json }},
+       "image":{% if block.settings.cutout %}{{ block.settings.cutout | image_url: width: 400 | json }}{% else %}null{% endif %},
+       "colors":[{% assign first_opt = p.options_with_values | first %}{% if first_opt %}{% for v in p.variants %}{% assign n = v.option1 | downcase %}{% assign key = 'chrome' %}{% assign hex = '#cfd6d2' %}{% if n contains 'noir' or n contains 'black' %}{% assign key = 'noir' %}{% assign hex = '#1b1e1d' %}{% elsif n contains 'vert' or n contains 'green' or n contains 'fire' %}{% assign key = 'vert' %}{% assign hex = '#36d483' %}{% endif %}{"name":{{ v.option1 | json }},"key":"{{ key }}","hex":"{{ hex }}","variantId":{{ v.id }}}{% unless forloop.last %},{% endunless %}{% endfor %}{% endif %}]}
+      {% endif %}{% endfor %}]
+    </script>
+    <div class="bg-rail__panel" data-rail-panel hidden>
+      <div class="bg-rail__nav"><button type="button" data-p-prev aria-label="Précédent">‹</button><button type="button" data-p-next aria-label="Suivant">›</button><button type="button" data-p-close aria-label="Fermer">✕</button></div>
+      <h3 data-p-title></h3>
+      <div class="bg-rail__row"><span data-p-price></span><div class="bg-swatches" data-p-colors></div></div>
+      <div class="bg-rail__actions"><a class="bg-btn bg-btn--ghost" data-p-link href="#">{{ 'products.view' | t }}</a><button class="bg-btn" type="button" data-p-add>{{ 'products.add' | t }}</button></div>
+      <p class="bg-sr" aria-live="polite" data-p-live></p>
+    </div>
+  </div>
+  {%- comment -%} Alternative sans JS / lecteur d'écran : cartes réelles {%- endcomment -%}
+  <div class="bg-wrap bg-sr"><ul>{% for block in section.blocks %}{% if block.settings.product != blank %}<li><a href="{{ block.settings.product.url }}">{{ block.settings.product.title | escape }}</a></li>{% endif %}{% endfor %}</ul></div>
+</section>
+{% schema %}
+{
+  "name": "Hero tringle",
+  "max_blocks": 8,
+  "settings": [
+    { "type": "text", "id": "kicker", "label": "Sur-titre", "default": "Colliers" },
+    { "type": "richtext", "id": "title", "label": "Titre", "default": "<p>La tringle. <em>Tirez, faites balancer.</em></p>" },
+    { "type": "text", "id": "sub", "label": "Texte", "default": "Choisissez un collier, changez de couleur, ajoutez-le au panier." },
+    { "type": "text", "id": "cta", "label": "Bouton principal", "default": "Découvrir les colliers" },
+    { "type": "url", "id": "cta_url", "label": "Lien du bouton" }
+  ],
+  "blocks": [
+    { "type": "necklace", "name": "Collier", "settings": [
+      { "type": "product", "id": "product", "label": "Produit (par handle, jamais codé en dur)" },
+      { "type": "image_picker", "id": "cutout", "label": "Détourage PNG transparent du pendentif (sinon silhouette démo)" },
+      { "type": "select", "id": "shape", "label": "Silhouette de repli (démo)", "default": "maguen", "options": [
+        { "value": "maguen", "label": "Maguen" }, { "value": "fire", "label": "Flamme" }, { "value": "fire2", "label": "Flamme 2.0" }, { "value": "petek", "label": "Petek" }, { "value": "disc", "label": "Disque" }, { "value": "bar", "label": "Barre" } ] }
+    ] }
+  ],
+  "presets": [ { "name": "Hero tringle" } ]
+}
+{% endschema %}

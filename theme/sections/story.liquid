@@ -1,0 +1,16 @@
+<section class="bg-section"><div class="bg-wrap bg-story">
+  <div data-reveal>
+    <p class="bg-kicker">{{ section.settings.kicker | escape }}</p>
+    <p class="lead bg-display" style="font-size:clamp(26px,3.4vw,46px)">{{ section.settings.lead | escape }}</p>
+    <div class="bg-placeholder">{{ section.settings.body | default: '[Récit de marque à fournir et valider par Ysahar : aucune signification de symbole ni citation religieuse inventée.]' }}</div>
+  </div>
+  <div class="bg-story__visual" data-reveal>{% if section.settings.image %}{{ section.settings.image | image_url: width: 1000 | image_tag: loading: 'lazy', alt: section.settings.image.alt }}{% endif %}</div>
+</div></section>
+{% schema %}
+{ "name": "Histoire de la marque", "settings": [
+  { "type": "text", "id": "kicker", "label": "Sur-titre", "default": "L’histoire" },
+  { "type": "text", "id": "lead", "label": "Phrase d’accroche", "default": "[Phrase de marque — à rédiger]" },
+  { "type": "richtext", "id": "body", "label": "Texte authentique" },
+  { "type": "image_picker", "id": "image", "label": "Image (photo réelle)" } ],
+  "presets": [ { "name": "Histoire de la marque" } ] }
+{% endschema %}

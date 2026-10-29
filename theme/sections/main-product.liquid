@@ -1,0 +1,43 @@
+{%- assign cur = product.selected_or_first_available_variant -%}
+<div class="bg-wrap" data-product>
+  <div class="bg-pdp">
+    <div class="bg-gal">
+      <div class="bg-gal__main" data-zoom>
+        {%- if cur.featured_media -%}{{ cur.featured_media | image_url: width: 1400 | image_tag: loading: 'eager', fetchpriority: 'high', data-main-img: '', alt: cur.featured_media.alt | default: product.title, widths: '600,900,1200,1400', sizes: '(min-width: 960px) 55vw, 100vw' }}{%- endif -%}
+      </div>
+      <div class="bg-gal__thumbs">
+        {%- for m in product.media limit: 8 -%}<button type="button" data-thumb="{{ m | image_url: width: 1400 }}" aria-label="Image {{ forloop.index }}" {% if forloop.first %}aria-current="true"{% endif %}>{{ m | image_url: width: 160 | image_tag: loading: 'lazy', alt: '' }}</button>{%- endfor -%}
+      </div>
+    </div>
+    <div class="bg-pdp__info">
+      <p class="bg-kicker">{{ product.type | escape }}</p>
+      <h1 class="bg-display">{{ product.title | escape }}</h1>
+      <p class="bg-price"><span data-v-price>{{ cur.price | money }}</span> <s data-v-compare hidden></s></p>
+      {% form 'product', product, data-add-form: '', data-title: product.title %}
+        <input type="hidden" name="id" value="{{ cur.id }}">
+        {%- unless product.has_only_default_variant -%}
+          {%- for opt in product.options_with_values -%}
+            <fieldset class="bg-opts"><legend>{{ opt.name | escape }}</legend><div class="bg-opts__row">
+              {%- for val in opt.values -%}
+                <label class="bg-opt"><input type="radio" name="opt{{ opt.position }}" value="{{ val | escape }}" data-option="{{ forloop.parentloop.index0 }}" {% if opt.selected_value == val %}checked{% endif %}><span class="bg-pill">{{ val | escape }}</span></label>
+              {%- endfor -%}
+            </div></fieldset>
+          {%- endfor -%}
+        {%- endunless -%}
+        <input type="hidden" name="quantity" value="1">
+        <button class="bg-btn" type="submit" style="width:100%" data-add="{{ 'products.add' | t }}" data-sold="{{ 'products.sold_out' | t }}"><span>{{ 'products.add' | t }}</span></button>
+        <p data-cart-msg role="alert"></p>
+      {% endform %}
+      <p class="bg-meta">SKU : <span data-v-sku>{{ cur.sku | default: '—' }}</span></p>
+      <div class="bg-info">
+        {%- if product.description != blank -%}<details open><summary>Description</summary><div>{{ product.description }}</div></details>{%- endif -%}
+        <details><summary>Livraison & retours</summary><div>{{ section.settings.shipping_text | default: '[À renseigner avec les conditions réelles de la boutique.]' }}</div></details>
+      </div>
+    </div>
+  </div>
+  <script type="application/json" data-product-json>
+    {"handle":{{ product.handle | json }},"options":{{ product.options | json }},"variants":[{% for v in product.variants %}{"id":{{ v.id }},"options":{{ v.options | json }},"price":{{ v.price }},"compare_at_price":{{ v.compare_at_price | default: 0 }},"sku":{{ v.sku | json }},"available":{{ v.available }},"image":{% if v.featured_media %}{{ v.featured_media | image_url: width: 1400 | json }}{% else %}null{% endif %}}{% unless forloop.last %},{% endunless %}{% endfor %}]}
+  </script>
+</div>
+<script type="application/ld+json">{{ product | structured_data }}</script>
+{% schema %}{ "name": "Fiche produit", "settings": [ { "type": "textarea", "id": "shipping_text", "label": "Texte livraison & retours (réel)" } ] }{% endschema %}

@@ -1,0 +1,45 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#060807"><title>Accueil – Breslev Gang (prévisualisation démo)</title><meta name="robots" content="noindex"><link rel="stylesheet" href="../theme/assets/bg-tokens.css"><link rel="stylesheet" href="../theme/assets/bg-base.css"></head><body>
+<main>
+<section class="bg-hero" aria-label="Accueil">
+  <div class="bg-wrap bg-hero__top">
+    <p class="bg-kicker">Colliers <span class="bg-demo-tag">prévisualisation démo</span></p>
+    <h1 class="bg-display">La tringle.<br><em>Tirez, faites balancer.</em></h1>
+    <p class="bg-hero__sub">Choisissez un collier, changez de couleur, ajoutez-le au panier.</p>
+    <div class="bg-hero__cta"><a class="bg-btn" href="collection.html">Découvrir les colliers</a></div>
+  </div>
+  <div class="bg-rail" data-bg-rail tabindex="0" role="group" aria-label="Tringle de colliers interactive. Flèches gauche et droite pour parcourir, Entrée pour ouvrir la fiche.">
+    <canvas aria-hidden="true"></canvas>
+    <p class="bg-rail__hint">Glissez pour faire balancer</p>
+    <script type="application/json" data-rail-items id="rail-data">[]</script>
+    <div class="bg-rail__panel" data-rail-panel hidden>
+      <div class="bg-rail__nav"><button type="button" data-p-prev aria-label="Précédent">‹</button><button type="button" data-p-next aria-label="Suivant">›</button><button type="button" data-p-close aria-label="Fermer">✕</button></div>
+      <h3 data-p-title></h3>
+      <div class="bg-rail__row"><span data-p-price></span><div class="bg-swatches" data-p-colors></div></div>
+      <div class="bg-rail__actions"><a class="bg-btn bg-btn--ghost" data-p-link href="#">Voir le bijou</a><button class="bg-btn" type="button" data-p-add>Ajouter au panier</button></div>
+      <p class="bg-sr" aria-live="polite" data-p-live></p>
+    </div>
+  </div>
+</section>
+<section class="bg-section"><div class="bg-wrap">
+  <div class="bg-section__head" data-reveal><div><p class="bg-kicker">Sélection</p><h2 class="bg-display">Les colliers</h2></div><a class="bg-btn bg-btn--ghost" href="collection.html">Tout voir</a></div>
+  <div class="bg-grid bg-grid--edit" id="featured" data-reveal></div>
+</div></section>
+<section class="bg-section" id="histoire"><div class="bg-wrap bg-story">
+  <div data-reveal><p class="bg-kicker">L’histoire</p><p class="bg-display" style="font-size:clamp(26px,3.4vw,46px);margin-bottom:20px">[Phrase de marque — à rédiger avec Ysahar]</p>
+  <div class="bg-placeholder">Récit de marque à fournir et valider. Aucune signification de symbole ni citation religieuse n’est inventée dans cette démo.</div></div>
+  <div class="bg-story__visual" data-reveal><div id="matiere"></div></div>
+</div></section>
+<section class="bg-section" style="padding-block:clamp(40px,6vw,80px)"><div class="bg-wrap"><div class="bg-assure" data-reveal>
+  <div><strong>Livraison offerte dès 120 €</strong><span class="bg-dim">Affichage public actuel — règles réelles à vérifier dans Shopify.</span></div>
+  <div><strong>Paiement sécurisé</strong><span class="bg-dim">Checkout Shopify natif (aucun checkout custom).</span></div>
+  <div><strong>Avis &amp; apparitions</strong><span class="bg-dim">Module désactivé : aucun contenu sans identité et droits confirmés.</span></div>
+</div></div></section>
+</main>
+<script src="../theme/assets/bg-shapes.js"></script><script src="../theme/assets/bg-cart.js"></script><script src="../theme/assets/bg-product.js"></script><script src="../theme/assets/bg-rail.js"></script><script src="../theme/assets/bg-ui.js"></script><script src="bg-preview.js"></script>
+<script>
+BG.preview.shell('Colliers',{intro:true});
+document.getElementById('rail-data').textContent = JSON.stringify(BG.preview.railItems());
+BG.initRails();
+document.getElementById('featured').innerHTML = BG.fixtures.map(function (p) { return BG.preview.card(p); }).join('');
+var m = document.getElementById('matiere'); m.innerHTML = BG.pendantSVG('maguen','chrome',{label:false});
+</script></body></html>

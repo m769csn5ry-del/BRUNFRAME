@@ -1,0 +1,22 @@
+{
+  "general": {
+    "skip": "Aller au contenu",
+    "tagged": "Étiquettes : {{ tags }}",
+    "cart": "Panier",
+    "search": "Rechercher",
+    "menu": "Menu",
+    "account": "Compte"
+  },
+  "products": {
+    "add": "Ajouter au panier",
+    "sold_out": "Épuisé",
+    "view": "Voir le bijou"
+  },
+  "cart": {
+    "title": "Votre panier",
+    "empty": "Votre panier est vide.",
+    "subtotal": "Sous-total",
+    "checkout": "Passer au paiement",
+    "taxes_note": "Taxes et frais de livraison calculés au paiement."
+  }
+}

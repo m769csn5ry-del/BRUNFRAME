@@ -1,0 +1,23 @@
+/* BRESLEV GANG — design tokens. Palette PROPOSÉE (à valider par Ysahar), pas définitive. */
+:root {
+  --bg-0: #060807;
+  --bg-1: #0b0e0d;
+  --bg-2: #121715;
+  --line: rgba(205, 220, 212, .14);
+  --ink: #e8eeea;
+  --ink-dim: #9aa6a0;
+  --chrome: #c9d2cd;
+  --green: #36d483;
+  --green-deep: #0d3a25;
+  --glow: rgba(54, 212, 131, .22);
+  --danger: #ff7a7a;
+
+  /* Polices de marque : remplacer par les fichiers réels (@font-face) quand fournis. */
+  --font-display: "BG Display", "Cormorant Garamond", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  --font-body: "BG Body", "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  --gutter: clamp(16px, 4vw, 56px);
+  --radius: 2px;
+  --ease: cubic-bezier(.2, .7, .1, 1);
+  --header-h: 64px;
+}

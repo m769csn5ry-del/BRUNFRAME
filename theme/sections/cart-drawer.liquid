@@ -1,0 +1,16 @@
+<div class="bg-drawer" data-cart-drawer hidden role="dialog" aria-modal="true" aria-labelledby="bg-cart-title"
+     data-threshold="{{ settings.free_shipping_threshold | times: 100 }}" data-collection-url="{{ routes.collections_url }}/colliers">
+  <div class="bg-drawer__veil" data-cart-close></div>
+  <div class="bg-drawer__panel">
+    <div class="bg-drawer__head"><h2 class="bg-display" id="bg-cart-title">{{ 'cart.title' | t }}</h2><button class="bg-icon-btn" data-cart-close aria-label="Fermer">✕</button></div>
+    <div class="bg-drawer__body" data-cart-body></div>
+    <div class="bg-drawer__foot" data-cart-foot hidden>
+      <p class="bg-sub"><span>{{ 'cart.subtotal' | t }}</span><strong data-cart-subtotal></strong></p>
+      <p class="bg-dim">{{ 'cart.taxes_note' | t }}</p>
+      <p data-cart-msg role="alert"></p>
+      <form action="{{ routes.cart_url }}" method="post"><button class="bg-btn" type="submit" name="checkout" style="width:100%">{{ 'cart.checkout' | t }}</button></form>
+      <a class="bg-link" href="{{ routes.cart_url }}">Voir le panier</a>
+    </div>
+  </div>
+</div>
+{% schema %}{ "name": "Tiroir panier" }{% endschema %}

@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}"{% if request.locale.iso_code == 'he' %} dir="rtl"{% endif %}>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#060807">
+  <link rel="canonical" href="{{ canonical_url }}">
+  {%- if settings.favicon != blank -%}<link rel="icon" href="{{ settings.favicon | image_url: width: 48, height: 48 }}">{%- endif -%}
+  <title>{{ page_title }}{% if current_tags %} – {{ 'general.tagged' | t: tags: current_tags | join: ', ' }}{% endif %}{% unless page_title contains shop.name %} – {{ shop.name }}{% endunless %}</title>
+  {%- if page_description %}<meta name="description" content="{{ page_description | escape }}">{% endif -%}
+  {% render 'meta-tags' %}
+  {{ 'bg-tokens.css' | asset_url | stylesheet_tag }}
+  {{ 'bg-base.css' | asset_url | stylesheet_tag }}
+  {{ content_for_header }}
+</head>
+<body class="template-{{ template.name }}">
+  <a class="bg-skip" href="#main">{{ 'general.skip' | t }}</a>
+  {% sections 'header-group' %}
+  <main id="main" tabindex="-1">{{ content_for_layout }}</main>
+  {% sections 'footer-group' %}
+  {% section 'cart-drawer' %}
+  <script src="{{ 'bg-shapes.js' | asset_url }}" defer></script>
+  <script src="{{ 'bg-cart.js' | asset_url }}" defer></script>
+  <script src="{{ 'bg-product.js' | asset_url }}" defer></script>
+  <script src="{{ 'bg-rail.js' | asset_url }}" defer></script>
+  <script src="{{ 'bg-ui.js' | asset_url }}" defer></script>
+</body>
+</html>

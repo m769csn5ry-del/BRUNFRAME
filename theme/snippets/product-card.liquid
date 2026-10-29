@@ -1,0 +1,14 @@
+{%- comment -%} Carte produit. Params: product, loading ('lazy' par défaut / 'eager') {%- endcomment -%}
+{%- assign loading = loading | default: 'lazy' -%}
+<a class="bg-card" href="{{ product.url }}" data-handle="{{ product.handle }}">
+  <div class="bg-card__img">
+    {%- if product.featured_image -%}
+      {{ product.featured_image | image_url: width: 900 | image_tag: loading: loading, widths: '360, 540, 720, 900', sizes: '(min-width: 900px) 25vw, 50vw', alt: product.featured_image.alt | default: product.title }}
+    {%- endif -%}
+    {%- unless product.available %}<span class="bg-card__tag">{{ 'products.sold_out' | t }}</span>{% endunless -%}
+  </div>
+  <div class="bg-card__meta">
+    <span class="bg-card__t">{{ product.title | escape }}</span>
+    <span class="bg-card__p">{{ product.price | money }}</span>
+  </div>
+</a>

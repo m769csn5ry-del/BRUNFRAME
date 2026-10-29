@@ -1,0 +1,16 @@
+<div class="bg-wrap bg-prose" style="max-width:900px">
+  <h1 class="bg-display">{{ 'cart.title' | t }}</h1>
+  {%- if cart.item_count == 0 -%}<p>{{ 'cart.empty' | t }}</p><a class="bg-btn" href="{{ routes.collections_url }}">Découvrir les colliers</a>
+  {%- else -%}
+  <form action="{{ routes.cart_url }}" method="post">
+    <ul class="bg-lines">{%- for item in cart.items -%}
+      <li class="bg-line"><a class="bg-line__img" href="{{ item.url }}">{% if item.image %}{{ item.image | image_url: width: 160 | image_tag: loading: 'lazy' }}{% endif %}</a>
+        <div><a class="bg-line__t" href="{{ item.url }}">{{ item.product.title | escape }}</a><p class="bg-dim">{{ item.variant.title | escape }}</p>
+          <div class="bg-qty"><input type="number" name="updates[]" value="{{ item.quantity }}" min="0" aria-label="Quantité" style="width:64px;background:none;border:0;color:inherit;text-align:center;min-height:40px"></div></div>
+        <div class="bg-line__p">{{ item.final_line_price | money }}<a class="bg-link" href="{{ item.url_to_remove }}">Retirer</a></div></li>{%- endfor -%}</ul>
+    <p class="bg-sub" style="margin-top:28px"><span>{{ 'cart.subtotal' | t }}</span><strong>{{ cart.total_price | money }}</strong></p>
+    <p class="bg-dim">{{ 'cart.taxes_note' | t }}</p>
+    <div style="display:flex;gap:12px;margin-top:20px"><button class="bg-btn bg-btn--ghost" name="update" type="submit">Mettre à jour</button><button class="bg-btn" name="checkout" type="submit">{{ 'cart.checkout' | t }}</button></div>
+  </form>{%- endif -%}
+</div>
+{% schema %}{ "name": "Panier (page)" }{% endschema %}

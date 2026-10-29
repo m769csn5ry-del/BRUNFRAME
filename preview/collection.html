@@ -1,0 +1,36 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#060807"><title>Colliers – Breslev Gang (prévisualisation démo)</title><meta name="robots" content="noindex"><link rel="stylesheet" href="../theme/assets/bg-tokens.css"><link rel="stylesheet" href="../theme/assets/bg-base.css"></head><body>
+<main class="bg-wrap">
+  <div class="bg-coll-head"><p class="bg-kicker">Collection <span class="bg-demo-tag">démo</span></p><h1 class="bg-display" id="ctitle">Colliers</h1></div>
+  <div class="bg-bar"><div class="bg-filters" id="filters" role="group" aria-label="Filtres"></div>
+    <label class="bg-sr" for="sort">Trier</label>
+    <select class="bg-select" id="sort"><option value="">Sélection</option><option value="pa">Prix croissant</option><option value="pd">Prix décroissant</option><option value="az">A–Z</option></select></div>
+  <p class="bg-dim" id="count" aria-live="polite" style="margin-bottom:16px"></p>
+  <div class="bg-grid" id="grid"></div><p class="bg-empty" id="empty" hidden>Aucun produit ne correspond. <button class="bg-link" id="reset">Réinitialiser</button></p>
+</main>
+<script src="../theme/assets/bg-shapes.js"></script><script src="../theme/assets/bg-cart.js"></script><script src="../theme/assets/bg-product.js"></script><script src="../theme/assets/bg-rail.js"></script><script src="../theme/assets/bg-ui.js"></script><script src="bg-preview.js"></script>
+<script>
+BG.preview.shell('Colliers');
+var st = { type: new URLSearchParams(location.search).get('type') || '', color: '', avail: false, max: 0, sort: '' };
+var TYPES = ['Collier', 'Petek'], COLORS = ['Chrome', 'Noir', 'Vert'];
+function chip(label, on, fn) { var b = document.createElement('button'); b.type = 'button'; b.className = 'bg-chip'; b.textContent = label; b.setAttribute('aria-pressed', on); b.onclick = fn; return b; }
+function draw() {
+  var f = document.getElementById('filters'); f.innerHTML = '';
+  TYPES.forEach(function (t) { f.appendChild(chip(t, st.type === t, function () { st.type = st.type === t ? '' : t; draw(); })); });
+  COLORS.forEach(function (c) { f.appendChild(chip(c, st.color === c, function () { st.color = st.color === c ? '' : c; draw(); })); });
+  f.appendChild(chip('En stock', st.avail, function () { st.avail = !st.avail; draw(); }));
+  f.appendChild(chip('≤ 80 €', st.max === 8000, function () { st.max = st.max ? 0 : 8000; draw(); }));
+  var l = BG.fixtures.filter(function (p) {
+    return (!st.type || p.type === st.type) && (!st.color || p.variants.some(function (v) { return v.title === st.color; })) &&
+      (!st.avail || p.variants.some(function (v) { return v.available; })) && (!st.max || p.price <= st.max);
+  });
+  if (st.sort === 'pa') l.sort(function (a, b) { return a.price - b.price; });
+  if (st.sort === 'pd') l.sort(function (a, b) { return b.price - a.price; });
+  if (st.sort === 'az') l.sort(function (a, b) { return a.title.localeCompare(b.title); });
+  document.getElementById('grid').innerHTML = l.map(function (p) { return BG.preview.card(p); }).join('');
+  document.getElementById('count').textContent = l.length + ' produit(s)';
+  document.getElementById('empty').hidden = l.length > 0;
+}
+document.getElementById('sort').onchange = function (e) { st.sort = e.target.value; draw(); };
+document.getElementById('reset').onclick = function () { st = { type: '', color: '', avail: false, max: 0, sort: '' }; document.getElementById('sort').value = ''; draw(); };
+document.getElementById('sort').value = ''; draw();
+</script></body></html>

@@ -1,0 +1,7 @@
+<section class="bg-section" style="padding-block:clamp(40px,6vw,80px)"><div class="bg-wrap"><div class="bg-assure" data-reveal>
+  {%- for b in section.blocks -%}<div {{ b.shopify_attributes }}><strong>{{ b.settings.title | escape }}</strong><span class="bg-dim">{{ b.settings.text | escape }}</span></div>{%- endfor -%}
+</div></div></section>
+{% schema %}
+{ "name": "Réassurance", "blocks": [ { "type": "item", "name": "Élément", "settings": [ { "type": "text", "id": "title", "label": "Titre", "default": "Livraison offerte dès 120 €" }, { "type": "text", "id": "text", "label": "Texte", "default": "Selon les règles de livraison de votre marché." } ] } ],
+  "presets": [ { "name": "Réassurance", "blocks": [ { "type": "item" }, { "type": "item", "settings": { "title": "Paiement sécurisé", "text": "Checkout Shopify natif." } }, { "type": "item", "settings": { "title": "Service client", "text": "Contactez-nous depuis la page contact." } } ] } ] }
+{% endschema %}

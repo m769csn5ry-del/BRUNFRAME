@@ -1,0 +1,10 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#060807"><title>Fiche produit – Breslev Gang (prévisualisation démo)</title><meta name="robots" content="noindex"><link rel="stylesheet" href="../theme/assets/bg-tokens.css"><link rel="stylesheet" href="../theme/assets/bg-base.css"></head><body>
+<main><div id="pdp"></div></main>
+<script src="../theme/assets/bg-shapes.js"></script><script src="../theme/assets/bg-cart.js"></script><script src="../theme/assets/bg-product.js"></script><script src="../theme/assets/bg-rail.js"></script><script src="../theme/assets/bg-ui.js"></script><script src="bg-preview.js"></script>
+<script>
+BG.preview.shell('Colliers');
+var p = BG.byHandle(new URLSearchParams(location.search).get('h')) || BG.fixtures[0];
+document.title = p.title + ' – Breslev Gang (prévisualisation démo)';
+document.getElementById('pdp').innerHTML = BG.preview.product(p);
+BG.initProducts();
+</script></body></html>

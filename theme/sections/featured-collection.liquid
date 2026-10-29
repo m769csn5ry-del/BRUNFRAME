@@ -1,0 +1,15 @@
+<section class="bg-section"><div class="bg-wrap">
+  <div class="bg-section__head" data-reveal><div><p class="bg-kicker">{{ section.settings.kicker | escape }}</p><h2 class="bg-display">{{ section.settings.title | escape }}</h2></div>
+    {% if section.settings.collection != blank %}<a class="bg-btn bg-btn--ghost" href="{{ section.settings.collection.url }}">Tout voir</a>{% endif %}</div>
+  <div class="bg-grid bg-grid--edit" data-reveal>
+    {%- for product in section.settings.collection.products limit: section.settings.limit -%}{% render 'product-card', product: product %}{%- endfor -%}
+  </div>
+</div></section>
+{% schema %}
+{ "name": "Sélection éditoriale", "settings": [
+  { "type": "text", "id": "kicker", "label": "Sur-titre", "default": "Sélection" },
+  { "type": "text", "id": "title", "label": "Titre", "default": "Les colliers" },
+  { "type": "collection", "id": "collection", "label": "Collection" },
+  { "type": "range", "id": "limit", "label": "Produits", "min": 3, "max": 8, "step": 1, "default": 5 } ],
+  "presets": [ { "name": "Sélection éditoriale" } ] }
+{% endschema %}

@@ -1,0 +1,5 @@
+<div class="bg-404"><div><p class="bg-kicker">Page introuvable</p><h1 class="bg-display">404</h1>
+  <p class="bg-dim" style="margin:0 auto 24px;max-width:40ch">Ce lien ne mène nulle part. Cherchez un bijou ou retournez aux colliers.</p>
+  <form action="{{ routes.search_url }}" method="get" role="search" style="display:flex;gap:8px;justify-content:center;margin-bottom:20px"><label class="bg-sr" for="q404">Recherche</label><input id="q404" class="bg-select" style="min-width:min(300px,60vw)" type="search" name="q" placeholder="Rechercher"><button class="bg-btn" type="submit">OK</button></form>
+  <a class="bg-btn bg-btn--ghost" href="{{ routes.collections_url }}">Voir les collections</a></div></div>
+{% schema %}{ "name": "404" }{% endschema %}

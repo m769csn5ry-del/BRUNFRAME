@@ -1,0 +1,11 @@
+{
+  "name": "brunframe-breslev-gang",
+  "private": true,
+  "version": "0.1.0-demo",
+  "scripts": {
+    "preview": "python3 -m http.server 4173",
+    "test": "node tests/e2e.js",
+    "theme:check": "shopify theme check --path theme"
+  },
+  "devDependencies": { "@shopify/cli": "^3" }
+}

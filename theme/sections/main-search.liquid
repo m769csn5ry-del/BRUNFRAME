@@ -1,0 +1,8 @@
+<div class="bg-wrap"><div class="bg-coll-head"><h1 class="bg-display">Recherche</h1>
+  <form action="{{ routes.search_url }}" method="get" role="search" style="margin-top:18px;display:flex;gap:8px"><label class="bg-sr" for="q">Recherche</label><input id="q" class="bg-select" style="flex:1;max-width:480px" type="search" name="q" value="{{ search.terms | escape }}"><button class="bg-btn" type="submit">Rechercher</button></form></div>
+  {%- if search.performed -%}{%- paginate search.results by 24 -%}
+    <p class="bg-dim" style="margin-bottom:20px">{{ search.results_count }} résultat(s)</p>
+    <div class="bg-grid">{%- for r in search.results -%}{%- if r.object_type == 'product' -%}{% render 'product-card', product: r %}{%- endif -%}{%- endfor -%}</div>
+    {{ paginate | default_pagination }}{%- endpaginate -%}{%- endif -%}
+</div>
+{% schema %}{ "name": "Recherche" }{% endschema %}
