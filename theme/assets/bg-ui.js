@@ -52,6 +52,7 @@
     });
   }
 
+  var quickBound = false;
   function tracks() {
     document.querySelectorAll('[data-track-nav]').forEach(function (nav) {
       var tr = document.getElementById(nav.dataset.trackNav); if (!tr) return;
@@ -59,12 +60,14 @@
         b.addEventListener('click', function () { tr.scrollBy({ left: Number(b.dataset.dir) * tr.clientWidth * .8, behavior: reduce ? 'auto' : 'smooth' }); });
       });
     });
+    if (quickBound) return; quickBound = true;
     document.addEventListener('click', function (e) {
       var b = e.target.closest('[data-quick-add]'); if (!b) return;
       e.preventDefault(); if (window.BG && BG.cart) BG.cart.add(b.dataset.quickAdd, 1, { title: b.dataset.title });
     });
   }
 
+  window.BG = window.BG || {}; BG.uiRefresh = function () { reveal(); spot(); tracks(); };
   function boot() { document.documentElement.classList.add('js'); intro(); menu(); reveal(); spot(); tracks(); }
   if (document.readyState !== 'loading') boot(); else document.addEventListener('DOMContentLoaded', boot);
 })();
