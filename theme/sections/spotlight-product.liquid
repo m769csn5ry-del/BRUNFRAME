@@ -1,0 +1,26 @@
+{%- assign p = section.settings.product -%}
+{%- if p != blank -%}
+<section class="bg-section"><div class="bg-wrap bg-spot">
+  <div class="bg-spot__media" data-spot data-reveal>
+    {%- if p.featured_media -%}{{ p.featured_media | image_url: width: 1400 | image_tag: loading: 'lazy', widths: '600,900,1200,1400', sizes: '(min-width: 900px) 55vw, 100vw', alt: p.featured_media.alt | default: p.title }}{%- endif -%}
+    <p class="bg-note">{{ 'spot.hint' | t }}</p>
+  </div>
+  <div data-reveal>
+    <p class="bg-kicker">{{ section.settings.kicker | escape }}</p>
+    <h2 class="bg-display">{{ p.title | escape }}</h2>
+    <p class="bg-spot__price">{{ p.price | money }}</p>
+    {%- if section.settings.text != blank -%}<div class="bg-dim" style="max-width:40ch;margin-bottom:30px">{{ section.settings.text }}</div>{%- endif -%}
+    <div class="bg-stage__cta">
+      {%- if p.available -%}<button class="bg-btn" type="button" data-quick-add="{{ p.selected_or_first_available_variant.id }}" data-title="{{ p.title | escape }}">{{ 'products.add' | t }}</button>{%- endif -%}
+      <a class="bg-arrow" href="{{ p.url }}">{{ 'products.view' | t }}</a>
+    </div>
+  </div>
+</div></section>
+{%- endif -%}
+{% schema %}
+{ "name": "Pièce en lumière", "settings": [
+  { "type": "product", "id": "product", "label": "Produit" },
+  { "type": "text", "id": "kicker", "label": "Sur-titre", "default": "Pièce en lumière" },
+  { "type": "richtext", "id": "text", "label": "Texte (uniquement des faits vérifiés)" } ],
+  "presets": [ { "name": "Pièce en lumière" } ] }
+{% endschema %}

@@ -1,20 +1,27 @@
 <footer class="bg-footer">
   <div class="bg-wrap">
+    <div class="bg-footer__brand">
+      {%- if settings.logo != blank -%}{{ settings.logo | image_url: width: 640 | image_tag: loading: 'lazy', alt: shop.name }}{%- else -%}<p class="bg-display" style="font-size:40px">{{ shop.name }}</p>{%- endif -%}
+      {%- if section.settings.tagline != blank -%}<q>{{ section.settings.tagline | escape }}</q>{%- endif -%}
+    </div>
     <div class="bg-footer__cols">
-      <div><p class="bg-logo">{{ shop.name }}</p><p class="bg-dim" style="max-width:34ch;margin-top:12px">{{ section.settings.tagline | escape }}</p></div>
-      <div><h3>Boutique</h3><ul>{% for l in linklists[section.settings.menu_shop].links %}<li><a href="{{ l.url }}">{{ l.title | escape }}</a></li>{% endfor %}</ul></div>
-      <div><h3>Aide</h3><ul>{% for l in linklists[section.settings.menu_help].links %}<li><a href="{{ l.url }}">{{ l.title | escape }}</a></li>{% endfor %}</ul></div>
-      <div><h3>Légal</h3><ul>
-        <li><a href="{{ routes.privacy_policy_url | default: '/policies/privacy-policy' }}">Confidentialité</a></li>
-        <li><a href="/policies/terms-of-service">CGV</a></li><li><a href="/policies/refund-policy">Retours</a></li><li><a href="/policies/shipping-policy">Livraison</a></li><li><a href="/policies/legal-notice">Mentions légales</a></li>
+      <div><h3>{{ linklists[section.settings.menu_shop].title | default: 'Boutique' }}</h3><ul>{% for l in linklists[section.settings.menu_shop].links %}<li><a href="{{ l.url }}">{{ l.title | escape }}</a></li>{% endfor %}</ul></div>
+      <div><h3>{{ linklists[section.settings.menu_help].title | default: 'Aide' }}</h3><ul>{% for l in linklists[section.settings.menu_help].links %}<li><a href="{{ l.url }}">{{ l.title | escape }}</a></li>{% endfor %}</ul></div>
+      <div><h3>Informations</h3><ul>
+        <li><a href="{{ shop.privacy_policy.url | default: '/policies/privacy-policy' }}">Confidentialité</a></li>
+        <li><a href="{{ shop.terms_of_service.url | default: '/policies/terms-of-service' }}">Conditions</a></li>
+        <li><a href="{{ shop.refund_policy.url | default: '/policies/refund-policy' }}">Retours & remboursement</a></li>
+        <li><a href="{{ shop.shipping_policy.url | default: '/policies/shipping-policy' }}">Livraison</a></li>
+        <li><a href="/policies/legal-notice">Mentions légales</a></li>
       </ul></div>
+      <div><h3>Paiement</h3><ul class="bg-pay">{%- for type in shop.enabled_payment_types -%}<li>{{ type | payment_type_svg_tag }}</li>{%- endfor -%}</ul></div>
     </div>
     <div class="bg-legal"><span>© {{ 'now' | date: '%Y' }} {{ shop.name }}</span><span>{{ section.settings.legal_line | escape }}</span></div>
   </div>
 </footer>
 {% schema %}
 { "name": "Pied de page", "settings": [
-  { "type": "text", "id": "tagline", "label": "Phrase de marque", "default": "[À rédiger avec Ysahar]" },
+  { "type": "text", "id": "tagline", "label": "Signature de marque", "default": "Not Just Necklace it’s a Protection" },
   { "type": "link_list", "id": "menu_shop", "label": "Menu boutique", "default": "footer" },
   { "type": "link_list", "id": "menu_help", "label": "Menu aide" },
   { "type": "text", "id": "legal_line", "label": "Mentions société", "default": "[Raison sociale / SIRET / adresse — à compléter, non inventés]" } ] }

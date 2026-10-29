@@ -5,7 +5,8 @@ window.BG = window.BG || {};
     var js = root.querySelector('[data-product-json]'); if (!js || root.dataset.ready) return;
     root.dataset.ready = 1;
     var P = JSON.parse(js.textContent), form = root.querySelector('[data-add-form]');
-    var state = P.variants.filter(function (v) { return v.available; })[0] || P.variants[0];
+    var state = P.variants.filter(function (v) { return String(v.id) === String(P.selected); })[0] ||
+      P.variants.filter(function (v) { return v.available; })[0] || P.variants[0];
     function find(opts) { return P.variants.filter(function (v) { return opts.every(function (o, i) { return v.options[i] === o; }); })[0]; }
     function apply(v) {
       state = v;
@@ -17,6 +18,9 @@ window.BG = window.BG || {};
       btn.querySelector('span').textContent = v.available ? btn.dataset.add : btn.dataset.sold;
       var url = new URL(location.href); url.searchParams.set('variant', v.id); history.replaceState(null, '', url);
       if (v.image) { var img = root.querySelector('[data-main-img]'); if (img) { img.src = v.image; img.srcset = ''; } }
+      var tt = root.querySelector('[data-v-title]'); if (tt && v.title_full) tt.textContent = v.title_full;
+      var th = root.querySelector('[data-thumbs]');
+      if (th && v.images) th.innerHTML = v.images.map(function (u, i) { return '<button type="button" data-thumb="' + u + '" aria-label="Photo ' + (i + 1) + '"' + (i ? '' : ' aria-current="true"') + '><img src="' + u.replace(/width=\d+/, 'width=160') + '" alt=""></button>'; }).join('');
       var opt = root.querySelector('[data-v-opt]'); if (opt) opt.textContent = v.options.join(' / ');
       BG.track && BG.track('select_item', { variant_id: v.id });
     }
@@ -31,11 +35,10 @@ window.BG = window.BG || {};
       state = start;
       start.options.forEach(function (o, i) { var r = root.querySelector('[data-option="' + i + '"][value="' + CSS.escape(o) + '"]'); if (r) r.checked = true; });
     }
-    root.querySelectorAll('[data-thumb]').forEach(function (b) {
-      b.addEventListener('click', function () {
-        var img = root.querySelector('[data-main-img]'); if (img) { img.src = b.dataset.thumb; img.srcset = ''; }
-        root.querySelectorAll('[data-thumb]').forEach(function (x) { x.removeAttribute('aria-current'); }); b.setAttribute('aria-current', 'true');
-      });
+    root.addEventListener('click', function (e) {
+      var b = e.target.closest('[data-thumb]'); if (!b) return;
+      var img = root.querySelector('[data-main-img]'); if (img) { img.src = b.dataset.thumb; img.srcset = ''; }
+      root.querySelectorAll('[data-thumb]').forEach(function (x) { x.removeAttribute('aria-current'); }); b.setAttribute('aria-current', 'true');
     });
     var z = root.querySelector('[data-zoom]');
     if (z) {

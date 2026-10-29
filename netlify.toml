@@ -1,0 +1,4 @@
+# Démo de prévisualisation (noindex). Netlify construit dist/ depuis le dépôt : aucune donnée Shopify, aucun secret.
+[build]
+  command = "bash tools/build_demo_site.sh"
+  publish = "dist"

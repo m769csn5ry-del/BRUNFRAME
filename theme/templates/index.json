@@ -1,1 +1,99 @@
-{ "sections": { "hero": { "type": "hero-rail", "blocks": {}, "block_order": [] }, "featured": { "type": "featured-collection", "settings": { "title": "Les colliers", "limit": 5 } }, "story": { "type": "story" }, "assure": { "type": "reassurance", "blocks": { "a": { "type": "item" }, "b": { "type": "item", "settings": { "title": "Paiement sécurisé", "text": "Checkout Shopify natif." } }, "c": { "type": "item", "settings": { "title": "Service client", "text": "Via la page contact." } } }, "block_order": ["a","b","c"] } }, "order": ["hero","featured","story","assure"] }
+{
+  "sections": {
+    "hero": {
+      "type": "hero-rail",
+      "blocks": {},
+      "block_order": []
+    },
+    "best": {
+      "type": "featured-collection",
+      "settings": {
+        "limit": 12
+      }
+    },
+    "tiles": {
+      "type": "collection-tiles",
+      "blocks": {
+        "t1": {
+          "type": "tile"
+        },
+        "t2": {
+          "type": "tile"
+        },
+        "t3": {
+          "type": "tile"
+        }
+      },
+      "block_order": [
+        "t1",
+        "t2",
+        "t3"
+      ]
+    },
+    "quote": {
+      "type": "brand-quote"
+    },
+    "story": {
+      "type": "story"
+    },
+    "spot": {
+      "type": "spotlight-product"
+    },
+    "social": {
+      "type": "social-proof",
+      "settings": {
+        "url": "https://www.instagram.com/breslev_gang/",
+        "text": "Paris · Instagram et TikTok @breslevgang."
+      }
+    },
+    "assure": {
+      "type": "reassurance",
+      "blocks": {
+        "a": {
+          "type": "item",
+          "settings": {
+            "title": "Livraison offerte",
+            "text": "Dès 120 € d’achats en France (selon règles Shopify par marché)."
+          }
+        },
+        "b": {
+          "type": "item",
+          "settings": {
+            "title": "Paiement en plusieurs fois",
+            "text": "Klarna dès 120 €, CB, Apple Pay, PayPal — checkout Shopify."
+          }
+        },
+        "c": {
+          "type": "item",
+          "settings": {
+            "title": "Expédition internationale",
+            "text": "Selon les marchés actifs dans Shopify."
+          }
+        },
+        "d": {
+          "type": "item",
+          "settings": {
+            "title": "Une question ?",
+            "text": "Contactez la maison depuis la page contact."
+          }
+        }
+      },
+      "block_order": [
+        "a",
+        "b",
+        "c",
+        "d"
+      ]
+    }
+  },
+  "order": [
+    "hero",
+    "best",
+    "tiles",
+    "quote",
+    "story",
+    "spot",
+    "social",
+    "assure"
+  ]
+}

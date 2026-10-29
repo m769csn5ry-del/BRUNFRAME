@@ -2,7 +2,7 @@
   {%- if settings.announce != blank %}<div class="bg-announce">{{ settings.announce | escape }}</div>{% endif -%}
   <div class="bg-wrap bg-header__in">
     <a class="bg-logo" href="{{ routes.root_url }}" aria-label="{{ shop.name | escape }}">
-      {%- if settings.logo != blank -%}<img src="{{ settings.logo | image_url: height: 64 }}" alt="{{ shop.name | escape }}" width="160" height="32">{%- else -%}{{ shop.name }}{%- endif -%}
+      {%- if settings.logo != blank -%}<img src="{{ settings.logo | image_url: height: 64 }}" alt="{{ shop.name | escape }}" width="180" height="36">{%- else -%}{{ shop.name }}{%- endif -%}
     </a>
     <nav class="bg-nav" data-menu aria-label="Principal">
       {%- for link in linklists[section.settings.menu].links -%}<a href="{{ link.url }}"{% if link.active %} aria-current="page"{% endif %}>{{ link.title | escape }}</a>{%- endfor -%}

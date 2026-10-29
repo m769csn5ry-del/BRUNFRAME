@@ -3,7 +3,11 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#060807">
+  <meta name="theme-color" content="#050606">
+  <script>document.documentElement.classList.add('js')</script>
+  {%- comment -%} Polices : Cormorant (titres du thème officiel) + Manrope. À auto-héberger (OFL) avant production pour le RGPD. {%- endcomment -%}
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Manrope:wght@400;500;600&display=swap">
   <link rel="canonical" href="{{ canonical_url }}">
   {%- if settings.favicon != blank -%}<link rel="icon" href="{{ settings.favicon | image_url: width: 48, height: 48 }}">{%- endif -%}
   <title>{{ page_title }}{% if current_tags %} – {{ 'general.tagged' | t: tags: current_tags | join: ', ' }}{% endif %}{% unless page_title contains shop.name %} – {{ shop.name }}{% endunless %}</title>
@@ -14,12 +18,12 @@
   {{ content_for_header }}
 </head>
 <body class="template-{{ template.name }}">
+  {%- if template.name == 'index' -%}{% render 'intro' %}{%- endif -%}
   <a class="bg-skip" href="#main">{{ 'general.skip' | t }}</a>
   {% sections 'header-group' %}
   <main id="main" tabindex="-1">{{ content_for_layout }}</main>
   {% sections 'footer-group' %}
   {% section 'cart-drawer' %}
-  <script src="{{ 'bg-shapes.js' | asset_url }}" defer></script>
   <script src="{{ 'bg-cart.js' | asset_url }}" defer></script>
   <script src="{{ 'bg-product.js' | asset_url }}" defer></script>
   <script src="{{ 'bg-rail.js' | asset_url }}" defer></script>

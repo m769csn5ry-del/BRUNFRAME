@@ -1,0 +1,22 @@
+<section class="bg-section bg-section--tight"><div class="bg-wrap">
+  <div class="bg-section__head"><div><p class="bg-kicker">{{ section.settings.kicker | escape }}</p><h2 class="bg-display"><span class="bg-l"><span>{{ section.settings.title | escape }}</span></span></h2></div>
+    {%- if section.settings.link_url != blank -%}<a class="bg-arrow" href="{{ section.settings.link_url }}">{{ section.settings.link_label | escape }}</a>{%- endif -%}</div>
+  <div class="bg-tiles" data-reveal>
+    {%- for b in section.blocks -%}{%- assign c = b.settings.collection -%}
+      <a class="bg-tile" href="{{ c.url | default: '#' }}" {{ b.shopify_attributes }}>
+        {%- assign img = b.settings.image | default: c.featured_image -%}
+        {%- if img -%}{{ img | image_url: width: 1400 | image_tag: loading: 'lazy', widths: '600,900,1200,1400', sizes: '(min-width: 900px) 55vw, 100vw', alt: '' }}{%- endif -%}
+        <div class="bg-tile__label"><p class="bg-kicker">{% if c %}{{ c.products_count }} {{ 'products.pieces' | t }}{% endif %}</p><p class="bg-display">{{ b.settings.label | default: c.title | escape }}</p></div>
+      </a>
+    {%- endfor -%}
+  </div>
+</div></section>
+{% schema %}
+{ "name": "Tuiles collections", "max_blocks": 3, "settings": [
+  { "type": "text", "id": "kicker", "label": "Sur-titre", "default": "Collections" },
+  { "type": "text", "id": "title", "label": "Titre", "default": "Trois signatures" },
+  { "type": "text", "id": "link_label", "label": "Lien", "default": "Tous les colliers" },
+  { "type": "url", "id": "link_url", "label": "URL du lien" } ],
+  "blocks": [ { "type": "tile", "name": "Tuile", "settings": [ { "type": "collection", "id": "collection", "label": "Collection" }, { "type": "text", "id": "label", "label": "Libellé (sinon titre de la collection)" }, { "type": "image_picker", "id": "image", "label": "Image (sinon image de la collection)" } ] } ],
+  "presets": [ { "name": "Tuiles collections", "blocks": [ { "type": "tile" }, { "type": "tile" }, { "type": "tile" } ] } ] }
+{% endschema %}

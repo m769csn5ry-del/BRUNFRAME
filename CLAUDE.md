@@ -5,4 +5,5 @@
 - Interdit sans autorisation : publication, écriture Shopify réelle, achats, analytics non consentis. Pas de clés/secrets en JS ; `.env` ignoré.
 - Animations : reduced-motion respecté, intro passable, jamais bloquante pour l'achat.
 - Quota : lire seulement les fichiers concernés, pas d'agents multiples. Fin de lot : FAIT / TESTÉ / BLOQUÉ / PROCHAIN (<120 mots).
-- Tests : `npm test` (Playwright, captures dans `captures/`), `npm run theme:check`.
+- Données démo = catalogue public réel (`tools/build_demo_data.py`). Jamais de silhouette inventée présentée comme un bijou.
+- Tests : `npm test` (Playwright, captures dans `captures/`), `node tests/visual.js <préfixe>`, `npm run theme:check`. Démo : `bash tools/build_demo_site.sh` → `dist/` (Netlify, noindex).

@@ -1,13 +1,11 @@
-| Élément | Démontré localement | Compatible Shopify (à intégrer) | Dépend d'accès | Décision PDG |
+| Élément | Démontré | Compatible Shopify | Dépend d'accès | Décision PDG |
 |---|---|---|---|---|
-| Hero + tringle physique (Canvas/Verlet) | ✅ | ✅ section `hero-rail` | photos détourées réelles | adoption du concept |
-| Panier tiroir, qty, seuil 120 € | ✅ (adaptateur démo) | ✅ Ajax Cart API | règles livraison réelles | – |
-| Variantes id/prix/SKU/stock/image | ✅ (fixtures) | ✅ `main-product` | produits réels | – |
-| Collection filtres/tri | ✅ (démo JS) | ✅ filtres natifs Storefront | collections réelles | – |
-| Checkout, Stripe, Klarna | ❌ | natif Shopify | admin | – |
-| Offre 5 %/60 min | ❌ | conception seulement | app/Function | oui |
-| Avis, personnalités, preuves sociales | ❌ désactivé | – | droits + identités | oui |
-| Fusion catalogue ~580 fiches | ❌ | – | export catalogue | oui (non destructif d'abord) |
-| Logo, police, favicon | ❌ texte provisoire | réglages thème | fichiers marque | – |
-| Hébreu/RTL | `dir=rtl` prévu | ✅ | traduction vérifiée | oui |
-| Légal/RGPD/cookies | placeholders | pages Shopify + Customer Privacy | données société | validation humaine |
+| Intro avec logo officiel (passable, 1 fois par session) | ✅ | ✅ snippet `intro` | – | – |
+| Tringle Verlet avec photos officielles en cadre chromé | ✅ | ✅ `hero-rail` (blocs produit) | détourages PNG réels | adoption |
+| Best-sellers, tuiles, signature, pièce en lumière | ✅ (données publiques) | ✅ sections | – | textes |
+| Panier tiroir, quantités, seuil 120 € | ✅ panier local | ✅ Ajax Cart API | règles livraison par marché | – |
+| Regroupement des coloris (1 modèle = 1 fiche) | ✅ visuel, non destructif | ✅ variantes natives | sauvegarde + mapping validé | oui |
+| Checkout, Klarna, Apple Pay… | ❌ (désactivé en démo) | natif Shopify | admin | – |
+| Offre 5 % / 60 min | ❌ | conception uniquement | app/Function | oui |
+| Personnalités, avis | ❌ | bloc soumis aux droits | droits écrits | oui |
+| Histoire, légal, RGPD | placeholders | pages Shopify | contenus marque | validation |

@@ -1,45 +1,95 @@
-<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#060807"><title>Accueil – Breslev Gang (prévisualisation démo)</title><meta name="robots" content="noindex"><link rel="stylesheet" href="../theme/assets/bg-tokens.css"><link rel="stylesheet" href="../theme/assets/bg-base.css"></head><body>
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#050606"><meta name="robots" content="noindex,nofollow"><title>Breslev Gang — Colliers TITLE Peteks · Prévisualisation BRUNFRAME</title><meta name="description" content="Concept de refonte Breslev Gang : tringle de colliers interactive, best-sellers et pièces de la maison. Prévisualisation, panier fictif."><script>document.documentElement.classList.add("js")</script><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Manrope:wght@400;500;600&display=swap" media="print" onload="this.media='all'"><link rel="preconnect" href="https://cdn.shopify.com"><link rel="stylesheet" href="../theme/assets/bg-tokens.css"><link rel="stylesheet" href="../theme/assets/bg-base.css"><link rel="icon" href="https://breslevgang.com/cdn/shop/files/2.jpg?crop=center&height=32&v=1691346121&width=32"></head><body><script src="data.js"></script><script src="../theme/assets/bg-cart.js"></script><script src="bg-preview.js"></script><script>BG.preview.header('', { intro: true });</script>
 <main>
-<section class="bg-hero" aria-label="Accueil">
-  <div class="bg-wrap bg-hero__top">
-    <p class="bg-kicker">Colliers <span class="bg-demo-tag">prévisualisation démo</span></p>
-    <h1 class="bg-display">La tringle.<br><em>Tirez, faites balancer.</em></h1>
-    <p class="bg-hero__sub">Choisissez un collier, changez de couleur, ajoutez-le au panier.</p>
-    <div class="bg-hero__cta"><a class="bg-btn" href="collection.html">Découvrir les colliers</a></div>
+<section class="bg-stage" data-stage aria-label="La tringle">
+  <div class="bg-stage__word" data-parallax aria-hidden="true">Breslev Gang</div>
+  <div class="bg-wrap bg-stage__copy">
+    <p class="bg-kicker bg-fade" style="--i:0">Maison parisienne · Colliers &amp; Peteks</p>
+    <h1 class="bg-display"><span class="bg-l" style="--i:1"><span>Plus qu’un collier.</span></span><span class="bg-l" style="--i:2"><span><em class="bg-chrome-text">Une protection.</em></span></span></h1>
+    <p class="bg-stage__sub bg-fade" style="--i:3">Faites glisser la tringle, approchez chaque pièce et choisissez la vôtre.</p>
+    <div class="bg-stage__cta bg-fade" style="--i:4"><a class="bg-btn" href="collection.html?k=Collier">Découvrir les colliers</a><a class="bg-arrow" href="#best-sellers">Best-sellers</a></div>
   </div>
   <div class="bg-rail" data-bg-rail tabindex="0" role="group" aria-label="Tringle de colliers interactive. Flèches gauche et droite pour parcourir, Entrée pour ouvrir la fiche.">
     <canvas aria-hidden="true"></canvas>
-    <p class="bg-rail__hint">Glissez pour faire balancer</p>
+    <p class="bg-rail__hint"><i></i>Glissez · touchez une pièce</p>
     <script type="application/json" data-rail-items id="rail-data">[]</script>
     <div class="bg-rail__panel" data-rail-panel hidden>
-      <div class="bg-rail__nav"><button type="button" data-p-prev aria-label="Précédent">‹</button><button type="button" data-p-next aria-label="Suivant">›</button><button type="button" data-p-close aria-label="Fermer">✕</button></div>
+      <div class="bg-rail__nav"><button type="button" data-p-prev aria-label="Pièce précédente">‹</button><button type="button" data-p-next aria-label="Pièce suivante">›</button><button type="button" data-p-close aria-label="Fermer">✕</button></div>
       <h3 data-p-title></h3>
-      <div class="bg-rail__row"><span data-p-price></span><div class="bg-swatches" data-p-colors></div></div>
-      <div class="bg-rail__actions"><a class="bg-btn bg-btn--ghost" data-p-link href="#">Voir le bijou</a><button class="bg-btn" type="button" data-p-add>Ajouter au panier</button></div>
+      <span class="bg-rail__price" data-p-price></span>
+      <div class="bg-rail__photos" data-p-photos></div>
+      <div class="bg-rail__chips" data-p-colors></div>
+      <div class="bg-rail__actions"><a class="bg-btn bg-btn--ghost" data-p-link href="#">Voir le bijou</a><button class="bg-btn" type="button" data-p-add>Ajouter</button></div>
       <p class="bg-sr" aria-live="polite" data-p-live></p>
     </div>
   </div>
+  <ul class="bg-sr" id="rail-list"></ul>
 </section>
-<section class="bg-section"><div class="bg-wrap">
-  <div class="bg-section__head" data-reveal><div><p class="bg-kicker">Sélection</p><h2 class="bg-display">Les colliers</h2></div><a class="bg-btn bg-btn--ghost" href="collection.html">Tout voir</a></div>
-  <div class="bg-grid bg-grid--edit" id="featured" data-reveal></div>
+
+<section class="bg-section" id="best-sellers"><div class="bg-wrap">
+  <div class="bg-section__head"><div><p class="bg-kicker">Best-sellers</p><h2 class="bg-display"><span class="bg-l"><span>Les pièces</span></span><span class="bg-l" style="--i:1"><span><em>de la maison</em></span></span></h2></div>
+    <div style="display:grid;gap:14px;justify-items:end"><div class="bg-track-nav" data-track-nav="best"><button type="button" data-dir="-1" aria-label="Précédent">←</button><button type="button" data-dir="1" aria-label="Suivant">→</button></div><p class="bg-note">Ordre de la collection publique « Best Sellers » — pas un classement des ventes.</p></div></div>
+  <div class="bg-track" id="best" data-reveal></div>
 </div></section>
-<section class="bg-section" id="histoire"><div class="bg-wrap bg-story">
-  <div data-reveal><p class="bg-kicker">L’histoire</p><p class="bg-display" style="font-size:clamp(26px,3.4vw,46px);margin-bottom:20px">[Phrase de marque — à rédiger avec Ysahar]</p>
-  <div class="bg-placeholder">Récit de marque à fournir et valider. Aucune signification de symbole ni citation religieuse n’est inventée dans cette démo.</div></div>
-  <div class="bg-story__visual" data-reveal><div id="matiere"></div></div>
+
+<section class="bg-section bg-section--tight"><div class="bg-wrap">
+  <div class="bg-section__head"><div><p class="bg-kicker">Collections</p><h2 class="bg-display"><span class="bg-l"><span>Trois signatures</span></span></h2></div><a class="bg-arrow" href="collection.html?k=Collier">Tous les colliers</a></div>
+  <div class="bg-tiles" id="tiles" data-reveal></div>
 </div></section>
-<section class="bg-section" style="padding-block:clamp(40px,6vw,80px)"><div class="bg-wrap"><div class="bg-assure" data-reveal>
-  <div><strong>Livraison offerte dès 120 €</strong><span class="bg-dim">Affichage public actuel — règles réelles à vérifier dans Shopify.</span></div>
-  <div><strong>Paiement sécurisé</strong><span class="bg-dim">Checkout Shopify natif (aucun checkout custom).</span></div>
-  <div><strong>Avis &amp; apparitions</strong><span class="bg-dim">Module désactivé : aucun contenu sans identité et droits confirmés.</span></div>
+
+<section class="bg-section bg-quote" id="maison"><div class="bg-quote__bg" id="quote-bg" data-reveal></div><div class="bg-wrap"><figure style="margin:0">
+  <blockquote class="bg-display"><span class="bg-l"><span>Not just</span></span><span class="bg-l" style="--i:1"><span>a necklace.</span></span><span class="bg-l" style="--i:2"><span><em class="bg-chrome-text">It’s a protection.</em></span></span></blockquote>
+  <figcaption class="bg-note">Signature officielle de Breslev Gang</figcaption></figure></div></section>
+
+<section class="bg-section bg-section--tight"><div class="bg-wrap bg-story">
+  <div data-reveal><p class="bg-kicker">La maison</p>
+    <p class="lead">Peteks, flammes, Maguen David, Hay : des pièces que l’on porte près du cœur.</p>
+    <div class="bg-placeholder">Histoire du fondateur, sens de chaque symbole et références spirituelles : à rédiger avec Ysahar. Cette démo n’invente aucune signification.</div>
+    <div class="bg-facts"><div><strong id="n-colliers">—</strong><span>Colliers en ligne</span></div><div><strong id="n-peteks">—</strong><span>Peteks en ligne</span></div><div><strong>17</strong><span>Pays &amp; régions</span></div></div>
+    <p class="bg-note" style="margin-top:14px">Comptages : catalogue public du 29/10/2026.</p></div>
+  <div class="bg-tiles" style="grid-template-rows:none;grid-template-columns:1fr" data-reveal><a class="bg-tile" id="story-tile" href="collection.html?k=Petek" style="min-height:min(110vw,620px)"></a></div>
+</div></section>
+
+<section class="bg-section"><div class="bg-wrap bg-spot" id="spot"></div></section>
+
+<section class="bg-section bg-section--tight"><div class="bg-wrap">
+  <div class="bg-social" data-reveal>
+    <div><p class="bg-kicker">Communauté</p><a class="bg-social__handle bg-chrome-text" href="https://www.instagram.com/breslev_gang/" rel="noopener">@breslev_gang</a>
+      <p class="bg-dim" style="margin-top:18px">Paris · ≈ 11 K abonnés sur Instagram (relevé public). TikTok <a href="https://tiktok.com/@breslevgang" rel="noopener">@breslevgang</a>.</p></div>
+    <div><p class="bg-dim" style="margin-bottom:22px">Les apparitions de personnalités portant les pièces seront présentées ici uniquement avec l’accord écrit des personnes et les droits des images.</p>
+      <a class="bg-btn bg-btn--ghost" href="https://www.instagram.com/breslev_gang/" rel="noopener">Suivre la maison</a></div>
+  </div>
+</div></section>
+
+<section class="bg-section bg-section--tight"><div class="bg-wrap"><div class="bg-assure" data-reveal>
+  <div><strong>Livraison offerte</strong><span class="bg-dim">Dès 120 € d’achats en France. Règles par pays lues dans Shopify.</span></div>
+  <div><strong>Paiement en plusieurs fois</strong><span class="bg-dim">Klarna dès 120 €, CB, Apple Pay, PayPal — checkout Shopify officiel.</span></div>
+  <div><strong>Expédition internationale</strong><span class="bg-dim">17 pays et régions, en euros, shekels, dollars, livres ou francs suisses.</span></div>
+  <div><strong>Une question ?</strong><span class="bg-dim"><a href="https://breslevgang.com/pages/contact" rel="noopener">Contactez la maison</a> — réponse par l’équipe Breslev Gang.</span></div>
 </div></div></section>
 </main>
-<script src="../theme/assets/bg-shapes.js"></script><script src="../theme/assets/bg-cart.js"></script><script src="../theme/assets/bg-product.js"></script><script src="../theme/assets/bg-rail.js"></script><script src="../theme/assets/bg-ui.js"></script><script src="bg-preview.js"></script>
+<script src="../theme/assets/bg-product.js"></script><script src="../theme/assets/bg-rail.js"></script><script src="../theme/assets/bg-ui.js"></script>
 <script>
-BG.preview.shell('Colliers',{intro:true});
-document.getElementById('rail-data').textContent = JSON.stringify(BG.preview.railItems());
-BG.initRails();
-document.getElementById('featured').innerHTML = BG.fixtures.map(function (p) { return BG.preview.card(p); }).join('');
-var m = document.getElementById('matiere'); m.innerHTML = BG.pendantSVG('maguen','chrome',{label:false});
+(function () {
+  var P = BG.preview, D = window.BG_DATA;
+  P.footer();
+  var items = P.railItems();
+  document.getElementById('rail-data').textContent = JSON.stringify(items);
+  document.getElementById('rail-list').innerHTML = items.map(function (i) { return '<li><a href="' + i.url + '">' + BG.esc(i.title) + ' — ' + i.priceLabel + '</a></li>'; }).join('');
+  BG.initRails();
+  document.getElementById('best').innerHTML = D.best.map(BG.byHandle).filter(Boolean).map(function (p) { return P.card(p); }).join('');
+  var count = function (k, f) { return D.products.filter(function (p) { return p.k === k && (!f || p.f === f); }).length; };
+  var tile = function (h, k, f, label, href) { var p = BG.byHandle(h); return '<a class="bg-tile" href="' + href + '"><img src="' + BG.img(p.img[0], 1100) + '" alt="" loading="lazy"><div class="bg-tile__label"><p class="bg-kicker">' + count(k, f) + ' pièces</p><p class="bg-display">' + label + '</p></div></a>'; };
+  document.getElementById('tiles').innerHTML = tile('necklace-chrome-fire-26', 'Collier', 'Flamme', 'Flamme · <em>Aech Cheli</em>', 'collection.html?k=Collier&f=Flamme') +
+    tile('collier-triple-maguen', 'Collier', 'Maguen David', 'Maguen <em>David</em>', 'collection.html?k=Collier&f=Maguen%20David') +
+    tile('petek-croco-black-x-hay-new-season-26', 'Petek', '', 'Peteks <em>cuir exotique</em>', 'collection.html?k=Petek');
+  var q = BG.byHandle('necklace-maguen-chrome'); document.getElementById('quote-bg').style.backgroundImage = 'url(' + BG.img(q.img[1] || q.img[0], 1400) + ')';
+  var st = BG.byHandle('petek-grey-x-aech-cheli-new-season-25');
+  document.getElementById('story-tile').innerHTML = '<img src="' + BG.img(st.img[1] || st.img[0], 1100) + '" alt="' + BG.esc(st.t) + '" loading="lazy"><div class="bg-tile__label"><p class="bg-kicker">Peteks</p><p class="bg-display">Cuir, perles <em>&amp; parchemin</em></p></div>';
+  document.getElementById('n-colliers').textContent = count('Collier'); document.getElementById('n-peteks').textContent = count('Petek');
+  var s = BG.byHandle(D.spotlight);
+  document.getElementById('spot').innerHTML = '<div class="bg-spot__media" data-spot data-reveal><img src="' + BG.img(s.img[0], 1200) + '" alt="' + BG.esc(s.t) + '" loading="lazy"><p class="bg-note">Déplacez la lumière</p></div>' +
+    '<div data-reveal><p class="bg-kicker">Pièce en lumière</p><h2 class="bg-display">' + BG.esc(s.t).replace('Deluxe', '<em>Deluxe</em>') + '</h2><p class="bg-spot__price">' + BG.money(s.p, 'EUR') + '</p>' +
+    '<p class="bg-dim" style="max-width:40ch;margin-bottom:30px">Une pièce de la ligne Maguen David. Matière, dimensions et finition : sur la fiche officielle.</p>' +
+    '<div class="bg-stage__cta"><button class="bg-btn" type="button" data-quick-add="' + s.vid + '" data-title="' + BG.esc(s.t) + '">Ajouter au panier</button><a class="bg-arrow" href="' + BG.url(s) + '">Voir la fiche</a></div></div>';
+})();
 </script></body></html>

@@ -5,12 +5,18 @@
     "cart": "Panier",
     "search": "Rechercher",
     "menu": "Menu",
-    "account": "Compte"
+    "account": "Compte",
+    "close": "Fermer",
+    "skip_intro": "Passer",
+    "view_all": "Tout voir"
   },
   "products": {
     "add": "Ajouter au panier",
     "sold_out": "Épuisé",
-    "view": "Voir le bijou"
+    "view": "Voir le bijou",
+    "add_short": "Ajouter",
+    "variants": "coloris",
+    "pieces": "pièces"
   },
   "cart": {
     "title": "Votre panier",
@@ -18,5 +24,17 @@
     "subtotal": "Sous-total",
     "checkout": "Passer au paiement",
     "taxes_note": "Taxes et frais de livraison calculés au paiement."
+  },
+  "rail": {
+    "label": "Tringle de colliers interactive. Flèches gauche et droite pour parcourir, Entrée pour ouvrir la fiche.",
+    "hint": "Glissez · touchez une pièce",
+    "prev": "Précédent",
+    "next": "Suivant"
+  },
+  "spot": {
+    "hint": "Déplacez la lumière"
+  },
+  "story": {
+    "placeholder": "Histoire du fondateur et sens des symboles : à rédiger et valider avec la marque."
   }
 }

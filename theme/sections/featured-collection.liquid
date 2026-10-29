@@ -1,15 +1,23 @@
-<section class="bg-section"><div class="bg-wrap">
-  <div class="bg-section__head" data-reveal><div><p class="bg-kicker">{{ section.settings.kicker | escape }}</p><h2 class="bg-display">{{ section.settings.title | escape }}</h2></div>
-    {% if section.settings.collection != blank %}<a class="bg-btn bg-btn--ghost" href="{{ section.settings.collection.url }}">Tout voir</a>{% endif %}</div>
-  <div class="bg-grid bg-grid--edit" data-reveal>
+{%- assign tid = 'track-' | append: section.id -%}
+<section class="bg-section" id="{{ section.settings.anchor | default: section.id }}"><div class="bg-wrap">
+  <div class="bg-section__head">
+    <div><p class="bg-kicker">{{ section.settings.kicker | escape }}</p><h2 class="bg-display"><span class="bg-l"><span>{{ section.settings.title_1 | escape }}</span></span><span class="bg-l" style="--i:1"><span><em>{{ section.settings.title_2 | escape }}</em></span></span></h2></div>
+    <div style="display:grid;gap:14px;justify-items:end">
+      <div class="bg-track-nav" data-track-nav="{{ tid }}"><button type="button" data-dir="-1" aria-label="{{ 'rail.prev' | t }}">←</button><button type="button" data-dir="1" aria-label="{{ 'rail.next' | t }}">→</button></div>
+      {%- if section.settings.collection != blank -%}<a class="bg-arrow" href="{{ section.settings.collection.url }}">{{ 'general.view_all' | t }}</a>{%- endif -%}
+    </div>
+  </div>
+  <div class="bg-track" id="{{ tid }}" data-reveal>
     {%- for product in section.settings.collection.products limit: section.settings.limit -%}{% render 'product-card', product: product %}{%- endfor -%}
   </div>
 </div></section>
 {% schema %}
-{ "name": "Sélection éditoriale", "settings": [
-  { "type": "text", "id": "kicker", "label": "Sur-titre", "default": "Sélection" },
-  { "type": "text", "id": "title", "label": "Titre", "default": "Les colliers" },
-  { "type": "collection", "id": "collection", "label": "Collection" },
-  { "type": "range", "id": "limit", "label": "Produits", "min": 3, "max": 8, "step": 1, "default": 5 } ],
-  "presets": [ { "name": "Sélection éditoriale" } ] }
+{ "name": "Carrousel produits", "settings": [
+  { "type": "text", "id": "kicker", "label": "Sur-titre", "default": "Best-sellers" },
+  { "type": "text", "id": "title_1", "label": "Titre ligne 1", "default": "Les pièces" },
+  { "type": "text", "id": "title_2", "label": "Titre ligne 2", "default": "de la maison" },
+  { "type": "collection", "id": "collection", "label": "Collection (ex. best-sellers)" },
+  { "type": "range", "id": "limit", "label": "Produits", "min": 4, "max": 16, "step": 1, "default": 12 },
+  { "type": "text", "id": "anchor", "label": "Ancre", "default": "best-sellers" } ],
+  "presets": [ { "name": "Carrousel produits" } ] }
 {% endschema %}

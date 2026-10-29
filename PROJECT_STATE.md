@@ -1,16 +1,29 @@
-# PROJECT_STATE (maj 2026-10-29)
+# PROJECT_STATE (mis à jour le 2026-10-29, lot « Operation Rebirth »)
+
 ## Architecture
-- `theme/` : thème OS2 (layout, 12 sections, templates JSON, snippets, assets `bg-*`). Theme Check : 0 erreur.
-- `preview/` : index / collection (filtres+tri) / product (variantes) / 404, panier démo (adaptateur local, même API que l'Ajax Cart Shopify).
-- Tringle : `theme/assets/bg-rail.js` — Canvas 2D + Verlet (chaînes, pendentif, voisins qui se repoussent, drag/inertie/rebond, clavier, reduced-motion, fallback sans canvas). `bg-shapes.js` = silhouettes DÉMO ; `item.image` (PNG détouré) les remplace.
-- Three.js/GSAP non utilisés : non justifiés (Canvas suffit, 0 dépendance).
-## Fait
-Fondation, hero+tringle, panier tiroir (qty, retrait, progression 120 €), fiche + variantes (id/prix/SKU/stock/image), collection filtrée, 404, SEO/OG de base, docs.
-## Tests
-`npm test` : 31/31 (5 viewports sans débordement/erreur console, drag+inertie+balancement, clavier, panier, variantes, filtres, tri, reduced-motion, fallback canvas). Theme Check 0 erreur.
-## Bloqué / dépendances
-- breslevgang.com injoignable depuis le sandbox (403 proxy) : AUCUN asset réel (photos, logo, police) récupéré. Noms de produits = brief ; handles/prix = fictifs.
-- Pas d'accès Shopify. Skills (taste, impeccable, GSAP…) : installation non effectuée (réseau) ; Claude Motion non utilisé (pas d'intégration confirmée).
-- Offre 5 %/60 min : conception seulement (docs/OFFER_5PCT.md), désactivée.
+- `theme/` : thème OS2 avec 16 sections, dont hero-rail, carrousel produits, tuiles collections, signature, histoire, pièce en lumière, communauté et réassurance. Templates JSON et snippets (intro, carte produit). Theme Check : 0 erreur, 2 avertissements Google Fonts documentés.
+- `preview/` : démo statique branchée sur `preview/data.js`, généré par `tools/build_demo_data.py` à partir du catalogue public réel (586 fiches). Panier local fictif, même API que l'Ajax Cart.
+- `tools/` : `merge_products_json.py` (snapshot), `group_candidates.py` (proposition « 1 modèle = 1 fiche »), `build_demo_site.sh` (dist/ noindex), `build_demo_data.py`.
+- La tringle (`bg-rail.js`) tourne en Canvas 2D + Verlet. Ordre de rendu : détourage PNG > photo officielle en cadre chromé > plaque neutre. **Les silhouettes inventées ont été supprimées.** Elle comprend anneaux, tiges, ombres au sol, reflet glissant, amortissement de la pièce et un mode allégé pour les appareils modestes.
+- Design system : noir minéral/graphite, chrome brossé (CTA), émeraude réservée aux reflets, Cormorant (police officielle) + Manrope.
+- GSAP et Three.js ne sont pas utilisés : le Canvas et les transitions CSS suffisent, sans aucune dépendance.
+
+## Décisions
+- Accroche = adaptation de la signature officielle « Not Just Necklace it's a Protection ».
+- Best-sellers affichés dans l'ordre public, avec la mention explicite que ce n'est pas un classement des ventes.
+- Personnalités : le bloc ne s'affiche que si la case « droits confirmés » est cochée dans le thème.
+
+## Tests (29/10)
+- `npm test` : **32/32**. Couverture : 5 viewports, drag, inertie, balancement, clavier, panier (180 €, seuil 120 €), coloris regroupés, pièce épuisée, filtres, tri, regroupement, reduced-motion, repli sans canvas, 404.
+- Lighthouse mobile local (ressources externes bloquées, donc non représentatif) : Perf 92, A11y 100, BP 96, SEO 63 (dû au `noindex` volontaire). LCP 2,2 s et CLS 0,01 en labo uniquement, pas des données réelles.
+- `node tests/visual.js after` : captures avant/après dans `captures/`.
+
+## Bloqué
+- Chrome : extension non exposée dans cette session. Recherche faite via Firecrawl (voir BRAND_RESEARCH.md).
+- Sandbox : cdn.shopify.com, breslevgang.com et l'upload Netlify sont refusés par la politique réseau. La démo publique exige de relier le dépôt au projet Netlify `breslev-gang-2100-demo` (une action dans le dashboard).
+- Aucun détourage PNG des pendentifs n'existe : la tringle montre les photos officielles en cadre. Les détourages réels sont à fournir samedi.
+- Skills taste, impeccable, GSAP, transitions et design-extract non installés. Claude Motion non intégré.
+- Shopify : pas d'accès. Offre 5 % / 60 min désactivée (voir docs/OFFER_5PCT.md).
+
 ## Prochain lot
-Assets samedi (photos détourées, logo, polices) → `item.image`, @font-face ; histoire/FAQ/contact/légal ; recherche prédictive ; hreflang/RTL ; Lighthouse ; thème de dev non publié.
+Lien Netlify, puis contrôle des vraies photos sur l'URL. Ensuite : détourages, histoire validée, polices auto-hébergées, recherche prédictive, thème de dev non publié.

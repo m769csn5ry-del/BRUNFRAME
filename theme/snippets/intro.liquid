@@ -1,0 +1,8 @@
+{%- comment -%} Intro courte : logo officiel + ligne de lumière (devient la tringle). Passable, 1re visite de session, ignorée en reduced-motion (bg-ui.js). {%- endcomment -%}
+<div class="bg-intro" data-intro hidden>
+  <div class="bg-intro__inner">
+    <div class="bg-intro__logo">{%- if settings.logo != blank -%}{{ settings.logo | image_url: width: 840 | image_tag: alt: shop.name, loading: 'eager' }}{%- else -%}<span class="bg-display">{{ shop.name }}</span>{%- endif -%}</div>
+    <div class="bg-intro__line"></div>
+  </div>
+  <button class="bg-btn bg-btn--ghost bg-btn--sm bg-intro__skip" data-intro-skip type="button">{{ 'general.skip_intro' | t }}</button>
+</div>

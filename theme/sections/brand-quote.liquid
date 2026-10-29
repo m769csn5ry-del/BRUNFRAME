@@ -1,0 +1,16 @@
+<section class="bg-section bg-quote">
+  {%- if section.settings.image -%}<div class="bg-quote__bg" style="background-image:url('{{ section.settings.image | image_url: width: 1600 }}')" data-reveal></div>{%- endif -%}
+  <div class="bg-wrap"><figure style="margin:0">
+    <blockquote class="bg-display"><span class="bg-l"><span>{{ section.settings.line_1 | escape }}</span></span><span class="bg-l" style="--i:1"><span>{{ section.settings.line_2 | escape }}</span></span><span class="bg-l" style="--i:2"><span><em class="bg-chrome-text">{{ section.settings.line_3 | escape }}</em></span></span></blockquote>
+    {%- if section.settings.caption != blank -%}<figcaption class="bg-note">{{ section.settings.caption | escape }}</figcaption>{%- endif -%}
+  </figure></div>
+</section>
+{% schema %}
+{ "name": "Signature de marque", "settings": [
+  { "type": "text", "id": "line_1", "label": "Ligne 1", "default": "Not just" },
+  { "type": "text", "id": "line_2", "label": "Ligne 2", "default": "a necklace." },
+  { "type": "text", "id": "line_3", "label": "Ligne 3", "default": "It’s a protection." },
+  { "type": "text", "id": "caption", "label": "Légende", "default": "Signature de la maison" },
+  { "type": "image_picker", "id": "image", "label": "Image de fond (photo réelle)" } ],
+  "presets": [ { "name": "Signature de marque" } ] }
+{% endschema %}
