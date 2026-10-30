@@ -2,8 +2,70 @@
   "sections": {
     "hero": {
       "type": "hero-orbit",
-      "blocks": {},
-      "block_order": []
+      "blocks": {
+        "piece_1": {
+          "type": "necklace",
+          "settings": {
+            "product": "necklace-maguen-chrome",
+            "theme_cutout": true,
+            "fy": 89,
+            "c1": "#c9d3dc",
+            "c2": "#5f6c78",
+            "c3": "#0d1114"
+          }
+        },
+        "piece_2": {
+          "type": "necklace",
+          "settings": {
+            "product": "necklace-chrome-fire-26",
+            "theme_cutout": true,
+            "fy": 90,
+            "c1": "#dfe2e5",
+            "c2": "#6b7178",
+            "c3": "#111315"
+          }
+        },
+        "piece_3": {
+          "type": "necklace",
+          "settings": {
+            "product": "petek-croco-black-x-hay-new-season-26",
+            "theme_cutout": true,
+            "fy": 90,
+            "c1": "#a7adb3",
+            "c2": "#3d4349",
+            "c3": "#0c0e10"
+          }
+        },
+        "piece_4": {
+          "type": "necklace",
+          "settings": {
+            "product": "mezouza-pearl-black",
+            "theme_cutout": true,
+            "fy": 90,
+            "c1": "#b7bbc0",
+            "c2": "#4a5057",
+            "c3": "#0e1012"
+          }
+        },
+        "piece_5": {
+          "type": "necklace",
+          "settings": {
+            "product": "necklace-fire-2-0",
+            "theme_cutout": true,
+            "fy": 93,
+            "c1": "#e8eaec",
+            "c2": "#7d838a",
+            "c3": "#141618"
+          }
+        }
+      },
+      "block_order": [
+        "piece_1",
+        "piece_2",
+        "piece_3",
+        "piece_4",
+        "piece_5"
+      ]
     },
     "best": {
       "type": "featured-collection",
