@@ -1,0 +1,37 @@
+[
+ {
+  "texte": "Livraison offerte dès 120 € d’achat",
+  "portee": "marque, marché France/EUR",
+  "source": "bandeau breslevgang.com",
+  "date": "2026-10-29",
+  "statut": "vérifié (public)"
+ },
+ {
+  "texte": "Échange sous 14 jours (colliers)",
+  "portee": "colliers",
+  "source": "breslevgang.com/policies/refund-policy",
+  "date": "2026-10-29",
+  "statut": "vérifié (public)"
+ },
+ {
+  "texte": "Fait main à Strasbourg",
+  "portee": "créations concernées, à préciser par modèle",
+  "source": "confirmation du commanditaire (BRUNFRAME) ; siège Strasbourg selon mentions légales",
+  "date": "2026-10-30",
+  "statut": "confirmation commanditaire, périmètre à valider"
+ },
+ {
+  "texte": "Petek : étui de cuir avec véritable parchemin",
+  "portee": "Peteks",
+  "source": "bio Instagram @breslev_gang (« Luxury leather & genuine parchment »)",
+  "date": "2026-10-29",
+  "statut": "vérifié (public), matière exacte par modèle à confirmer"
+ },
+ {
+  "texte": "Pendentifs distinctifs non proposés par les concurrents",
+  "portee": "modèles à lister",
+  "source": "confirmation du commanditaire",
+  "date": "2026-10-30",
+  "statut": "NON publié tant que les modèles et le périmètre ne sont pas validés"
+ }
+]
