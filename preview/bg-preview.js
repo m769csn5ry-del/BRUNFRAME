@@ -111,6 +111,19 @@ window.BG = window.BG || {};
         (g ? '<span class="bg-card__v">' + g.length + ' coloris · regroupement proposé</span>' : '') + '</div></a>' +
         (p.a && !p.v ? '<button class="bg-card__add" type="button" data-quick-add="' + p.vid + '" data-title="' + esc(p.t) + '" aria-label="Ajouter ' + esc(p.t) + ' au panier">+</button>' : '') + '</article>';
     },
+    orbitItems: function () {
+      return (D.orbit || []).filter(function (o) { return byH[o.h]; }).map(function (o) {
+        var p = byH[o.h], n = D.products.filter(function (x) { return x.f === p.f; }).length, g = BG.group(p);
+        return {
+          handle: p.h, title: p.t, kicker: (BG.kinds[p.k] || '') + ' · ' + p.f, priceLabel: BG.price(p), url: BG.url(p), variantId: p.vid, available: p.a,
+          photo: BG.img(p.img[0], 900), tone: o.tone,
+          heads: ['', p.f, p.a ? 'Disponible' : 'Épuisée'],
+          facts: ['Photo officielle de la boutique, prix public relevé le 29/10/2026. Matière et dimensions : sur la fiche officielle.',
+            n + ' pièces publiées dans la famille « ' + p.f + ' ».' + (g ? ' ' + g.length + ' coloris proposés au regroupement.' : ''),
+            (p.a ? 'Disponible sur la boutique au relevé du 29/10/2026' : 'Épuisée au relevé du 29/10/2026') + ' · ' + BG.price(p) + '.']
+        };
+      });
+    },
     railItems: function () {
       return D.rail.filter(function (h) { return byH[h]; }).map(function (h) {
         var p = byH[h], g = BG.group(p) || [p];

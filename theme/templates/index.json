@@ -1,7 +1,7 @@
 {
   "sections": {
     "hero": {
-      "type": "hero-rail",
+      "type": "hero-orbit",
       "blocks": {},
       "block_order": []
     },

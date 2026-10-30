@@ -34,9 +34,15 @@ BEST = ['petek-grey-x-aech-cheli-new-season-25', 'petek-pink-python-x-aech-cheli
         'petek-croco-grey-x-aech-cheli-new-season-26', 'petek-black-python-x-aech-cheli-new-season-25', 'petek-croco-black-x-hay-new-season-26',
         'petek-green-silver', 'petek-deluxe-green', 'necklace-maguen-chrome', 'jewel-breslev-necklace-fire-jewish', 'necklace-fire-2-0', 'collier-mezouza']
 RAIL = ['necklace-maguen-chrome', 'jewel-breslev-necklace-fire-jewish', 'necklace-chrome-fire-26', 'necklace-maguen-deluxe', 'necklace-fire-2-0', 'collier-triple-maguen', 'necklace-fire-pearl-black']
+# Galerie orbitale de l'accueil : pièces pilotes du MASTER PROMPT (pas un classement des ventes).
+# Fonds par collier = proposition de direction artistique BRUNFRAME, réglable par bloc dans l'éditeur de thème.
+ORBIT = [('necklace-maguen-chrome', ['#c9d3dc', '#5f6c78', '#0d1114']), ('necklace-chrome-fire-26', ['#ff9a3c', '#d4480f', '#2b0b02']),
+         ('petek-croco-black-x-hay-new-season-26', ['#52c79a', '#145a43', '#03130d']), ('jewel-breslev-necklace-fire-jewish', ['#ffc45a', '#b9650c', '#241302']),
+         ('mezouza-pearl-black', ['#8e9cff', '#2f3a96', '#0a0c24']), ('necklace-fire-2-0', ['#ff5a4e', '#9c1a17', '#200505']),
+         ('petek-real-croco-black', ['#d09a5c', '#6e3e14', '#170b03'])]
 data = {'source': 'breslevgang.com — products.json public, relevé du 29/10/2026 (prix en devise de base, à confirmer)',
         'products': [out(p) for p in keep], 'best': [h for h in BEST if h in P], 'rail': [h for h in RAIL if h in P],
-        'spotlight': 'necklace-maguen-deluxe', 'logo': 'https://breslevgang.com/cdn/shop/files/WhatsApp_July_24_copie.png?v=1698640604'}
+        'orbit': [{'h': h, 'tone': t} for h, t in ORBIT if h in P], 'spotlight': 'necklace-maguen-deluxe', 'logo': 'https://breslevgang.com/cdn/shop/files/WhatsApp_July_24_copie.png?v=1698640604'}
 open('preview/data.js', 'w').write('/* GÉNÉRÉ par tools/build_demo_data.py — ne pas éditer. */\nwindow.BG_DATA=' + json.dumps(data, ensure_ascii=False, separators=(',', ':')) + ';\n')
 from collections import Counter
 print(len(data['products']), Counter(x['k'] for x in data['products']), Counter(x['f'] for x in data['products'] if x['k'] == 'Collier'))

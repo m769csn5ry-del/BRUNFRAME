@@ -21,8 +21,8 @@ def view(name):
     main = re.sub(r'<script src[^>]*></script>', '', main)
     return {'html': rw(main), 'run': rw(run)}
 views = {n: view(n) for n in ('index', 'collection', 'collections', 'search', 'product', '404')}
-css = R('theme/assets/bg-tokens.css') + '\n' + R('theme/assets/bg-base.css')
-js = '\n;\n'.join([R('preview/data.js'), R('theme/assets/bg-cart.js'), rw(R('preview/bg-preview.js')), R('theme/assets/bg-product.js'), R('theme/assets/bg-rail.js'), R('theme/assets/bg-ui.js')])
+css = R('theme/assets/bg-tokens.css') + '\n' + R('theme/assets/bg-base.css') + '\n' + R('theme/assets/bg-orbit.css')
+js = '\n;\n'.join([R('preview/data.js'), R('theme/assets/bg-cart.js'), rw(R('preview/bg-preview.js')), R('theme/assets/bg-product.js'), R('theme/assets/bg-rail.js'), R('theme/assets/bg-orbit.js'), R('theme/assets/bg-ui.js')])
 router = """
 ;(function(){
   var V = %s, app = document.getElementById('app');
@@ -32,7 +32,7 @@ router = """
     if (!V[r]) r = '404';
     app.innerHTML = V[r].html;
     try { new Function(V[r].run)(); } catch (e) { console.error(e); }
-    if (BG.initRails) BG.initRails(); if (BG.initProducts) BG.initProducts(); if (BG.uiRefresh) BG.uiRefresh();
+    if (BG.initRails) BG.initRails(); if (BG.initOrbits) BG.initOrbits(); if (BG.initProducts) BG.initProducts(); if (BG.uiRefresh) BG.uiRefresh();
     document.querySelectorAll('.bg-nav a').forEach(function (a) { a.removeAttribute('aria-current'); });
     var s = BG.q().get('s'), el = s && document.getElementById(s);
     if (el) el.scrollIntoView(); else scrollTo(0, 0);

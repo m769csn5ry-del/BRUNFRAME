@@ -25,29 +25,32 @@ const results = []; const ok = (n, c, d = '') => { results.push([c, n, d]); cons
     ok(`${name}: aucune erreur console`, errs.length === 0, errs.join('|'));
     await pg.screenshot({ path: `captures/home-${name}.png` });
     if (name === 'desktop1440') {
-      const s0 = await pg.evaluate(() => document.querySelector('[data-bg-rail]').BGRail.state);
-      const box = await pg.locator('.bg-rail canvas').boundingBox();
-      await pg.mouse.move(box.x + 300, box.y + 40); await pg.mouse.down();
-      for (let i = 0; i < 12; i++) await pg.mouse.move(box.x + 300 - i * 25, box.y + 40 + i, { steps: 1 });
-      const mid = await pg.evaluate(() => document.querySelector('[data-bg-rail]').BGRail.chains().map(c => c.p[c.hi].x));
-      await pg.screenshot({ path: 'captures/rail-drag-desktop1440.png' });
-      await pg.mouse.up(); await pg.waitForTimeout(150);
-      const s1 = await pg.evaluate(() => document.querySelector('[data-bg-rail]').BGRail.state);
-      ok('rail: drag déplace la tringle', Math.abs(s1.off - s0.off) > 20, `off ${s0.off.toFixed(0)}→${s1.off.toFixed(0)}`);
-      await pg.waitForTimeout(700);
-      const s2 = await pg.evaluate(() => document.querySelector('[data-bg-rail]').BGRail.state);
-      ok('rail: inertie après relâchement', Math.abs(s2.off - s1.off) > 3 || Math.abs(s1.vel) > .5, `vel=${s1.vel.toFixed(1)} Δ=${(s2.off - s1.off).toFixed(0)}`);
-      const x1 = await pg.evaluate(() => document.querySelector('[data-bg-rail]').BGRail.chains().map(c => Math.round(c.p[c.hi].x - c.p[0].x)));
-      await pg.waitForTimeout(2500);
-      const x2 = await pg.evaluate(() => document.querySelector('[data-bg-rail]').BGRail.chains().map(c => Math.round(c.p[c.hi].x - c.p[0].x)));
-      ok('rail: pendentifs en mouvement puis amortis (balancement)', JSON.stringify(x1) !== JSON.stringify(x2), JSON.stringify(x1) + ' → ' + JSON.stringify(x2));
-      ok('rail: ≥3 colliers', (await pg.evaluate(() => document.querySelector('[data-bg-rail]').BGRail.items.length)) >= 3);
-      /* clavier + panneau */
-      await pg.focus('[data-bg-rail]'); await pg.keyboard.press('ArrowRight'); await pg.waitForTimeout(900);
-      ok('rail: clavier ouvre le panneau', await pg.isVisible('[data-rail-panel]'), await pg.textContent('[data-p-title]'));
-      await pg.screenshot({ path: 'captures/rail-selected-desktop1440.png' });
-      await pg.click('[data-p-add]'); await pg.waitForSelector('.bg-drawer.is-open');
-      ok('panier: ajout depuis la tringle + tiroir', (await pg.textContent('[data-cart-count]')) === '1');
+      const O = () => pg.evaluate(() => document.querySelector('[data-orbit]').BGOrbit.state);
+      const items = await pg.evaluate(() => document.querySelector('[data-orbit]').BGOrbit.items.map(i => ({ t: i.title, c: i.tone[0] })));
+      ok('orbite: ≥3 colliers réels', items.length >= 3, items.map(i => i.t).join(' | '));
+      const s0 = await O(), box = await pg.locator('[data-orbit-stage]').boundingBox();
+      await pg.mouse.move(box.x + box.width * .62, box.y + box.height * .45); await pg.mouse.down();
+      for (let i = 1; i <= 12; i++) await pg.mouse.move(box.x + box.width * .62 - i * 30, box.y + box.height * .45 + i, { steps: 1 });
+      const mid = await O(); await pg.screenshot({ path: 'captures/orbit-drag-desktop1440.png' });
+      ok('orbite: le glissé fait tourner la galerie', Math.abs(mid.pos - s0.pos) > .3, `pos ${s0.pos.toFixed(2)}→${mid.pos.toFixed(2)}`);
+      await pg.mouse.up(); await pg.waitForTimeout(1400);
+      const s1 = await O();
+      ok('orbite: inertie maîtrisée, arrêt sur une sélection lisible', s1.pos === s1.target && Number.isInteger(s1.target) && s1.sel !== s0.sel, `sel ${s0.sel}→${s1.sel}`);
+      ok('orbite: le glissé ne déclenche pas de clic (reste en galerie)', s1.phase === 'gallery' && (await pg.evaluate(() => scrollY)) === 0);
+      ok('orbite: nom affiché = pièce sélectionnée', (await pg.textContent('[data-orbit-label] .bg-orbit__name')) === items[s1.sel].t, items[s1.sel].t);
+      const hex = h => 'rgb(' + [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16)).join(', ') + ')';
+      await pg.waitForTimeout(1000);
+      ok('orbite: fond propre au collier sélectionné', (await pg.evaluate(() => getComputedStyle(document.querySelector('[data-orbit]')).getPropertyValue('--c1').trim())) === hex(items[s1.sel].c), items[s1.sel].c);
+      await pg.focus('.bg-orbit__item[aria-pressed=true]'); await pg.keyboard.press('ArrowRight'); await pg.waitForTimeout(900);
+      ok('orbite: clavier → pièce suivante', (await O()).sel === (s1.sel + 1) % items.length);
+      await pg.evaluate(() => document.querySelector('[data-orbit]').BGOrbit.go(0)); await pg.waitForTimeout(1200);
+      await pg.click('[data-orbit-enter]'); await pg.waitForTimeout(1800);
+      const s2 = await O();
+      ok('orbite: « Découvrir » isole la même pièce et ouvre le récit', s2.phase === 'product-story' && s2.sel === 0 && (await pg.textContent('[data-orbit-chapter="1"] h2')) === items[0].t, s2.phase + ' p=' + s2.p.toFixed(2));
+      ok('orbite: voisins masqués pendant le récit', (await pg.$$eval('.bg-orbit__item', es => es.filter(e => e.getAttribute('aria-pressed') !== 'true' && getComputedStyle(e).visibility !== 'hidden' && +getComputedStyle(e).opacity > .05).length)) === 0);
+      await pg.screenshot({ path: 'captures/orbit-story-desktop1440.png' });
+      await pg.click('[data-orbit-chapter="1"] [data-o-add]'); await pg.waitForSelector('.bg-drawer.is-open');
+      ok('panier: ajout depuis le récit de la galerie + tiroir', (await pg.textContent('[data-cart-count]')) === '1');
       await pg.screenshot({ path: 'captures/cart-desktop1440.png' });
       await pg.click('[data-q][data-d="1"]'); await pg.waitForTimeout(100);
       ok('panier: quantité +1', (await pg.textContent('.bg-qty output')) === '2');
@@ -60,9 +63,15 @@ const results = []; const ok = (n, c, d = '') => { results.push([c, n, d]); cons
   }
   /* mobile : drag tactile sans bloquer le scroll vertical */
   { const ctx = await block(await browser.newContext({ viewport: { width: 390, height: 844 }, hasTouch: true, isMobile: true })); const pg = await ctx.newPage();
-    await pg.goto(base + 'index.html'); await pg.evaluate(() => sessionStorage.setItem('bg_intro', '1')); await pg.waitForTimeout(500);
-    const ta = await pg.evaluate(() => getComputedStyle(document.querySelector('.bg-rail canvas')).touchAction);
+    await pg.goto(base + 'index.html'); await pg.evaluate(() => sessionStorage.setItem('bg_intro', '1')); await pg.reload(); await pg.waitForTimeout(800);
+    const ta = await pg.evaluate(() => getComputedStyle(document.querySelector('[data-orbit-stage]')).touchAction);
     ok('mobile: touch-action pan-y (scroll vertical conservé)', ta === 'pan-y', ta);
+    const cdp = await ctx.newCDPSession(pg); const sel0 = await pg.evaluate(() => document.querySelector('[data-orbit]').BGOrbit.state.sel);
+    await cdp.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [{ x: 300, y: 360 }] });
+    for (let i = 1; i <= 10; i++) await cdp.send('Input.dispatchTouchEvent', { type: 'touchMove', touchPoints: [{ x: 300 - 18 * i, y: 362 }] });
+    await cdp.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] }); await pg.waitForTimeout(1200);
+    const st = await pg.evaluate(() => document.querySelector('[data-orbit]').BGOrbit.state);
+    ok('mobile: swipe tactile change de collier', st.sel !== sel0 && st.pos === st.target, `sel ${sel0}→${st.sel}`);
     await pg.screenshot({ path: 'captures/home-mobile-top.png' }); await ctx.close(); }
   /* produit + variantes */
   { const ctx = await block(await browser.newContext({ viewport: { width: 1280, height: 800 } })); const pg = await ctx.newPage(); const errs = []; pg.on('pageerror', e => errs.push(e.message));
@@ -88,18 +97,16 @@ const results = []; const ok = (n, c, d = '') => { results.push([c, n, d]); cons
   { const ctx = await block(await browser.newContext({ viewport: { width: 1280, height: 800 }, reducedMotion: 'reduce' })); const pg = await ctx.newPage(); const errs = []; pg.on('pageerror', e => errs.push(e.message));
     await pg.goto(base + 'index.html'); await pg.waitForTimeout(600);
     ok('reduced-motion: intro absente', (await pg.locator('[data-intro]').count()) === 0);
-    const a = await pg.evaluate(() => document.querySelector('[data-bg-rail]').BGRail.chains().map(c => c.p[c.hi].y.toFixed(2)).join());
-    await pg.waitForTimeout(700);
-    const b = await pg.evaluate(() => document.querySelector('[data-bg-rail]').BGRail.chains().map(c => c.p[c.hi].y.toFixed(2)).join());
-    ok('reduced-motion: tringle statique (aucune boucle)', a === b);
-    await pg.click('[data-bg-rail] canvas', { position: { x: 640, y: 300 } }).catch(() => { });
+    const st = await pg.evaluate(() => ({ s: document.querySelector('[data-orbit]').classList.contains('is-static'), h: document.querySelector('[data-orbit]').offsetHeight, ch: getComputedStyle(document.querySelector('[data-orbit-chapter="1"]')).visibility }));
+    ok('reduced-motion: galerie stable, récit lisible sans défilement imposé', st.s && st.h < 3 * 800 && st.ch === 'visible', JSON.stringify(st));
+    await pg.click('[data-orbit-next]'); await pg.waitForTimeout(300);
+    ok('reduced-motion: changement de collier possible', (await pg.evaluate(() => document.querySelector('[data-orbit]').BGOrbit.state.sel)) === 1);
     await pg.screenshot({ path: 'captures/home-reduced-motion.png' });
     ok('reduced-motion: aucune erreur', errs.length === 0, errs.join('|')); await ctx.close(); }
-  /* fallback sans canvas 2D */
+  /* fallback : liste de liens et cartes accessibles sans dépendre de l'animation */
   { const ctx = await block(await browser.newContext({ viewport: { width: 1280, height: 800 } })); const pg = await ctx.newPage();
-    await pg.addInitScript(() => { HTMLCanvasElement.prototype.getContext = () => null; });
     await pg.goto(base + 'index.html'); await pg.waitForTimeout(500);
-    ok('fallback sans canvas: cartes produit accessibles + pas de crash', (await pg.locator('#best .bg-card').count()) >= 3 && (await pg.locator('.bg-rail.is-fallback').count()) === 1);
+    ok('fallback: liens des colliers + cartes produit dans le DOM', (await pg.locator('#orbit-list a').count()) >= 3 && (await pg.locator('#best .bg-card').count()) >= 3 && (await pg.locator('.bg-faq details').count()) >= 3);
     await ctx.close(); }
   await browser.close(); srv.close();
   const f = results.filter(r => !r[0]); console.log(`\n${results.length - f.length}/${results.length} tests OK`); process.exit(f.length ? 1 : 0);
