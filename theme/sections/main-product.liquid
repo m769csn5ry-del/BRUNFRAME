@@ -3,15 +3,16 @@
   <div class="bg-pdp">
     <div class="bg-gal">
       <div class="bg-gal__main" data-zoom>
-        {%- if cur.featured_media -%}{{ cur.featured_media | image_url: width: 1400 | image_tag: loading: 'eager', fetchpriority: 'high', data-main-img: '', alt: cur.featured_media.alt | default: product.title, widths: '600,900,1200,1400', sizes: '(min-width: 960px) 55vw, 100vw' }}{%- endif -%}
+        {%- assign main_media = cur.featured_media | default: product.featured_media -%}
+        {%- if main_media -%}{{ main_media | image_url: width: 1400 | image_tag: loading: 'eager', fetchpriority: 'high', data-main-img: '', alt: main_media.alt | default: product.title, widths: '600,900,1200,1400', sizes: '(min-width: 960px) 55vw, 100vw' }}{%- endif -%}
       </div>
-      <div class="bg-gal__thumbs">
+      <div class="bg-gal__thumbs" data-thumbs>
         {%- for m in product.media limit: 8 -%}<button type="button" data-thumb="{{ m | image_url: width: 1400 }}" aria-label="Image {{ forloop.index }}" {% if forloop.first %}aria-current="true"{% endif %}>{{ m | image_url: width: 160 | image_tag: loading: 'lazy', alt: '' }}</button>{%- endfor -%}
       </div>
     </div>
     <div class="bg-pdp__info">
       <p class="bg-kicker">{{ product.type | escape }}</p>
-      <h1 class="bg-display">{{ product.title | escape }}</h1>
+      <h1 class="bg-display" data-v-title>{{ product.title | escape }}</h1>
       <p class="bg-price"><span data-v-price>{{ cur.price | money }}</span> <s data-v-compare hidden></s></p>
       {% form 'product', product, data-add-form: '', data-title: product.title %}
         <input type="hidden" name="id" value="{{ cur.id }}">

@@ -9,6 +9,7 @@
     </nav>
     <div class="bg-tools">
       <a class="bg-icon-btn" href="{{ routes.search_url }}" aria-label="{{ 'general.search' | t }}"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 5 5"/></svg></a>
+      <button class="bg-icon-btn" type="button" data-theme-toggle aria-pressed="false" aria-label="Changer de thème"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg></button>
       <a class="bg-icon-btn" href="{{ routes.cart_url }}" data-cart-open aria-label="{{ 'general.cart' | t }}"><svg viewBox="0 0 24 24"><path d="M5 8h14l-1 12H6zM9 8V6a3 3 0 0 1 6 0v2"/></svg><span class="bg-badge" data-cart-count{% if cart.item_count == 0 %} hidden{% endif %}>{{ cart.item_count }}</span></a>
       <button class="bg-icon-btn bg-menu-btn" data-menu-toggle aria-expanded="false" aria-label="{{ 'general.menu' | t }}"><svg viewBox="0 0 24 24"><path d="M4 8h16M4 16h16"/></svg></button>
     </div>

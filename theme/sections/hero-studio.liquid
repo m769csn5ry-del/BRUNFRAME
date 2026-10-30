@@ -1,0 +1,90 @@
+{%- comment -%} Studio d'accueil (bg-studio.js / bg-studio.css) : galerie circulaire au-dessus d'un relief minéral noir.
+  Chaque bloc = un collier réel. Prix, disponibilité, coloris et URL sont lus dans Shopify.
+  Les cinq pièces livrées avec le thème ont une silhouette 3D tirée de leur détourage (assets n3d-*) ; les autres s'affichent en photo détourée à plat. {%- endcomment -%}
+{{ 'bg-studio.css' | asset_url | stylesheet_tag }}
+{%- liquid
+  assign first_cut = ''
+  for block in section.blocks
+    assign p = block.settings.product
+    if p != blank and first_cut == ''
+      if block.settings.cutout != blank
+        assign first_cut = block.settings.cutout | image_url: width: 900
+      else
+        assign cut_name = 'cut-' | append: p.handle | append: '.webp'
+        assign first_cut = cut_name | asset_url
+      endif
+    endif
+  endfor
+-%}
+<section id="galerie" class="bg-studio" aria-roledescription="carrousel" aria-label="{{ section.settings.label | escape }}">
+  <script type="application/json" data-studio-items>[
+    {%- assign sep = false -%}
+    {%- for block in section.blocks -%}
+      {%- assign p = block.settings.product -%}
+      {%- if p != blank -%}
+        {%- liquid
+          assign v = p.selected_or_first_available_variant
+          if block.settings.cutout != blank
+            assign cut_url = block.settings.cutout | image_url: width: 900
+          else
+            assign cut_name = 'cut-' | append: p.handle | append: '.webp'
+            assign cut_url = cut_name | asset_url
+          endif
+          assign opt = ''
+          unless p.has_only_default_variant
+            assign opt = v.title
+          endunless
+        -%}
+        {%- if sep -%},{%- endif -%}{%- assign sep = true -%}
+        { "handle": {{ p.handle | json }}, "title": {{ p.title | json }}, "option": {{ opt | json }}, "priceLabel": {{ v.price | money | json }},
+          "available": {{ v.available | json }}, "url": {{ p.url | json }}, "cutout": {{ cut_url | json }}, "fy": {{ block.settings.fy | divided_by: 100.0 | json }} }
+      {%- endif -%}
+    {%- endfor -%}
+  ]</script>
+  <div class="bg-studio__pin">
+    {%- if first_cut != '' -%}<img class="bg-studio__poster" data-studio-poster src="{{ first_cut }}" alt="" width="360" height="1000" fetchpriority="high">{%- endif -%}
+    <div class="bg-studio__stage" data-studio tabindex="0" role="group" aria-label="Glissez ou utilisez les flèches gauche et droite pour parcourir les colliers"><canvas data-studio-canvas aria-hidden="true"></canvas></div>
+    <div class="bg-studio__intro"><p class="bg-kicker">{{ section.settings.kicker | escape }}</p><h1>{{ section.settings.title | escape | newline_to_br }}</h1>{%- if section.settings.text != blank -%}<p>{{ section.settings.text | escape }}</p>{%- endif -%}</div>
+    <div class="bg-studio__hud">
+      <button type="button" data-s-prev aria-label="Collier précédent">‹</button>
+      <div class="bg-studio__meta"><strong data-s-name></strong><span><span data-s-opt></span> <span data-s-price></span></span></div>
+      <button type="button" data-s-next aria-label="Collier suivant">›</button>
+      <a class="bg-btn bg-btn--sm" data-s-link href="{{ routes.collections_url }}">Voir cette pièce</a>
+      <div class="bg-studio__dots">
+        {%- for block in section.blocks -%}{%- if block.settings.product != blank -%}<button type="button" data-s-dot aria-label="{{ block.settings.product.title | escape }}"></button>{%- endif -%}{%- endfor -%}
+      </div>
+    </div>
+    <p class="bg-studio__hint" aria-hidden="true">Glissez · défilez pour le détail</p>
+    <p class="bg-sr" aria-live="polite" data-studio-live></p>
+  </div>
+  <ul class="bg-sr">
+    {%- for block in section.blocks -%}{%- assign p = block.settings.product -%}{%- if p != blank -%}<li><a href="{{ p.url }}">{{ p.title | escape }} — {{ p.price | money }}</a></li>{%- endif -%}{%- endfor -%}
+  </ul>
+</section>
+<script type="importmap">{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js", "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/" } }</script>
+<script type="module">
+  import { initStudio } from {{ 'bg-studio.js' | asset_url | json }};
+  const root = document.getElementById('galerie');
+  window.BG_STUDIO = JSON.parse(root.querySelector('[data-studio-items]').textContent);
+  initStudio(root);
+</script>
+{% schema %}
+{
+  "name": "Studio d'accueil",
+  "max_blocks": 9,
+  "settings": [
+    { "type": "text", "id": "label", "label": "Nom accessible de la galerie", "default": "Les colliers Breslev Gang" },
+    { "type": "text", "id": "kicker", "label": "Sur-titre", "default": "Colliers & Peteks" },
+    { "type": "textarea", "id": "title", "label": "Titre", "default": "Des pendentifs\nqui se remarquent." },
+    { "type": "text", "id": "text", "label": "Texte court", "default": "Photos officielles des pièces de la boutique." }
+  ],
+  "blocks": [
+    { "type": "necklace", "name": "Collier", "settings": [
+      { "type": "product", "id": "product", "label": "Produit" },
+      { "type": "image_picker", "id": "cutout", "label": "Détourage PNG transparent (optionnel, prioritaire sur cut-<handle>.webp)" },
+      { "type": "range", "id": "fy", "label": "Hauteur du pendentif dans le détourage", "min": 50, "max": 98, "step": 1, "unit": "%", "default": 90 }
+    ] }
+  ],
+  "presets": [ { "name": "Studio d'accueil" } ]
+}
+{% endschema %}
