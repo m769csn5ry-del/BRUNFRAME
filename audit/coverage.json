@@ -1,0 +1,19 @@
+{
+ "date_releve": "2026-10-29",
+ "produits_source": 586,
+ "produits_mappes": 586,
+ "produits_doubles": 0,
+ "variantes_source": 929,
+ "variantes_mappees": 929,
+ "variantes_manquantes": [],
+ "variantes_en_double": [],
+ "variantes_inventees": [],
+ "modeles": 506,
+ "par_statut": {
+  "PROBABLE": 21,
+  "INDIVIDUEL": 433,
+  "À NE PAS FUSIONNER": 35,
+  "CONFIRMÉ": 17
+ },
+ "modelIds_uniques": true
+}
