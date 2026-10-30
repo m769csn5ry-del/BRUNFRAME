@@ -2,17 +2,22 @@
 import json, re, csv
 from collections import defaultdict
 P = {p['handle']: p for p in json.load(open('docs/research/catalog-public-snapshot.json'))}
-groups = defaultdict(list)
-for r in csv.DictReader(open('docs/catalog-mapping-proposal.csv')):
-    if r['statut'] == 'candidat': groups[r['master_model_key']].append(r['source_handle'])
-member = {h: k for k, hs in groups.items() for h in hs}
+# Regroupements = couche de présentation issue de content/models.json (tools/build_catalog_models.py), réversible.
+MODELS = json.load(open('content/models.json', encoding='utf-8'))
+member, GL, MODEL_OF = {}, {}, {}
+for m in MODELS:
+    for l in m['lines']: MODEL_OF[l['handle']] = m['modelId']
+    if len(m['sourceProductIds']) > 1:
+        for l in m['lines']: member[l['handle']] = m['modelId']; GL[l['handle']] = l['options'][0] if l['options'] else ''
 TAX = json.load(open('docs/research/taxonomy.json', encoding='utf-8'))
 SEG = {'Colliers': 'Collier', 'Peteks': 'Petek', 'Vêtements': 'Vetement'}
 def kind(p):
     t = TAX[str(p['id'])]
     if t['segment'] in SEG: return SEG[t['segment']]
     return 'Bijou' if t['famille'] == 'BIJOUX & ACCESSOIRES' else 'Autre'
-def fam(p): return TAX[str(p['id'])]['sous_famille']
+def fam(p):
+    t = TAX[str(p['id'])]   # libellé interne « à préciser » : jamais affiché au client, on retombe sur le segment
+    return t['segment'] if 'préciser' in t['sous_famille'] else t['sous_famille']
 def label(p, key):
     """Libellé de variante = mots du titre absents de la clé du modèle (souvent la couleur)."""
     words = [w for w in re.split(r'[\s’\']+', p['title']) if w and w.lower() not in key.split()]
@@ -20,14 +25,14 @@ def label(p, key):
 def out(p):
     v = p['variants'][0]; k = member.get(p['handle']); t = TAX[str(p['id'])]
     prices = [round(float(x['price']) * 100) for x in p['variants']]
-    o = {'h': p['handle'], 't': p['title'], 'k': kind(p), 's': t['segment'], 'f': fam(p), 'p': min(prices), 'c': round(float(v['compare']) * 100) if v.get('compare') else 0,
+    o = {'id': p['id'], 'h': p['handle'], 't': p['title'], 'k': kind(p), 's': t['segment'], 'f': fam(p), 'p': min(prices), 'c': round(float(v['compare']) * 100) if v.get('compare') else 0,
          'a': any(x['available'] for x in p['variants']), 'vid': v['id'], 'sku': v['sku'] or '',
          'img': [i.split('?')[0] + '?v=' + i.split('v=')[-1] if 'v=' in i else i for i in p['images'][:3]],
-         'g': k, 'gl': label(p, k) if k else ''}
+         'g': k, 'gl': GL.get(p['handle'], '') if k else '', 'm': MODEL_OF[p['handle']]}
     if max(prices) != min(prices): o['pmax'] = max(prices)
     if len(p['variants']) > 1:  # structures de variantes existantes (vêtements, carte cadeau) : options natives, jamais de produit cartésien
         o['on'] = p['options']
-        o['v'] = [{'id': x['id'], 'o': [s.strip() for s in x['title'].split(' / ')], 'p': round(float(x['price']) * 100), 'a': x['available']} for x in p['variants']]
+        o['v'] = [{'id': x['id'], 'o': [s.strip() for s in x['title'].split(' / ')], 'p': round(float(x['price']) * 100), 'a': x['available'], 'sku': x.get('sku', '')} for x in p['variants']]
     return o
 keep = list(P.values())
 BEST = ['petek-grey-x-aech-cheli-new-season-25', 'petek-pink-python-x-aech-cheli-new-season-26', 'petek-blue-croco-x-aech-cheli-new-season-26',
@@ -43,7 +48,14 @@ ORBIT = [('necklace-maguen-chrome', ['#c9d3dc', '#5f6c78', '#0d1114']), ('neckla
 CUT = json.load(open('tools/cutouts.json'))
 data = {'source': 'breslevgang.com — products.json public, relevé du 29/10/2026 (prix en devise de base, à confirmer)',
         'products': [out(p) for p in keep], 'best': [h for h in BEST if h in P], 'rail': [h for h in RAIL if h in P],
+        'models': {m['modelId']: {'n': m['name'], 's': m['status'], 'on': m['optionNames']} for m in MODELS},
         'orbit': [dict({'h': h, 'tone': t}, **({'cut': CUT[h]['file'], 'fy': CUT[h]['fy']} if h in CUT else {})) for h, t in ORBIT if h in P], 'spotlight': 'necklace-maguen-deluxe', 'logo': 'https://breslevgang.com/cdn/shop/files/WhatsApp_July_24_copie.png?v=1698640604'}
 open('preview/data.js', 'w').write('/* GÉNÉRÉ par tools/build_demo_data.py — ne pas éditer. */\nwindow.BG_DATA=' + json.dumps(data, ensure_ascii=False, separators=(',', ':')) + ';\n')
+# Descriptions originales de la boutique (texte de la maison, jamais réécrit) : fichier séparé, chargé par la fiche seulement.
+DESC = {}
+for c in json.load(open('content/products.json', encoding='utf-8')):
+    DESC.update(c['descriptions_originales'])
+open('preview/descriptions.js', 'w').write('/* GÉNÉRÉ par tools/build_demo_data.py — descriptions originales publiées sur breslevgang.com (relevé du 29/10/2026), non réécrites. */\nwindow.BG_DESC=' + json.dumps(DESC, ensure_ascii=False, separators=(',', ':')) + ';\n')
 from collections import Counter
+print(len(DESC), 'descriptions')
 print(len(data['products']), Counter(x['k'] for x in data['products']), Counter(x['f'] for x in data['products'] if x['k'] == 'Collier'))
