@@ -1,10 +1,10 @@
-<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#111315"><meta name="robots" content="noindex,nofollow"><title>Collection — Breslev Gang · Prévisualisation</title><meta name="description" content="Colliers et Peteks Breslev Gang : filtres par famille, prix et disponibilité. Prévisualisation BRUNFRAME."><script>document.documentElement.classList.add("js")</script><script src="../theme/assets/bg-theme.js"></script><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Manrope:wght@400;500;600&display=swap" media="print" onload="this.media='all'"><link rel="preconnect" href="https://cdn.shopify.com"><link rel="stylesheet" href="../theme/assets/bg-tokens.css"><link rel="stylesheet" href="../theme/assets/bg-base.css"><link rel="icon" href="https://breslevgang.com/cdn/shop/files/2.jpg?crop=center&height=32&v=1691346121&width=32"></head><body><script src="data.js"></script><script src="../theme/assets/bg-cart.js"></script><script src="bg-preview.js"></script><script>BG.preview.header({ Collier: 'Colliers', Petek: 'Peteks', Bijou: 'Bijoux', Vetement: 'Vêtements', Autre: 'Plus', Tout: 'Collections' }[new URLSearchParams(location.search).get('k')] || 'Colliers');</script>
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#111315"><meta name="robots" content="noindex,nofollow"><title>Collection — Breslev Gang · Prévisualisation</title><meta name="description" content="Colliers et Peteks Breslev Gang : filtres par famille, prix et disponibilité. Prévisualisation BRUNFRAME."><script>document.documentElement.classList.add("js")</script><script src="../theme/assets/bg-theme.js"></script><link rel="preconnect" href="https://cdn.shopify.com"><link rel="stylesheet" href="../theme/assets/bg-tokens.css"><link rel="stylesheet" href="../theme/assets/bg-base.css"><link rel="icon" href="https://breslevgang.com/cdn/shop/files/2.jpg?crop=center&height=32&v=1691346121&width=32"></head><body><script src="data.js"></script><script src="media-map.js"></script><script src="../theme/assets/bg-cart.js"></script><script src="bg-preview.js"></script><script>BG.preview.header({ Collier: 'Colliers', Petek: 'Peteks', Bijou: 'Bijoux', Vetement: 'Vêtements', Autre: 'Plus', Tout: 'Collections' }[new URLSearchParams(location.search).get('k')] || 'Colliers');</script>
 <main>
   <div class="bg-wrap bg-coll-head"><p class="bg-kicker" id="ckick">Collection</p><h1 class="bg-display" id="ctitle">Colliers</h1><p class="bg-dim" id="cintro" style="margin-top:18px;max-width:52ch"></p></div>
   <div class="bg-wrap">
     <div class="bg-bar"><div class="bg-filters" id="filters" role="group" aria-label="Filtres"></div>
       <div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap">
-        <label class="bg-toggle"><input type="checkbox" id="grp"> 1 modèle = 1 fiche <span class="bg-demo-tag">proposition</span></label>
+        <label class="bg-toggle"><input type="checkbox" id="grp" checked> 1 modèle = 1 fiche <span class="bg-demo-tag">proposition</span></label>
         <label class="bg-sr" for="sort">Trier</label>
         <select class="bg-select" id="sort"><option value="">Nouveautés</option><option value="pa">Prix croissant</option><option value="pd">Prix décroissant</option><option value="az">A → Z</option></select></div></div>
     <p class="bg-dim" id="count" aria-live="polite" style="margin-bottom:18px"></p>
@@ -17,7 +17,7 @@
 <script>
 (function () {
   var D = window.BG_DATA, P = BG.preview, U = new URLSearchParams(location.search);
-  var st = { k: U.get('k') || 'Collier', f: U.get('f') || '', q: U.get('q') || '', price: '', avail: false, sort: '', grp: false, n: 24 };
+  var st = { k: U.get('k') || 'Collier', f: U.get('f') || '', q: U.get('q') || '', price: '', avail: false, sort: '', grp: true, n: 24 };
   P.footer();
   var INTRO = { Collier: 'Flamme, Maguen David, Hay, Mezouza, Israël, Tsadikim : tous les symboles publiés sur la boutique, par thème dominant.',
     Petek: 'À perles, à chaîne, cordon, Kids : tous les montages publiés. Couleurs et textures se retrouvent dans la recherche.',
@@ -47,7 +47,7 @@
     if (st.sort === 'pd') l.sort(function (a, b) { return b.p - a.p; });
     if (st.sort === 'az') l.sort(function (a, b) { return a.t.localeCompare(b.t); });
     document.getElementById('grid').innerHTML = l.slice(0, st.n).map(function (p, i) { return P.card(p, { grouped: st.grp, eager: i < 4 }); }).join('');
-    document.getElementById('count').textContent = l.length + (st.grp ? ' modèles' : ' pièces') + (st.grp ? ' (regroupement proposé, non appliqué à la boutique)' : '');
+    document.getElementById('count').textContent = l.length + (st.grp ? ' modèles' : ' pièces');
     document.getElementById('empty').hidden = l.length > 0;
     document.getElementById('more').hidden = l.length <= st.n;
   }

@@ -1,105 +1,61 @@
-<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#111315"><meta name="robots" content="noindex,nofollow"><title>Breslev Gang — Colliers et Peteks · Prévisualisation BRUNFRAME</title><meta name="description" content="Concept de refonte Breslev Gang : tringle de colliers interactive, best-sellers et pièces de la maison. Prévisualisation, panier fictif."><script>document.documentElement.classList.add("js")</script><script src="../theme/assets/bg-theme.js"></script><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Manrope:wght@400;500;600&display=swap" media="print" onload="this.media='all'"><link rel="preconnect" href="https://cdn.shopify.com"><link rel="stylesheet" href="../theme/assets/bg-tokens.css"><link rel="stylesheet" href="../theme/assets/bg-base.css"><link rel="stylesheet" href="../theme/assets/bg-orbit.css"><link rel="icon" href="https://breslevgang.com/cdn/shop/files/2.jpg?crop=center&height=32&v=1691346121&width=32"></head><body><script src="data.js"></script><script src="../theme/assets/bg-cart.js"></script><script src="bg-preview.js"></script><script>BG.preview.header('', { intro: true });</script>
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#111315"><meta name="robots" content="noindex,nofollow"><title>Breslev Gang — Colliers et Peteks · Prévisualisation BRUNFRAME</title><meta name="description" content="Concept de refonte Breslev Gang : tringle de colliers interactive, best-sellers et pièces de la maison. Prévisualisation, panier fictif."><script>document.documentElement.classList.add("js")</script><script src="../theme/assets/bg-theme.js"></script><link rel="preconnect" href="https://cdn.shopify.com"><link rel="stylesheet" href="../theme/assets/bg-tokens.css"><link rel="stylesheet" href="../theme/assets/bg-base.css"><link rel="stylesheet" href="../theme/assets/bg-studio.css"><link rel="icon" href="https://breslevgang.com/cdn/shop/files/2.jpg?crop=center&height=32&v=1691346121&width=32"></head><body><script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script><script src="data.js"></script><script src="media-map.js"></script><script src="../theme/assets/bg-cart.js"></script><script src="bg-preview.js"></script><script>BG.preview.header('', { intro: false });</script>
 <main>
-<section class="bg-orbit" data-orbit aria-roledescription="carrousel" aria-label="Les colliers Breslev Gang" tabindex="-1">
-  <script type="application/json" data-orbit-items id="orbit-data">[]</script>
-  <div class="bg-orbit__pin" data-orbit-pin>
-    <div class="bg-orbit__bg bg-orbit__studio" aria-hidden="true"></div><div class="bg-orbit__bg bg-orbit__color" aria-hidden="true"></div><div class="bg-orbit__bg bg-orbit__beam" aria-hidden="true"></div>
-    <div class="bg-orbit__lamp" aria-hidden="true"></div>
-    <div class="bg-orbit__top" data-orbit-gallery><p class="bg-kicker">Maison parisienne · Colliers &amp; Peteks</p><h1 class="bg-display">Plus qu’un collier. <em class="bg-chrome-text">Une protection.</em></h1></div>
-    <p class="bg-orbit__word" data-orbit-word aria-hidden="true">It’s a protection</p>
-    <div class="bg-orbit__stage" data-orbit-stage role="group" aria-label="Glissez pour parcourir les colliers ; flèches gauche et droite au clavier"></div>
-    <div class="bg-orbit__label" data-orbit-gallery data-orbit-label aria-hidden="true"></div>
-    <button class="bg-btn bg-btn--ghost bg-btn--sm bg-orbit__enter" type="button" data-orbit-gallery data-orbit-enter>Découvrir la pièce</button>
-    <div class="bg-orbit__ctrl" data-orbit-gallery><button type="button" data-orbit-prev aria-label="Collier précédent">‹</button><div class="bg-orbit__bar" data-orbit-bar aria-hidden="true"></div><button type="button" data-orbit-next aria-label="Collier suivant">›</button></div>
-    <div class="bg-orbit__chapter" data-orbit-chapter="1"><p class="bg-kicker" data-o-kicker></p><h2 data-o-title></h2><p data-o-fact></p>
-      <div class="bg-stage__cta"><button class="bg-btn" type="button" data-o-add>Ajouter au panier</button><a class="bg-btn bg-btn--ghost" data-o-link href="#">Voir la pièce</a></div></div>
-    <div class="bg-orbit__chapter" data-orbit-chapter="2"><p class="bg-kicker">Famille</p><h3 data-o-head></h3><p data-o-fact></p></div>
-    <div class="bg-orbit__chapter" data-orbit-chapter="3"><p class="bg-kicker" data-o-price></p><h3 data-o-head></h3><p data-o-fact></p><a class="bg-arrow" data-o-link href="#">Fiche produit</a></div>
-    <div class="bg-orbit__aside" data-orbit-aside><button type="button" data-orbit-prev aria-label="Collier précédent">↑</button><span aria-hidden="true">Changer</span><button type="button" data-orbit-next aria-label="Collier suivant">↓</button></div>
-    <p class="bg-orbit__faqt" data-orbit-faq aria-hidden="true">Foire aux<br>questions</p>
-    <p class="bg-sr" aria-live="polite" data-orbit-live></p>
+<section id="galerie" class="bg-studio" aria-roledescription="carrousel" aria-label="Les colliers Breslev Gang">
+  <div class="bg-studio__pin">
+    <img class="bg-studio__poster" data-studio-poster src="../theme/assets/cut-necklace-maguen-chrome.webp" alt="" width="360" height="1000" fetchpriority="high">
+    <div class="bg-studio__stage" data-studio tabindex="0" role="group" aria-label="Glissez ou utilisez les flèches gauche et droite pour parcourir les colliers"><canvas data-studio-canvas aria-hidden="true"></canvas></div>
+    <div class="bg-studio__intro"><p class="bg-kicker">Colliers &amp; Peteks</p><h1>Des pendentifs<br>qui se remarquent.</h1><p>Photos officielles des pièces de la boutique.</p></div>
+    <div class="bg-studio__hud">
+      <button type="button" data-s-prev aria-label="Collier précédent">‹</button>
+      <div class="bg-studio__meta"><strong data-s-name></strong><span><span data-s-opt></span> <span data-s-price></span></span></div>
+      <button type="button" data-s-next aria-label="Collier suivant">›</button>
+      <a class="bg-btn bg-btn--sm" data-s-link href="#">Voir cette pièce</a>
+      <div class="bg-studio__dots" data-s-dots></div>
+    </div>
+    <p class="bg-studio__hint" aria-hidden="true">Glissez · défilez pour le détail</p>
+    <p class="bg-sr" aria-live="polite" data-studio-live></p>
   </div>
   <ul class="bg-sr" id="orbit-list"></ul>
 </section>
-<section class="bg-orbit-after" aria-labelledby="faq-title"><div class="bg-wrap">
-  <h2 class="bg-sr" id="faq-title">Foire aux questions</h2>
-  <div class="bg-faq">
-    <details><summary>La livraison est-elle offerte ?</summary><p>Oui, dès 120 € d’achats en France (bandeau officiel de la boutique). Pour les autres pays, les conditions sont celles affichées par Shopify au paiement.</p></details>
-    <details><summary>Puis-je payer en plusieurs fois ?</summary><p>Le paiement en plusieurs fois avec Klarna est proposé dès 120 € (mention officielle des fiches). Les moyens de paiement sont gérés par le checkout Shopify.</p></details>
-    <details><summary>Puis-je échanger une pièce ?</summary><p>La politique publiée indique des échanges sous 14 jours pour les colliers. Les conditions exactes par famille sont à lire dans la politique officielle de la boutique.</p></details>
-    <details><summary>En quelle matière sont les colliers ?</summary><p>La matière et les dimensions sont précisées sur chaque fiche officielle. Cette prévisualisation ne les affiche pas tant qu’elles ne sont pas confirmées.</p></details>
-    <details><summary>Le panier de cette page est-il réel ?</summary><p>Non. C’est une prévisualisation BRUNFRAME : le panier est simulé et aucun paiement n’est possible. Les prix et photos sont ceux relevés sur la boutique le 29/10/2026.</p></details>
-  </div>
-  <div class="bg-lineup" data-orbit-lineup><p class="bg-kicker">La ligne complète</p><h2>Choisissez la vôtre</h2><div class="bg-lineup__row" id="lineup"></div>
-    <a class="bg-btn" href="collection.html?k=Collier">Tous les colliers</a> <a class="bg-btn bg-btn--ghost" href="collection.html?k=Petek">Tous les Peteks</a></div>
-</div></section>
-
-<section class="bg-section" id="best-sellers"><div class="bg-wrap">
-  <div class="bg-section__head"><div><p class="bg-kicker">Best-sellers</p><h2 class="bg-display"><span class="bg-l"><span>Les pièces</span></span><span class="bg-l" style="--i:1"><span><em>de la maison</em></span></span></h2></div>
-    <div style="display:grid;gap:14px;justify-items:end"><div class="bg-track-nav" data-track-nav="best"><button type="button" data-dir="-1" aria-label="Précédent">←</button><button type="button" data-dir="1" aria-label="Suivant">→</button></div><p class="bg-note">Ordre de la collection publique « Best Sellers » — pas un classement des ventes.</p></div></div>
-  <div class="bg-track" id="best" data-reveal></div>
-</div></section>
-
 <section class="bg-section bg-section--tight"><div class="bg-wrap">
-  <div class="bg-section__head"><div><p class="bg-kicker">Collections</p><h2 class="bg-display"><span class="bg-l"><span>Trois signatures</span></span></h2></div><a class="bg-arrow" href="collection.html?k=Collier">Tous les colliers</a></div>
+  <div class="bg-section__head"><div><p class="bg-kicker">Collections</p><h2 class="bg-display"><span class="bg-l"><span>À chaque pièce,<br><em>son univers.</em></span></span></h2></div><a class="bg-arrow" href="collections.html">Toutes les collections</a></div>
   <div class="bg-tiles" id="tiles" data-reveal></div>
 </div></section>
 
-<section class="bg-section bg-quote" id="maison"><div class="bg-quote__bg" id="quote-bg" data-reveal></div><div class="bg-wrap"><figure style="margin:0">
-  <blockquote class="bg-display"><span class="bg-l"><span>Not just</span></span><span class="bg-l" style="--i:1"><span>a necklace.</span></span><span class="bg-l" style="--i:2"><span><em class="bg-chrome-text">It’s a protection.</em></span></span></blockquote>
-  <figcaption class="bg-note">Signature officielle de Breslev Gang</figcaption></figure></div></section>
-
-<section class="bg-section bg-section--tight"><div class="bg-wrap bg-story">
-  <div data-reveal><p class="bg-kicker">La maison</p>
-    <p class="lead">Peteks, flammes, Maguen David, Hay : des pièces que l’on porte près du cœur.</p>
-    <div class="bg-placeholder">Histoire du fondateur, sens de chaque symbole et références spirituelles : à rédiger avec Ysahar. Cette démo n’invente aucune signification.</div>
-    <div class="bg-facts"><div><strong id="n-colliers">—</strong><span>Colliers en ligne</span></div><div><strong id="n-peteks">—</strong><span>Peteks en ligne</span></div><div><strong>17</strong><span>Pays &amp; régions</span></div></div>
-    <p class="bg-note" style="margin-top:14px">Comptages : catalogue public du 29/10/2026.</p></div>
-  <div class="bg-tiles" style="grid-template-rows:none;grid-template-columns:1fr" data-reveal><a class="bg-tile" id="story-tile" href="collection.html?k=Petek" style="min-height:min(110vw,620px)"></a></div>
+<section class="bg-section bg-atelier" id="atelier" data-atelier hidden><div class="bg-wrap bg-atelier__layout">
+ <div class="bg-atelier__head"><p class="bg-kicker">04 / L’atelier</p><h2 class="bg-display">Du geste.<br><em>Au bijou.</em></h2><p class="bg-dim">Fait main en France. Maison installée à Strasbourg. Images filmées à l’atelier, sans retouche.</p><div class="bg-atelier__chapters" data-atelier-chapters role="group" aria-label="Séquences de l’atelier"></div><div class="bg-atelier__progress"><button class="bg-btn bg-btn--ghost bg-btn--sm" type="button" data-atelier-toggle aria-pressed="false">Mettre en pause</button><span data-atelier-caption aria-live="polite"></span></div></div>
+ <div class="bg-atelier__row" data-atelier-row></div>
 </div></section>
 
-<section class="bg-section"><div class="bg-wrap bg-spot" id="spot"></div></section>
-
-<section class="bg-section bg-section--tight"><div class="bg-wrap">
-  <div class="bg-social" data-reveal>
-    <div><p class="bg-kicker">Communauté</p><a class="bg-social__handle bg-chrome-text" href="https://www.instagram.com/breslev_gang/" rel="noopener">@breslev_gang</a>
-      <p class="bg-dim" style="margin-top:18px">Paris · ≈ 11 K abonnés sur Instagram (relevé public). TikTok <a href="https://tiktok.com/@breslevgang" rel="noopener">@breslevgang</a>.</p></div>
-    <div><p class="bg-dim" style="margin-bottom:22px">Les apparitions de personnalités portant les pièces seront présentées ici uniquement avec l’accord écrit des personnes et les droits des images.</p>
-      <a class="bg-btn bg-btn--ghost" href="https://www.instagram.com/breslev_gang/" rel="noopener">Suivre la maison</a></div>
-  </div>
+<section class="bg-section" id="acheter"><div class="bg-wrap">
+  <div class="bg-section__head"><div><p class="bg-kicker">05 / La sélection Breslev Gang</p><h2 class="bg-display"><span class="bg-l"><span>Les pièces</span></span><span class="bg-l" style="--i:1"><span><em>de la maison</em></span></span></h2></div>
+    <div style="display:grid;gap:14px;justify-items:end"><div class="bg-track-nav" data-track-nav="best"><button type="button" data-dir="-1" aria-label="Précédent">←</button><button type="button" data-dir="1" aria-label="Suivant">→</button></div><p class="bg-note">Une sélection de colliers à découvrir.</p></div></div>
+  <div class="bg-track" id="best" data-reveal></div>
+  <div class="bg-assure" data-reveal>
+ <div><strong>Livraison offerte dès 120 €</strong><span class="bg-dim">Selon le bandeau de la boutique. Conditions au paiement.</span></div>
+ <div><strong>Choisir en toute clarté</strong><span class="bg-dim"><a href="retours.html">Consulter les conditions d’échange</a></span></div>
+ <div><strong>Une question sur une pièce ?</strong><span class="bg-dim"><a href="https://breslevgang.com/pages/contact">Contacter Breslev Gang ↗</a></span></div>
+ </div>
 </div></section>
-
-<section class="bg-section bg-section--tight"><div class="bg-wrap"><div class="bg-assure" data-reveal>
-  <div><strong>Livraison offerte</strong><span class="bg-dim">Dès 120 € d’achats en France. Règles par pays lues dans Shopify.</span></div>
-  <div><strong>Paiement en plusieurs fois</strong><span class="bg-dim">Klarna dès 120 €, CB, Apple Pay, PayPal — checkout Shopify officiel.</span></div>
-  <div><strong>Expédition internationale</strong><span class="bg-dim">17 pays et régions, en euros, shekels, dollars, livres ou francs suisses.</span></div>
-  <div><strong>Une question ?</strong><span class="bg-dim"><a href="https://breslevgang.com/pages/contact" rel="noopener">Contactez la maison</a> — réponse par l’équipe Breslev Gang.</span></div>
-</div></div></section>
 </main>
-<script src="../theme/assets/bg-product.js"></script><script src="../theme/assets/bg-orbit.js"></script><script src="../theme/assets/bg-ui.js"></script>
+<script src="../theme/assets/bg-product.js"></script><script src="../theme/assets/bg-ui.js"></script><script src="atelier-data.js"></script><script src="../theme/assets/bg-atelier.js"></script>
 <script>
 (function () {
   var P = BG.preview, D = window.BG_DATA;
   P.footer();
+
   var items = P.orbitItems();
-  document.getElementById('orbit-data').textContent = JSON.stringify(items);
+  window.BG_STUDIO = items.map(function (i) { var p = BG.byHandle(i.handle); return { handle: i.handle, title: i.title, option: (p && p.gl) || '', priceLabel: i.priceLabel, available: i.available, url: i.url, cutout: i.cutout, fy: i.fy }; }).filter(function (i) { return i.cutout; });
+  document.querySelector('[data-s-dots]').innerHTML = window.BG_STUDIO.map(function (i, k) { return '<button type="button" data-s-dot aria-label="' + BG.esc(i.title) + '"></button>'; }).join('');
   document.getElementById('orbit-list').innerHTML = items.map(function (i) { return '<li><a href="' + i.url + '">' + BG.esc(i.title) + ' — ' + i.priceLabel + '</a></li>'; }).join('');
-  document.getElementById('lineup').innerHTML = items.map(function (i, k) { return '<a class="bg-lineup__item' + (i.cutout ? ' is-cut' : '') + '" href="' + i.url + '" style="--k:' + k + ';--c1:' + i.tone[0] + '"><img src="' + (i.cutout || i.photo) + '" alt="" loading="lazy"' + (i.cutout ? '' : ' width="600" height="750"') + '><i></i><span>' + BG.esc(i.title) + '</span></a>'; }).join('');
-  BG.initOrbits();
-  document.getElementById('best').innerHTML = D.best.map(BG.byHandle).filter(Boolean).map(function (p) { return P.card(p); }).join('');
+  import('../theme/assets/bg-studio.js').then(function (m) { m.initStudio(document.getElementById('galerie')); });
+  document.getElementById('best').innerHTML = D.rail.slice(0, 6).map(BG.byHandle).filter(Boolean).map(function (p) { return P.card(p); }).join('');
+  var BRACELET = (D.products.filter(function (p) { return p.k === 'Bijou' && p.img[0] && /bracelet/i.test(p.t) && p.a; })[0] || {}).h;
   var count = function (k, f) { return D.products.filter(function (p) { return p.k === k && (!f || p.f === f); }).length; };
   var tile = function (h, k, f, label, href) { var p = BG.byHandle(h); return '<a class="bg-tile" href="' + href + '"><img src="' + BG.img(p.img[0], 1100) + '" alt="" loading="lazy"><div class="bg-tile__label"><p class="bg-kicker">' + count(k, f) + ' pièces</p><p class="bg-display">' + label + '</p></div></a>'; };
-  document.getElementById('tiles').innerHTML = tile('necklace-chrome-fire-26', 'Collier', 'Flamme', 'Flamme · <em>Aech Cheli</em>', 'collection.html?k=Collier&f=Flamme') +
-    tile('collier-triple-maguen', 'Collier', 'Maguen David', 'Maguen <em>David</em>', 'collection.html?k=Collier&f=Maguen%20David') +
-    tile('petek-croco-black-x-hay-new-season-26', 'Petek', '', 'Peteks <em>cuir exotique</em>', 'collection.html?k=Petek');
-  var q = BG.byHandle('necklace-maguen-chrome'); document.getElementById('quote-bg').style.backgroundImage = 'url(' + BG.img(q.img[1] || q.img[0], 1400) + ')';
-  var st = BG.byHandle('petek-grey-x-aech-cheli-new-season-25');
-  document.getElementById('story-tile').innerHTML = '<img src="' + BG.img(st.img[1] || st.img[0], 1100) + '" alt="' + BG.esc(st.t) + '" loading="lazy"><div class="bg-tile__label"><p class="bg-kicker">Peteks</p><p class="bg-display">Cuir, perles <em>&amp; parchemin</em></p></div>';
-  document.getElementById('n-colliers').textContent = count('Collier'); document.getElementById('n-peteks').textContent = count('Petek');
-  var s = BG.byHandle(D.spotlight);
-  document.getElementById('spot').innerHTML = '<div class="bg-spot__media" data-spot data-reveal><img src="' + BG.img(s.img[0], 1200) + '" alt="' + BG.esc(s.t) + '" loading="lazy"><p class="bg-note">Déplacez la lumière</p></div>' +
-    '<div data-reveal><p class="bg-kicker">Pièce en lumière</p><h2 class="bg-display">' + BG.esc(s.t).replace('Deluxe', '<em>Deluxe</em>') + '</h2><p class="bg-spot__price">' + BG.money(s.p, 'EUR') + '</p>' +
-    '<p class="bg-dim" style="max-width:40ch;margin-bottom:30px">Une pièce de la ligne Maguen David. Matière, dimensions et finition : sur la fiche officielle.</p>' +
-    '<div class="bg-stage__cta"><button class="bg-btn" type="button" data-quick-add="' + s.vid + '" data-title="' + BG.esc(s.t) + '">Ajouter au panier</button><a class="bg-arrow" href="' + BG.url(s) + '">Voir la fiche</a></div></div>';
+  document.getElementById('tiles').innerHTML = tile('necklace-chrome-fire-26', 'Collier', 'Flamme / Aech Cheli', 'Flamme · <em>Aech Cheli</em>', 'collection.html?k=Collier&f=Flamme%20%2F%20Aech%20Cheli') +
+    tile(BRACELET, 'Bijou', '', 'Bracelets <em>&amp; bijoux</em>', 'collection.html?k=Bijou') +
+    tile('petek-croco-black-x-hay-new-season-26', 'Petek', '', 'Peteks <em>à découvrir</em>', 'collection.html?k=Petek');
+  BG.initAtelier && BG.initAtelier();
 })();
 </script></body></html>

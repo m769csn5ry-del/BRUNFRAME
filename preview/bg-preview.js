@@ -7,7 +7,7 @@ window.BG = window.BG || {};
   D.products.forEach(function (p) { byH[p.h] = p; if (p.g) (groups[p.g] = groups[p.g] || []).push(p); });
   BG.byHandle = function (h) { return byH[h]; };
   BG.group = function (p) { return p && p.g && groups[p.g] && groups[p.g].length > 1 ? groups[p.g] : null; };
-  BG.img = function (u, w) { return u ? u + (u.indexOf('?') < 0 ? '?' : '&') + 'width=' + (w || 600) : ''; };
+  BG.img = function (u, w) { var cached = (window.BG_MEDIA || {})[(u || '').split('?')[0]]; return cached || (u ? u + (u.indexOf('?') < 0 ? '?' : '&') + 'width=' + (w || 600) : ''); };
   BG.url = function (p) { return 'product.html?h=' + encodeURIComponent(p.h); };
   BG.official = function (p) { return 'https://breslevgang.com/products/' + encodeURIComponent(p.h); };
   var money = function (c) { return BG.money(c, 'EUR'); };
@@ -37,7 +37,7 @@ window.BG = window.BG || {};
     var o = load(), items = [], total = 0, count = 0;
     Object.keys(o).forEach(function (id) {
       var e = byV[id], q = o[id]; if (!e || !q) return;
-      var p = e.p, pr = e.v ? e.v.p : p.p;
+      q=Math.max(1,Math.min(99,Math.floor(Number(q)||1))); var p = e.p, pr = e.v ? e.v.p : p.p;
       items.push({ key: String(id), id: Number(id), quantity: q, product_title: p.t, title: p.t, variant_title: e.v ? e.v.o.join(' / ') : (p.gl || ''), url: BG.url(p), image: BG.img(p.img[0], 200), final_line_price: pr * q });
       total += pr * q; count += q;
     });
@@ -49,9 +49,9 @@ window.BG = window.BG || {};
       var e = byV[id];
       if (!e) return Promise.reject(new Error('Variante inconnue'));
       if (!(e.v ? e.v.a : e.p.a)) return Promise.reject(new Error('Cette pièce est épuisée.'));
-      var o = load(); o[id] = (o[id] || 0) + qty; save(o); return Promise.resolve(cartJSON());
+      qty=Math.max(1,Math.floor(Number(qty)||1));var o = load(); if(Number(o[id]||0)+qty>99)return Promise.reject(new Error('Quantité maximale de démonstration : 99.')); o[id] = Number(o[id] || 0) + qty; save(o); return Promise.resolve(cartJSON());
     },
-    change: function (key, qty) { var o = load(); if (qty <= 0) delete o[key]; else o[key] = qty; save(o); return Promise.resolve(cartJSON()); }
+    change: function (key, qty) { if(!byV[key]||!Number.isInteger(qty)||qty>99)return Promise.reject(new Error('Quantité invalide.'));var o = load(); if (qty <= 0) delete o[key]; else o[key] = qty; save(o); return Promise.resolve(cartJSON()); }
   };
 
   var LOGO = D.logo ? BG.img(D.logo, 600) : '';
@@ -70,11 +70,11 @@ window.BG = window.BG || {};
     shell: function (active, o) { BG.preview.header(active, o); BG.preview.footer(); },
     header: function (active, o) {
       o = o || {};
-      var nav = [['Colliers', 'collection.html?k=Collier'], ['Peteks', 'collection.html?k=Petek'], ['Bijoux', 'collection.html?k=Bijou'], ['Collections', 'collections.html'], ['Univers', 'index.html#maison'], ['Vêtements', 'collection.html?k=Vetement', 'secondary']];
+      var nav = [['Colliers', 'collection.html?k=Collier'], ['Peteks', 'collection.html?k=Petek'], ['Bijoux', 'collection.html?k=Bijou'], ['Collections', 'collections.html'], ['Atelier', 'atelier.html'], ['Vêtements', 'collection.html?k=Vetement', 'secondary']];
       document.body.insertAdjacentHTML('afterbegin',
         '<a class="bg-skip" href="#main">Aller au contenu</a>' +
-        (o.intro ? '<div class="bg-intro" data-intro hidden><div class="bg-intro__inner"><div class="bg-intro__logo">' + logo() + '</div><div class="bg-intro__line"></div></div><button class="bg-btn bg-btn--ghost bg-btn--sm bg-intro__skip" data-intro-skip type="button">Passer</button></div>' : '') +
-        '<div class="bg-announce"><span>Livraison offerte dès 120 € d’achats · France</span><span>Prévisualisation BRUNFRAME · panier fictif</span></div>' +
+        (false ? '<div class="bg-intro" data-intro hidden><div class="bg-intro__inner"><div class="bg-intro__logo">' + logo() + '</div><div class="bg-intro__line"></div></div><button class="bg-btn bg-btn--ghost bg-btn--sm bg-intro__skip" data-intro-skip type="button">Passer</button></div>' : '') +
+        '<div class="bg-announce"><span>Livraison offerte dès 120 € d’achats</span><span>BRUNFRAME / Démonstration</span></div>' +
         '<header class="bg-header"><div class="bg-wrap bg-header__in">' +
         '<a class="bg-logo" href="index.html" aria-label="Breslev Gang — accueil">' + logo() + '</a>' +
         '<nav class="bg-nav" data-menu aria-label="Principal">' + nav.map(function (n) { return '<a href="' + n[1] + '"' + (n[2] ? ' class="is-secondary"' : '') + (n[0] === active ? ' aria-current="page"' : '') + '>' + n[0] + '</a>'; }).join('') + '<a class="is-secondary" href="collection.html?k=Autre"' + (active === 'Plus' ? ' aria-current="page"' : '') + '>Plus de créations</a>' + '</nav>' +
@@ -86,18 +86,18 @@ window.BG = window.BG || {};
     footer: function () {
       document.body.insertAdjacentHTML('beforeend',
         '<footer class="bg-footer"><div class="bg-wrap">' +
-        '<div class="bg-footer__brand">' + logo() + '<q>Not Just Necklace it’s a Protection</q></div>' +
+        '<div class="bg-footer__brand">' + logo() + '<span class="bg-footer__signature">Colliers. Peteks. Breslev Gang.</span></div>' +
         '<div class="bg-footer__cols">' +
-        '<div><h3>Colliers</h3><ul><li><a href="collection.html?k=Collier&f=Flamme">Flamme · Aech Cheli</a></li><li><a href="collection.html?k=Collier&f=Maguen%20David">Maguen David</a></li><li><a href="collection.html?k=Collier&f=Hay">Hay · חי</a></li><li><a href="collection.html?k=Collier&f=Mezouza">Mezouza</a></li></ul></div>' +
+        '<div><h3>Colliers</h3><ul><li><a href="collection.html?k=Collier&f=Flamme%20%2F%20Aech%20Cheli">Flamme · Aech Cheli</a></li><li><a href="collection.html?k=Collier&f=Maguen%20David">Maguen David</a></li><li><a href="collection.html?k=Collier&f=Hay">Hay · חי</a></li><li><a href="collection.html?k=Collier&f=Mezouza">Mezouza</a></li></ul></div>' +
         '<div><h3>Plus de créations</h3><ul><li><a href="collection.html?k=Bijou">Bijoux &amp; accessoires</a></li><li><a href="collection.html?k=Vetement">Vêtements</a></li><li><a href="collection.html?k=Autre">Maison, kippot, coffrets</a></li><li><a href="collection.html?k=Autre&amp;f=Cartes%20cadeaux">Carte cadeau</a></li><li><a href="search.html">Rechercher</a></li></ul></div>' +
         '<div><h3>Peteks</h3><ul><li><a href="collection.html?k=Petek">Tous les Peteks</a></li><li><a href="collection.html?k=Petek&q=croco">Cuir exotique</a></li><li><a href="collection.html?k=Petek&q=perle">À perles</a></li></ul></div>' +
-        '<div><h3>Maison</h3><ul><li><a href="https://www.instagram.com/breslev_gang/" rel="noopener">Instagram</a></li><li><a href="https://tiktok.com/@breslevgang" rel="noopener">TikTok</a></li><li><a href="https://breslevgang.com/pages/contact" rel="noopener">Contact</a></li></ul></div>' +
-        '<div><h3>Paiement</h3><ul class="bg-pay"><li>CB</li><li>Visa</li><li>Mastercard</li><li>Amex</li><li>Apple Pay</li><li>Google Pay</li><li>PayPal</li><li>Klarna</li><li>Shop Pay</li><li>Bancontact</li></ul></div>' +
-        '</div><div class="bg-legal"><span>© 2026 Breslev Gang · Mentions légales, CGV, confidentialité : pages Shopify officielles</span><span>Concept BRUNFRAME — données publiques relevées le 29/10/2026</span></div></div></footer>' +
+        '<div><h3>Maison</h3><ul><li><a href="https://www.instagram.com/breslev_gang/" rel="noopener">Instagram</a></li><li><a href="https://breslevgang.com/pages/contact" rel="noopener">Contact</a></li></ul></div>' +
+        '<div><h3>Informations</h3><ul><li><a href="faq.html">Questions fréquentes</a></li><li><a href="livraison.html">Livraison</a></li><li><a href="retours.html">Échanges et retours</a></li><li><a href="atelier.html">L’atelier</a></li><li><a href="https://breslevgang.com/policies/legal-notice">Mentions légales</a></li><li><a href="https://breslevgang.com/policies/privacy-policy">Confidentialité</a></li></ul></div>'  +
+        '</div><div class="bg-legal"><span>© 2026 Breslev Gang</span><span>Direction & développement BRUNFRAME · Démonstration</span></div></div></footer>' +
         '<div class="bg-drawer" data-cart-drawer hidden role="dialog" aria-modal="true" aria-labelledby="bg-cart-title" data-threshold="12000" data-collection-url="collection.html?k=Collier"><div class="bg-drawer__veil" data-cart-close></div><div class="bg-drawer__panel">' +
         '<div class="bg-drawer__head"><h2 class="bg-display" id="bg-cart-title">Votre panier</h2><button class="bg-icon-btn" type="button" data-cart-close aria-label="Fermer">✕</button></div><div class="bg-drawer__body" data-cart-body></div>' +
         '<div class="bg-drawer__foot" data-cart-foot hidden><p class="bg-sub"><span>Sous-total</span><strong data-cart-subtotal></strong></p><p class="bg-dim">Taxes incluses ; livraison et réductions calculées au paiement.</p><p data-cart-msg role="alert"></p>' +
-        '<button class="bg-btn" type="button" disabled>Paiement Shopify — désactivé en démo</button></div></div></div>');
+        '<a class="bg-btn" data-checkout href="https://breslevgang.com/cart">Continuer sur la boutique officielle ↗</a><p class="bg-note">Vous quittez la démonstration. Prix, disponibilité, livraison et paiement sont confirmés sur Shopify.</p></div></div></div>');
       var m = document.querySelector('main'); if (m) m.id = 'main';
     },
     card: function (p, o) {
@@ -118,7 +118,7 @@ window.BG = window.BG || {};
           handle: p.h, title: p.t, kicker: (BG.kinds[p.k] || '') + ' · ' + p.f, priceLabel: BG.price(p), url: BG.url(p), variantId: p.vid, available: p.a,
           photo: BG.img(p.img[0], 900), cutout: o.cut ? '../theme/assets/' + o.cut : '', fy: o.fy || .9, tone: o.tone,
           heads: ['', p.f, p.a ? 'Disponible' : 'Épuisée'],
-          facts: ['Photo officielle de la boutique, prix public relevé le 29/10/2026. Matière et dimensions : sur la fiche officielle.',
+          facts: ['Retrouvez les photographies et les variantes de cette pièce sur sa fiche.',
             n + ' pièces publiées dans la famille « ' + p.f + ' ».' + (g ? ' ' + g.length + ' coloris proposés au regroupement.' : ''),
             (p.a ? 'Disponible sur la boutique au relevé du 29/10/2026' : 'Épuisée au relevé du 29/10/2026') + ' · ' + BG.price(p) + '.']
         };
@@ -135,7 +135,8 @@ window.BG = window.BG || {};
       });
     },
     product: function (p) {
-      var g = BG.group(p) || [p], native = !!p.v, nopts = '';
+      var g = BG.group(p) || [p], native = !!p.v, nopts = '', M = (D.models || {})[p.m] || {}, grouped = !native && g.length > 1;
+      var oname = (M.on && M.on[0]) || 'Coloris', head = grouped && M.n ? M.n : p.t;
       if (native) {  /* options natives Shopify (Couleur × Taille, montants) : seules les combinaisons vendues existent */
         g = [p];
         nopts = p.on.map(function (name, i) {
@@ -145,24 +146,25 @@ window.BG = window.BG || {};
           }).join('') + '</div></fieldset>';
         }).join('');
       }
-      var opts = native ? nopts : g.length > 1 ? '<fieldset class="bg-opts"><legend>Coloris : <span data-v-opt></span></legend><div class="bg-opts__row">' + g.map(function (m) {
+      var note = M.s === 'PROBABLE' ? 'Regroupement proposé, à valider par la maison : ces ' + g.length + ' variantes sont aujourd’hui ' + g.length + ' fiches séparées sur la boutique.' : 'Ces ' + g.length + ' variantes sont aujourd’hui ' + g.length + ' fiches séparées sur la boutique.';
+      var opts = native ? nopts : grouped ? '<fieldset class="bg-opts"><legend>' + esc(oname) + ' : <span data-v-opt></span></legend><div class="bg-opts__row">' + g.map(function (m) {
         return '<label class="bg-opt"><input type="radio" name="opt0" value="' + esc(m.gl) + '" data-option="0"' + (m.h === p.h ? ' checked' : '') + '><span class="bg-pill"><img src="' + BG.img(m.img[0], 120) + '" alt="" width="34" height="42">' + esc(m.gl) + '</span></label>';
-      }).join('') + '</div></fieldset><p class="bg-note bg-group-note">Regroupement proposé : ces coloris sont aujourd’hui ' + g.length + ' fiches séparées sur la boutique.</p>' : '';
-      var json = native ? { handle: p.h, selected: (p.v.filter(function (v) { return v.a; })[0] || p.v[0]).id, options: p.on, variants: p.v.map(function (v) { return { id: v.id, title_full: p.t, options: v.o, price: v.p, compare_at_price: 0, sku: '', available: v.a, image: p.img[0] ? BG.img(p.img[0], 1200) : '' }; }) } :
-        { handle: p.h, selected: p.vid, options: ['Coloris'], variants: g.map(function (m) { return { id: m.vid, title_full: m.t, handle: m.h, options: [m.gl || 'Standard'], price: m.p, compare_at_price: m.c, sku: m.sku, available: m.a, image: BG.img(m.img[0], 1200), images: m.img.map(function (u) { return BG.img(u, 1200); }) }; }) };
+      }).join('') + '</div></fieldset><p class="bg-note bg-group-note">' + note + '</p>' : '';
+      var json = native ? { handle: p.h, selected: (p.v.filter(function (v) { return v.a; })[0] || p.v[0]).id, options: p.on, variants: p.v.map(function (v) { return { id: v.id, pid: p.id, title_full: p.t, options: v.o, price: v.p, compare_at_price: 0, sku: v.sku || p.sku, available: v.a, image: p.img[0] ? BG.img(p.img[0], 1200) : '' }; }) } :
+        { handle: p.h, selected: p.vid, options: [oname], variants: g.map(function (m) { return { id: m.vid, pid: m.id, title_full: m.t, handle: m.h, options: [m.gl || 'Standard'], price: m.p, compare_at_price: m.c, sku: m.sku, available: m.a, image: BG.img(m.img[0], 1200), images: m.img.map(function (u) { return BG.img(u, 1200); }) }; }) };
       var kl = BG.kinds[p.k] || 'Collection';
       var rec = D.products.filter(function (x) { return x.k === p.k && x.f === p.f && x.h !== p.h && (!p.g || x.g !== p.g); }).slice(0, 4);
       return '<div class="bg-wrap"><p class="bg-crumbs"><a href="index.html">Accueil</a> / <a href="collection.html?k=' + p.k + '">' + kl + '</a> / ' + esc(p.f) + '</p></div>' +
         '<div class="bg-wrap" data-product><div class="bg-pdp"><div class="bg-gal"><div class="bg-gal__main" data-zoom>' + (p.img[0] ? '<img data-main-img src="' + BG.img(p.img[0], 1200) + '" alt="' + esc(p.t) + '" width="1200" height="1500" fetchpriority="high">' : '<p class="bg-card__noimg">Visuel à fournir — aucune photo n’est publiée pour cette fiche.</p>') + '</div>' +
         '<div class="bg-gal__thumbs" data-thumbs>' + p.img.map(function (u, i) { return '<button type="button" data-thumb="' + BG.img(u, 1200) + '" aria-label="Photo ' + (i + 1) + '"' + (i ? '' : ' aria-current="true"') + '><img src="' + BG.img(u, 160) + '" alt=""></button>'; }).join('') + '</div></div>' +
-        '<div class="bg-pdp__info"><p class="bg-kicker">' + esc(kl + ' · ' + p.f) + '</p><h1 class="bg-display" data-v-title>' + esc(p.t) + '</h1>' +
-        '<p class="bg-price"><span data-v-price></span> <s data-v-compare hidden></s></p><p class="bg-note bg-pdp__klarna">Prix public relevé le 29/10/2026 · Paiement en plusieurs fois avec Klarna dès 120 € (mention officielle)</p>' +
-        '<form data-add-form data-title="' + esc(p.t) + '"><input type="hidden" name="id" value="">' + opts +
+        '<div class="bg-pdp__info"><p class="bg-kicker">' + esc(kl + ' · ' + p.f) + '</p><h1 class="bg-display">' + esc(head) + '</h1>' + (grouped ? '<p class="bg-note">Nom sur la boutique : <span data-v-title>' + esc(p.t) + '</span></p>' : '') +
+        '<p class="bg-price"><span data-v-price></span> <s data-v-compare hidden></s></p><p class="bg-note bg-pdp__klarna">Prix public relevé le 29/10/2026 · À confirmer sur la boutique officielle</p>' +
+        '<p class="bg-note" data-v-status role="status"></p><form data-add-form data-title="' + esc(p.t) + '"><input type="hidden" name="id" value="">' + opts +
         '<input type="hidden" name="quantity" value="1"><button class="bg-btn" type="submit" style="width:100%" data-add="Ajouter au panier" data-sold="Épuisé"><span>Ajouter au panier</span></button><p data-cart-msg role="alert"></p></form>' +
-        '<p class="bg-meta">Réf. variante <span data-v-sku></span> · <a href="' + BG.official(p) + '" rel="noopener">Voir la fiche officielle</a></p>' +
-        '<div class="bg-info"><details open><summary>Description</summary><div>Description, matière et dimensions : reprises automatiquement depuis Shopify à l’intégration. Rien n’est affirmé ici sans la fiche réelle.</div></details>' +
-        '<details><summary>Livraison & retours</summary><div>Livraison offerte dès 120 € d’achats en France (bandeau officiel). Les règles varient selon le pays : elles seront lues dans Shopify. Retours : politique officielle de la boutique.</div></details>' +
-        '<details><summary>Paiement</summary><div>Checkout Shopify officiel : CB, Apple Pay, Google Pay, PayPal, Klarna, Shop Pay…</div></details></div></div></div>' +
+        '<p class="bg-meta">Réf. variante <span data-v-sku></span> · <a data-official-product href="' + BG.official(p) + '" rel="noopener">Voir la fiche officielle</a></p>' +
+        '<div class="bg-info"><details open><summary>Description</summary><div data-v-desc></div></details>' +
+        '<details><summary>Livraison & retours</summary><div>Livraison offerte dès 120 € selon le bandeau officiel. <a href="https://breslevgang.com/policies/refund-policy">Consulter les conditions de retour</a>. Les frais applicables sont confirmés au paiement.</div></details>' +
+        '<details><summary>Paiement</summary><div>Les moyens de paiement disponibles sont indiqués au paiement sur la boutique officielle.</div></details></div></div></div>' +
         '<script type="application/json" data-product-json>' + JSON.stringify(json).replace(/</g, '\\u003c') + '<\/script></div>' +
         (rec.length ? '<section class="bg-section bg-section--tight"><div class="bg-wrap"><div class="bg-section__head"><div><p class="bg-kicker">Même famille</p><h2 class="bg-display">À porter aussi</h2></div></div><div class="bg-grid">' + rec.map(function (x) { return BG.preview.card(x); }).join('') + '</div></div></section>' : '');
     }

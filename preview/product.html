@@ -1,12 +1,19 @@
-<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#111315"><meta name="robots" content="noindex,nofollow"><title>Fiche produit — Breslev Gang · Prévisualisation</title><meta name="description" content="Fiche produit Breslev Gang : photos officielles, coloris regroupés, ajout au panier. Prévisualisation BRUNFRAME."><script>document.documentElement.classList.add("js")</script><script src="../theme/assets/bg-theme.js"></script><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Manrope:wght@400;500;600&display=swap" media="print" onload="this.media='all'"><link rel="preconnect" href="https://cdn.shopify.com"><link rel="stylesheet" href="../theme/assets/bg-tokens.css"><link rel="stylesheet" href="../theme/assets/bg-base.css"><link rel="icon" href="https://breslevgang.com/cdn/shop/files/2.jpg?crop=center&height=32&v=1691346121&width=32"></head><body><script src="data.js"></script><script src="../theme/assets/bg-cart.js"></script><script src="bg-preview.js"></script><script>BG.preview.header('');</script>
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#111315"><meta name="robots" content="noindex,nofollow"><title>Fiche produit — Breslev Gang · Prévisualisation</title><meta name="description" content="Fiche produit Breslev Gang : photos officielles, coloris regroupés, ajout au panier. Prévisualisation BRUNFRAME."><script>document.documentElement.classList.add("js")</script><script src="../theme/assets/bg-theme.js"></script><link rel="preconnect" href="https://cdn.shopify.com"><link rel="stylesheet" href="../theme/assets/bg-tokens.css"><link rel="stylesheet" href="../theme/assets/bg-base.css"><link rel="icon" href="https://breslevgang.com/cdn/shop/files/2.jpg?crop=center&height=32&v=1691346121&width=32"></head><body><script src="data.js"></script><script src="media-map.js"></script><script src="../theme/assets/bg-cart.js"></script><script src="bg-preview.js"></script><script>BG.preview.header('');</script>
 <main><div id="pdp"></div></main>
-<script src="../theme/assets/bg-product.js"></script><script src="../theme/assets/bg-ui.js"></script>
+<script src="descriptions.js"></script><script src="../theme/assets/bg-product.js"></script><script src="../theme/assets/bg-ui.js"></script>
 <script>
 (function () {
   BG.preview.footer();
   var p = BG.byHandle(new URLSearchParams(location.search).get('h')) || BG.byHandle('necklace-maguen-chrome');
   document.title = p.t + ' — Breslev Gang · Prévisualisation';
-  document.getElementById('pdp').innerHTML = BG.preview.product(p);
+  var pdp = document.getElementById('pdp');
+  pdp.innerHTML = BG.preview.product(p);
+  /* Description : texte publié par la boutique pour la variante choisie, affiché tel quel et attribué ; sinon, manque signalé. */
+  pdp.addEventListener('bg:variant', function (e) {
+    var box = pdp.querySelector('[data-v-desc]'), t = (window.BG_DESC || {})[String(e.detail.pid)];
+    box.innerHTML = t ? t.split(/\n+/).filter(Boolean).map(function (x) { return '<p>' + BG.esc(x) + '</p>'; }).join('') + '<p class="bg-note">Texte publié sur la boutique officielle (relevé du 29/10/2026).</p>'
+      : '<p>La boutique ne publie pas encore de description pour cette pièce. Matières, dimensions et entretien : à fournir par la maison.</p>';
+  });
   BG.initProducts();
 })();
 </script></body></html>
