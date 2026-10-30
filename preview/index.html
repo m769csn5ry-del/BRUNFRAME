@@ -84,7 +84,7 @@
   var items = P.orbitItems();
   document.getElementById('orbit-data').textContent = JSON.stringify(items);
   document.getElementById('orbit-list').innerHTML = items.map(function (i) { return '<li><a href="' + i.url + '">' + BG.esc(i.title) + ' — ' + i.priceLabel + '</a></li>'; }).join('');
-  document.getElementById('lineup').innerHTML = items.map(function (i, k) { return '<a class="bg-lineup__item" href="' + i.url + '" style="--k:' + k + ';--c1:' + i.tone[0] + '"><img src="' + i.photo + '" alt="" loading="lazy" width="600" height="750"><i></i><span>' + BG.esc(i.title) + '</span></a>'; }).join('');
+  document.getElementById('lineup').innerHTML = items.map(function (i, k) { return '<a class="bg-lineup__item' + (i.cutout ? ' is-cut' : '') + '" href="' + i.url + '" style="--k:' + k + ';--c1:' + i.tone[0] + '"><img src="' + (i.cutout || i.photo) + '" alt="" loading="lazy"' + (i.cutout ? '' : ' width="600" height="750"') + '><i></i><span>' + BG.esc(i.title) + '</span></a>'; }).join('');
   BG.initOrbits();
   document.getElementById('best').innerHTML = D.best.map(BG.byHandle).filter(Boolean).map(function (p) { return P.card(p); }).join('');
   var count = function (k, f) { return D.products.filter(function (p) { return p.k === k && (!f || p.f === f); }).length; };

@@ -116,7 +116,7 @@ window.BG = window.BG || {};
         var p = byH[o.h], n = D.products.filter(function (x) { return x.f === p.f; }).length, g = BG.group(p);
         return {
           handle: p.h, title: p.t, kicker: (BG.kinds[p.k] || '') + ' · ' + p.f, priceLabel: BG.price(p), url: BG.url(p), variantId: p.vid, available: p.a,
-          photo: BG.img(p.img[0], 900), tone: o.tone,
+          photo: BG.img(p.img[0], 900), cutout: o.cut ? '../theme/assets/' + o.cut : '', fy: o.fy || .9, tone: o.tone,
           heads: ['', p.f, p.a ? 'Disponible' : 'Épuisée'],
           facts: ['Photo officielle de la boutique, prix public relevé le 29/10/2026. Matière et dimensions : sur la fiche officielle.',
             n + ' pièces publiées dans la famille « ' + p.f + ' ».' + (g ? ' ' + g.length + ' coloris proposés au regroupement.' : ''),
