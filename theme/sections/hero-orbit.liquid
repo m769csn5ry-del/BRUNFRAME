@@ -8,14 +8,24 @@
       {%- assign p = block.settings.product -%}
       {%- if p != blank -%}
         {%- assign v = p.selected_or_first_available_variant -%}
-        {%- assign img = block.settings.cutout | default: p.featured_media -%}
+        {%- comment -%} Détourage : image choisie dans l'éditeur, sinon asset du thème cut-<handle>.webp si la case est cochée, sinon photo officielle. {%- endcomment -%}
+        {%- liquid
+          assign cut_url = ''
+          if block.settings.cutout != blank
+            assign cut_url = block.settings.cutout | image_url: width: 900
+          elsif block.settings.theme_cutout
+            assign cut_name = 'cut-' | append: p.handle | append: '.webp'
+            assign cut_url = cut_name | asset_url
+          endif
+          assign img = p.featured_media
+        -%}
         {%- unless forloop.first %},{% endunless -%}
         {
           "handle": {{ p.handle | json }}, "title": {{ p.title | json }},
           "kicker": {{ p.type | default: section.settings.kicker_fallback | json }},
           "priceLabel": {{ p.price | money | json }}, "url": {{ p.url | json }},
           "variantId": {{ v.id | json }}, "available": {{ p.available | json }},
-          "photo": {{ img | image_url: width: 900 | json }},
+          "photo": {{ img | image_url: width: 900 | json }}, "cutout": {{ cut_url | json }}, "fy": {{ block.settings.fy | divided_by: 100.0 | json }},
           "tone": [{{ block.settings.c1 | json }}, {{ block.settings.c2 | json }}, {{ block.settings.c3 | json }}],
           "heads": ["", {{ block.settings.head_2 | json }}, {% if p.available %}{{ 'Disponible' | json }}{% else %}{{ 'Épuisée' | json }}{% endif %}],
           "facts": [{{ block.settings.fact_1 | json }}, {{ block.settings.fact_2 | json }}, {{ p.price | money | json }}]
@@ -50,7 +60,7 @@
   {%- if section.settings.faq_page != blank -%}<div class="bg-faq bg-rte">{{ section.settings.faq_page.content }}</div>{%- endif -%}
   <div class="bg-lineup" data-orbit-lineup><p class="bg-kicker">{{ section.settings.lineup_kicker | escape }}</p><h2>{{ section.settings.lineup_title | escape }}</h2><div class="bg-lineup__row">
     {%- for block in section.blocks -%}{%- assign p = block.settings.product -%}{%- if p != blank -%}
-      <a class="bg-lineup__item" href="{{ p.url }}" style="--k:{{ forloop.index0 }};--c1:{{ block.settings.c1 }}">{{ block.settings.cutout | default: p.featured_media | image_url: width: 600 | image_tag: loading: 'lazy', alt: '' }}<i></i><span>{{ p.title | escape }}</span></a>
+      <a class="bg-lineup__item{% if block.settings.cutout != blank or block.settings.theme_cutout %} is-cut{% endif %}" href="{{ p.url }}" style="--k:{{ forloop.index0 }};--c1:{{ block.settings.c1 }}">{%- if block.settings.cutout != blank -%}{{ block.settings.cutout | image_url: width: 600 | image_tag: loading: 'lazy', alt: '' }}{%- elsif block.settings.theme_cutout -%}{%- assign cn = 'cut-' | append: p.handle | append: '.webp' -%}<img src="{{ cn | asset_url }}" alt="" loading="lazy" width="300" height="900">{%- else -%}{{ p.featured_media | image_url: width: 600 | image_tag: loading: 'lazy', alt: '' }}{%- endif -%}<i></i><span>{{ p.title | escape }}</span></a>
     {%- endif -%}{%- endfor -%}
   </div>{%- if section.settings.cta_url != blank -%}<a class="bg-btn" href="{{ section.settings.cta_url }}">{{ section.settings.cta | escape }}</a>{%- endif -%}</div>
 </div></section>
@@ -80,6 +90,8 @@
     { "type": "necklace", "name": "Collier", "settings": [
       { "type": "product", "id": "product", "label": "Produit" },
       { "type": "image_picker", "id": "cutout", "label": "Détourage PNG transparent (optionnel, prioritaire sur la photo)" },
+      { "type": "checkbox", "id": "theme_cutout", "label": "Utiliser le détourage fourni avec le thème (cut-<handle>.webp)", "default": false },
+      { "type": "range", "id": "fy", "label": "Hauteur du pendentif dans le détourage", "min": 50, "max": 98, "step": 1, "unit": "%", "default": 90 },
       { "type": "color", "id": "c1", "label": "Fond : lumière", "default": "#c9d3dc" },
       { "type": "color", "id": "c2", "label": "Fond : teinte", "default": "#5f6c78" },
       { "type": "color", "id": "c3", "label": "Fond : bord", "default": "#0d1114" },
