@@ -64,7 +64,7 @@ if ARTIFACT:
     body = out[out.index('<main id="app">'):out.rindex('</body>')]
     art = ('<title>Breslev Gang 2100</title><meta name="robots" content="noindex">'
       '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Manrope:wght@400;500;600&display=swap">'
-      '<style>:root{color-scheme:dark}html{background:#050606}' + m.group(1) + '\nbody{background:var(--bg-0);color:var(--ink)}</style><script>document.documentElement.classList.add("js")</script>' + body)
+      '<script>' + R('theme/assets/bg-theme.js') + '</script><style>html{background:var(--bg-0)}' + m.group(1) + '\nbody{background:var(--bg-0);color:var(--ink)}</style><script>document.documentElement.classList.add("js")</script>' + body)
     open(sys.argv[sys.argv.index('--artifact') + 1], 'w', encoding='utf-8').write(art)
 else:
     open('dist-single/breslev-gang-demo.html', 'w', encoding='utf-8').write(out)
