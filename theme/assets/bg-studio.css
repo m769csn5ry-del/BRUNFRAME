@@ -1,0 +1,34 @@
+/* Studio d'accueil : galerie suspendue (A) → détail sur relief minéral (B) */
+.bg-studio{position:relative;height:150svh;background:#0f1113;color:#eceef0}
+.bg-studio__pin{position:sticky;top:var(--hdr,69px);height:calc(100svh - var(--hdr,69px));overflow:hidden}
+.bg-studio__stage{position:absolute;inset:0;touch-action:pan-y;cursor:grab;outline:none}
+.bg-studio.is-drag .bg-studio__stage{cursor:grabbing}
+.bg-studio__stage:focus-visible{box-shadow:inset 0 0 0 2px #9fb8a8}
+.bg-studio canvas{display:block;width:100%;height:100%;opacity:0;transition:opacity .6s}
+.bg-studio.is-ready canvas{opacity:1}
+/* affiche : photo officielle détourée, sur fond anthracite, avant chargement / sans WebGL / mouvement réduit */
+.bg-studio__poster{position:absolute;left:50%;top:3svh;height:min(66svh,620px);width:auto;transform:translateX(-50%);transition:opacity .5s;pointer-events:none}
+.bg-studio::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 70% 55% at 50% 40%,#23272b,#0f1113 70%);pointer-events:none}
+.bg-studio.is-ready:not(.is-static) .bg-studio__poster{opacity:0}
+.bg-studio.is-static canvas{display:none}
+.bg-studio.is-static{height:100svh}
+/* texte : zone propre sous la nav, à gauche ; fiche près de la pièce, en bas */
+.bg-studio__intro{position:absolute;left:clamp(16px,4vw,56px);top:5svh;max-width:16ch;opacity:calc(1 - var(--b,0)*1.6);pointer-events:none}
+.bg-studio__intro h1{font-size:clamp(26px,2.6vw,38px);line-height:1.02;margin:.3em 0 0;font-weight:500;letter-spacing:-.01em}
+.bg-studio__intro p{color:#b6bcc2}
+.bg-studio__hud{position:absolute;left:50%;bottom:clamp(16px,5svh,48px);transform:translateX(-50%);width:min(520px,calc(100% - 32px));display:grid;grid-template-columns:auto 1fr auto;gap:10px 14px;align-items:center;background:#0f1113cc;border:1px solid #ffffff1f;border-radius:14px;padding:12px 14px;backdrop-filter:blur(8px)}
+.bg-studio__hud button{width:40px;height:40px;border-radius:50%;border:1px solid #ffffff38;background:transparent;color:inherit;font-size:18px;cursor:pointer}
+.bg-studio__hud button:hover{border-color:#fff8}
+.bg-studio__meta{min-width:0;text-align:center}
+.bg-studio__meta strong{display:block;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bg-studio__meta span{color:#b6bcc2;font-size:14px}
+.bg-studio__hud .bg-btn{grid-column:1/-1;justify-self:center}
+.bg-studio__dots{grid-column:1/-1;display:flex;justify-content:center;gap:6px}
+.bg-studio__dots button{width:22px;height:22px;border:0;padding:0;position:relative}
+.bg-studio__dots button::after{content:"";position:absolute;inset:9px 3px;border-radius:2px;background:#ffffff40}
+.bg-studio__dots button[aria-current=true]::after{background:#e9ecef}
+.bg-studio__hint{position:absolute;right:clamp(16px,4vw,56px);bottom:clamp(16px,5svh,48px);color:#8e959c;font-size:13px;opacity:calc(1 - var(--b,0)*2)}
+.bg-studio.is-static .bg-studio__hint{display:none}
+@media (max-width:759px){.bg-studio__hint{display:none}.bg-studio__intro{max-width:none;right:16px}.bg-studio__intro p{display:none}.bg-studio__poster{height:52svh;top:16svh}}
+@media (min-width:760px){.bg-studio__hud{grid-template-columns:auto 1fr auto auto;width:min(620px,calc(100% - 32px))}.bg-studio__hud .bg-btn{grid-column:auto}.bg-studio__meta{text-align:left}}
+.bg-studio__poster{display:none}.bg-studio.is-static .bg-studio__poster,.bg-studio:not(.is-ready) .bg-studio__poster{display:block}

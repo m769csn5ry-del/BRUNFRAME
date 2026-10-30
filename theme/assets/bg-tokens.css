@@ -1,3 +1,6 @@
+@font-face{font-family:Cormorant;src:url(font-cormorant-500-latin.woff2) format("woff2");font-weight:300 700;font-display:swap}
+@font-face{font-family:Jost;src:url(font-jost-400-latin.woff2) format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:Jost;src:url(font-jost-500-latin.woff2) format("woff2");font-weight:500 800;font-display:swap}
 /* BRESLEV GANG — design tokens « 2100 ». Palette proposée par BRUNFRAME (à valider par Ysahar).
    Base minérale noire/graphite + chrome ; l'émeraude n'est qu'un reflet de matière, jamais un aplat d'interface. */
 :root {
@@ -29,7 +32,7 @@
 
   /* Cormorant = police de titres du thème officiel actuel. Manrope = texte/UI. Auto-héberger avant production. */
   --font-display: "Cormorant", "Cormorant Garamond", "Iowan Old Style", Georgia, serif;
-  --font-body: "Manrope", "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-body: "Jost", "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 
   --gutter: clamp(18px, 4.2vw, 64px);
   --radius: 2px;

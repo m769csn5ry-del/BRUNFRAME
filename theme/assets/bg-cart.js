@@ -13,7 +13,9 @@ window.BG = window.BG || {};
     discount: null /* codes promo : saisis au checkout natif Shopify (aucune logique ici) */
   };
   var A = function () { return window.BG_CART_ADAPTER || shopify; };
-  var cart = null, drawer, lastFocus;
+  var cart = null, drawer, lastFocus, closeTimer, pending=Promise.resolve();
+  function enqueue(fn) { var next=pending.then(fn); pending=next.catch(function(){}); return next; }
+  function background(lock) { document.querySelectorAll("body > header, body > main, body > footer").forEach(function(n){n.inert=lock}); }
 
   function money(cents, cur) {
     var c = cur || (window.Shopify && Shopify.currency && Shopify.currency.active) || 'EUR';
@@ -34,8 +36,8 @@ window.BG = window.BG || {};
     }
     var pct = thr ? Math.min(100, Math.round(cart.total_price / thr * 100)) : 0;
     var ship = thr ? '<div class="bg-ship"><p>' + (left > 0 ? 'Plus que <strong>' + money(left, cart.currency) + '</strong> pour la livraison offerte' : '<strong>Livraison offerte</strong> sur cette commande') +
-      '</p><div class="bg-ship__bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="' + pct + '"><i style="width:' + pct + '%"></i></div>' +
-      '<small>Seuil et marchés à confirmer dans Shopify.</small></div>' : '';
+      '</p><div class="bg-ship__bar" role="progressbar" aria-label="Progression vers le seuil de livraison offerte" aria-valuemin="0" aria-valuemax="100" aria-valuenow="' + pct + '"><i style="width:' + pct + '%"></i></div>' +
+      '<small>Conditions confirmées sur la boutique officielle.</small></div>' : '';
     body.innerHTML = ship + '<ul class="bg-lines">' + cart.items.map(function (it) {
       return '<li class="bg-line"><a class="bg-line__img" href="' + esc(it.url) + '"><img src="' + esc(it.image || '') + '" alt="' + esc(it.title) + '" width="72" height="72"></a>' +
         '<div><a href="' + esc(it.url) + '" class="bg-line__t">' + esc(it.product_title || it.title) + '</a><p class="bg-dim">' + esc(it.variant_title || '') + '</p>' +
@@ -44,6 +46,8 @@ window.BG = window.BG || {};
     }).join('') + '</ul>';
     foot.hidden = false;
     foot.querySelector('[data-cart-subtotal]').textContent = money(cart.total_price, cart.currency);
+    var checkout=foot.querySelector('[data-checkout]');
+    if(checkout) checkout.href='https://breslevgang.com/cart/'+cart.items.map(function(it){return it.id+':'+it.quantity}).join(',')+'?storefront=true';
   }
 
   function set(c) { cart = c; render(); document.dispatchEvent(new CustomEvent('bg:cart:updated', { detail: c })); return c; }
@@ -52,14 +56,14 @@ window.BG = window.BG || {};
   BG.cart = {
     refresh: function () { return A().get().then(set); },
     add: function (id, qty, meta) {
-      return A().add(id, qty || 1).then(set).then(function (c) {
+      toast(''); return enqueue(function(){return A().add(id, qty || 1)}).then(set).then(function (c) {
         BG.track && BG.track('add_to_cart', { variant_id: id, title: meta && meta.title });
         BG.cart.open(); return c;
       }).catch(function (e) { BG.cart.open(); toast(e.message); });
     },
-    change: function (key, qty) { return A().change(key, Math.max(0, qty)).then(set).catch(function (e) { toast(e.message); }); },
-    open: function () { if (!drawer) return; lastFocus = document.activeElement; drawer.hidden = false; document.body.classList.add('bg-lock'); requestAnimationFrame(function () { drawer.classList.add('is-open'); var c = drawer.querySelector('[data-cart-close]'); c && c.focus(); }); },
-    close: function () { if (!drawer) return; drawer.classList.remove('is-open'); document.body.classList.remove('bg-lock'); setTimeout(function () { drawer.hidden = true; }, 280); lastFocus && lastFocus.focus && lastFocus.focus(); }
+    change: function (key, qty) { toast(''); return enqueue(function(){return A().change(key, Math.max(0, qty))}).then(set).catch(function (e) { toast(e.message); }); },
+    open: function () { if (!drawer) return; clearTimeout(closeTimer); if(drawer.hidden) lastFocus = document.activeElement; drawer.hidden = false; background(true); document.body.classList.add('bg-lock'); requestAnimationFrame(function () { drawer.classList.add('is-open'); var c = drawer.querySelector('[data-cart-close]'); c && c.focus(); }); },
+    close: function () { if (!drawer) return; drawer.classList.remove('is-open'); document.body.classList.remove('bg-lock'); background(false); closeTimer=setTimeout(function () { drawer.hidden = true; }, 280); lastFocus && lastFocus.focus && lastFocus.focus(); }
   };
 
   BG.track = function (name, payload) { /* événements internes ; branchement analytics soumis au consentement (Customer Privacy API) */
@@ -76,10 +80,17 @@ window.BG = window.BG || {};
       else if (t.hasAttribute('data-cart-close')) BG.cart.close();
       else if (t.dataset.q) {
         var it = cart.items.filter(function (i) { return String(i.key) === t.dataset.q; })[0];
-        if (it) BG.cart.change(it.key, it.quantity + Number(t.dataset.d));
+        if (it) { drawer.setAttribute('aria-busy','true'); drawer.querySelectorAll('[data-q]').forEach(function(b){b.disabled=true}); BG.cart.change(it.key, it.quantity + Number(t.dataset.d)).finally(function(){drawer.removeAttribute('aria-busy');drawer.querySelectorAll('[data-q]').forEach(function(b){b.disabled=false});var replacement=Array.from(drawer.querySelectorAll('[data-q]')).find(function(b){return b.dataset.q===t.dataset.q&&b.dataset.d===t.dataset.d});if(replacement)replacement.focus();else drawer.querySelector('[data-cart-close]').focus()}); }
       }
     });
-    drawer.addEventListener('keydown', function (e) { if (e.key === 'Escape') BG.cart.close(); });
+    drawer.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') BG.cart.close();
+      if(e.key!=='Tab')return;
+      var nodes=Array.from(drawer.querySelectorAll('button:not([disabled]),a[href],input:not([disabled])')).filter(function(n){return n.getClientRects().length&&!n.closest('[hidden]')});
+      var first=nodes[0],last=nodes[nodes.length-1];
+      if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus()}
+      else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}
+    });
     document.addEventListener('submit', function (e) {
       var f = e.target.closest('[data-add-form]'); if (!f) return;
       e.preventDefault();

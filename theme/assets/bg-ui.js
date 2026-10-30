@@ -23,7 +23,10 @@
   function menu() {
     var b = document.querySelector('[data-menu-toggle]'), n = document.querySelector('[data-menu]');
     if (!b || !n) return;
-    b.addEventListener('click', function () { var o = n.classList.toggle('is-open'); b.setAttribute('aria-expanded', o); });
+    b.setAttribute('aria-controls','bg-mobile-menu');n.id='bg-mobile-menu';
+    b.addEventListener('click', function () { var o = n.classList.toggle('is-open'); b.setAttribute('aria-expanded', o); if(o){var a=n.querySelector('a');if(a)a.focus()} });
+    n.addEventListener('click',function(e){if(e.target.closest('a')){n.classList.remove('is-open');b.setAttribute('aria-expanded','false')}});
+    document.addEventListener('keydown',function(e){if(e.key==='Escape'&&n.classList.contains('is-open')){n.classList.remove('is-open');b.setAttribute('aria-expanded','false');b.focus()}});
   }
 
   function reveal() {

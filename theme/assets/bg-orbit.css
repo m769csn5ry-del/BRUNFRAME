@@ -137,3 +137,11 @@
 .bg-lineup__item.is-cut img { aspect-ratio: auto; height: clamp(180px, 24vw, 320px); width: auto; max-width: 100%; object-fit: contain; -webkit-mask-image: none; mask-image: none; filter: drop-shadow(0 12px 16px rgba(0, 0, 0, .5)); }
 /* Mobile : les chaînes occupent toute la hauteur ; le titre reste dans le DOM (h1) mais sort de l'image, le nom de la pièce et son CTA restent visibles. */
 @media (max-width: 759px) { .bg-orbit:not(.is-static) .bg-orbit__top { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; } }
+/* Accueil compact : la scène s'arrête au gros plan (≈ 3 écrans de défilement au lieu de 5,6). */
+.bg-orbit[data-orbit-end] { height: 250svh; }
+/* Titre de galerie : jamais sous le pli, quelle que soit la hauteur d'écran. */
+@media (min-width: 760px) { .bg-orbit__top { bottom: max(26px, 4.5svh); max-width: 24ch; } .bg-orbit__top h1 { font-size: clamp(22px, 2.1vw, 34px); } }
+@media (min-width: 760px) and (max-height: 820px) { .bg-orbit__top .bg-kicker { display: none; } .bg-orbit__top h1 { margin: 0; } }
+/* Galerie compacte, mobile : le titre passe à la ligne dans la largeur de l'écran. */
+@media (max-width: 759px) { .bg-orbit[data-orbit-compact] .bg-orbit__top { position: absolute !important; width: auto; height: auto; overflow: visible; clip: auto; white-space: normal; left: var(--gutter); right: var(--gutter); max-width: none; }
+  .bg-orbit[data-orbit-compact] .bg-orbit__top .bg-display { font-size: clamp(24px, 7vw, 30px); line-height: 1.05; } }
