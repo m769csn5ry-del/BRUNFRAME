@@ -1,9 +1,9 @@
 /* Galerie orbitale de l'accueil, d'après la vidéo de référence : colliers en arc, swipe / flèches / clavier,
    puis, au défilement, isolation de la pièce choisie, fond propre à chaque collier, rapprochement, chapitres de texte,
    grande typographie, FAQ et retour de toute la ligne. Une seule pièce persistante, pilotée par un progrès de scroll.
-   Photos officielles (pas de détourage ni de modèle 3D) : rotations limitées à de faibles angles, jamais de faux dos.
+   Détourages des photos officielles quand ils existent (champ cutout), sinon photo fondue. Pas de modèle 3D : rotations limitées à de faibles angles, jamais de faux dos.
    Données : <script type="application/json" data-orbit-items> [{ handle, title, kicker, priceLabel, url, variantId, available,
-   photo, tone: [c1, c2, c3], facts: [..] }]. Les textes et boutons restent dans le DOM. */
+   photo, cutout?, fy?, tone: [c1, c2, c3], facts: [..] }]. Les textes et boutons restent dans le DOM. */
 window.BG = window.BG || {};
 (function (BG) {
   var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -42,8 +42,10 @@ window.BG = window.BG || {};
     root.classList.toggle('is-static', isStatic);
 
     stage.innerHTML = data.map(function (it, i) {
-      return '<button type="button" class="bg-orbit__item" data-i="' + i + '" aria-label="' + esc(it.title) + '" style="--c1:' + it.tone[0] + '">' +
-        '<img src="' + esc(it.photo) + '" alt="" width="600" height="750" draggable="false"' + (i < 3 ? '' : ' loading="lazy"') + '></button>';
+      /* Détourage transparent si fourni (pièce entière, suspendue, zoom centré sur le pendentif), sinon photo officielle fondue. */
+      var cut = it.cutout, img = cut || it.photo;
+      return '<button type="button" class="bg-orbit__item' + (cut ? ' is-cut' : '') + '" data-i="' + i + '" aria-label="' + esc(it.title) + '" style="--c1:' + it.tone[0] + (cut ? ';--fy:' + (it.fy || .9) : '') + '">' +
+        '<img src="' + esc(img) + '" alt="" ' + (cut ? '' : 'width="600" height="750" ') + 'draggable="false"' + (i < 3 ? '' : ' loading="lazy"') + '></button>';
     }).join('');
     var els = [].slice.call(stage.children);
     bar.innerHTML = data.map(function (it, i) { return '<i style="--c1:' + it.tone[0] + '" data-i="' + i + '"></i>'; }).join('');
@@ -90,7 +92,7 @@ window.BG = window.BG || {};
     function render() {
       p = progress();
       var iso = ss(0.08, 0.2, p), P = pose(mobile ? POSE_MOB : POSE_DESK, p);
-      var R = mobile ? W * .78 : Math.min(W * .46, 760), step = mobile ? .62 : .44;
+      var R = mobile ? W * .78 : Math.min(W * .42, 700), step = mobile ? .62 : .44;
       var itemW = els[0].offsetWidth || 200;
       els.forEach(function (e, i) {
         var d = wrapD(i - pos), a = d * step, active = i === sel;

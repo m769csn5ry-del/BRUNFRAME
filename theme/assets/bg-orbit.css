@@ -125,3 +125,15 @@
 .is-static .bg-orbit__color { opacity: .9; }
 .is-static .bg-orbit__item img { transition: none; }
 @media (prefers-reduced-motion: reduce) { .bg-orbit, .bg-lineup__item { transition: none !important; } }
+
+/* Détourages : la pièce entière pend depuis le haut du cadre ; le point d'ancrage (--fy) est le pendentif,
+   placé au même endroit qu'une photo pour que poses, zoom et rotation restent centrés sur le bijou. */
+.bg-orbit__item.is-cut { aspect-ratio: auto; height: clamp(300px, 46svh, 540px); width: auto; translate: -50% calc(-100% * var(--fy, .9)); transform-origin: 50% calc(100% * var(--fy, .9)); }
+.bg-orbit__item.is-cut img { width: auto; height: 100%; object-fit: contain; border-radius: 0; -webkit-mask-image: none; mask-image: none;
+  filter: drop-shadow(0 18px 22px rgba(0, 0, 0, .55)) brightness(calc(.55 + .45 * var(--lit, 1))); }
+@media (max-width: 759px) { .bg-orbit__item.is-cut { height: clamp(260px, 40svh, 420px); width: auto; } }
+/* Les colliers pendent depuis le haut du cadre : sur ordinateur, le titre descend en bas à gauche, hors de leur trajectoire. */
+@media (min-width: 760px) { .bg-orbit__top { top: auto; bottom: max(26px, 4.5svh); max-width: 26ch; } }
+.bg-lineup__item.is-cut img { aspect-ratio: auto; height: clamp(180px, 24vw, 320px); width: auto; max-width: 100%; object-fit: contain; -webkit-mask-image: none; mask-image: none; filter: drop-shadow(0 12px 16px rgba(0, 0, 0, .5)); }
+/* Mobile : les chaînes occupent toute la hauteur ; le titre reste dans le DOM (h1) mais sort de l'image, le nom de la pièce et son CTA restent visibles. */
+@media (max-width: 759px) { .bg-orbit:not(.is-static) .bg-orbit__top { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; } }
