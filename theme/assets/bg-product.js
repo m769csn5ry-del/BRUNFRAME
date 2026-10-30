@@ -22,6 +22,7 @@ window.BG = window.BG || {};
       var th = root.querySelector('[data-thumbs]');
       if (th && v.images) th.innerHTML = v.images.map(function (u, i) { return '<button type="button" data-thumb="' + u + '" aria-label="Photo ' + (i + 1) + '"' + (i ? '' : ' aria-current="true"') + '><img src="' + u.replace(/width=\d+/, 'width=160') + '" alt=""></button>'; }).join('');
       var opt = root.querySelector('[data-v-opt]'); if (opt) opt.textContent = v.options.join(' / ');
+      root.querySelectorAll('[data-v-optname]').forEach(function (n) { n.textContent = v.options[Number(n.dataset.vOptname)] || ''; });
       BG.track && BG.track('select_item', { variant_id: v.id });
     }
     root.addEventListener('change', function (e) {

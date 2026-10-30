@@ -1,15 +1,24 @@
 /* BRESLEV GANG — design tokens « 2100 ». Palette proposée par BRUNFRAME (à valider par Ysahar).
    Base minérale noire/graphite + chrome ; l'émeraude n'est qu'un reflet de matière, jamais un aplat d'interface. */
 :root {
-  --bg-0: #050606;
-  --bg-1: #0a0d0c;
-  --bg-2: #111514;
-  --graphite: #1a1f1e;
+  color-scheme: dark;
+  --bg-0: #111315;
+  --bg-1: #16191b;
+  --bg-2: #1b1f22;
+  --graphite: #22262a;
   --line: rgba(214, 226, 221, .11);
   --line-2: rgba(214, 226, 221, .22);
-  --ink: #eceff0;
-  --ink-dim: #9aa6a1;
-  --ink-faint: #7d8984;
+  --ink: #f2f2ef;
+  --ink-dim: #b7bbc0;
+  --ink-faint: #8f949a;
+  /* surfaces dépendantes du thème (header, tiroir, voile, puces) */
+  --glass: rgba(17, 19, 21, .76);
+  --glass-solid: rgba(17, 19, 21, .97);
+  --drawer: linear-gradient(180deg, #181b1d, #111315);
+  --veil: rgba(0, 0, 0, .66);
+  --tint: rgba(255, 255, 255, .035);
+  --tint-2: rgba(255, 255, 255, .06);
+  --tag-bg: rgba(17, 19, 21, .72);
   --emerald-900: #05211a;
   --emerald-700: #0b4a37;
   --emerald-500: #17785a;
@@ -28,3 +37,41 @@
   --ease-io: cubic-bezier(.65, 0, .35, 1);
   --header-h: 68px;
 }
+
+/* Thème clair : composition complète (pas d'inversion des médias). Le studio du hero reste une scène sombre dans les deux thèmes. */
+:root[data-theme="light"] {
+  color-scheme: light;
+  --bg-0: #f4f4f1;
+  --bg-1: #ecece8;
+  --bg-2: #e4e4df;
+  --graphite: #dcdcd6;
+  --line: rgba(24, 26, 27, .12);
+  --line-2: rgba(24, 26, 27, .26);
+  --ink: #181a1b;
+  --ink-dim: #4a4f53;
+  --ink-faint: #5f656a;
+  --glass: rgba(244, 244, 241, .8);
+  --glass-solid: rgba(244, 244, 241, .98);
+  --drawer: linear-gradient(180deg, #f8f8f5, #ecece8);
+  --veil: rgba(24, 26, 27, .45);
+  --tint: rgba(24, 26, 27, .04);
+  --tint-2: rgba(24, 26, 27, .07);
+  --tag-bg: rgba(244, 244, 241, .82);
+}
+
+/* Scènes volontairement sombres en mode clair (studio du hero, intro, tuiles sur photo, pièce en lumière) : on y rétablit les valeurs sombres. */
+:root[data-theme="light"] .bg-stage,
+:root[data-theme="light"] .bg-announce,
+:root[data-theme="light"] .bg-intro,
+:root[data-theme="light"] .bg-tile,
+:root[data-theme="light"] .bg-spot__media {
+  color-scheme: dark;
+  --bg-0: #111315; --bg-1: #16191b; --bg-2: #1b1f22; --graphite: #22262a;
+  --line: rgba(214, 226, 221, .11); --line-2: rgba(214, 226, 221, .22);
+  --ink: #f2f2ef; --ink-dim: #b7bbc0; --ink-faint: #8f949a;
+  --tint: rgba(255, 255, 255, .035); --tint-2: rgba(255, 255, 255, .06);
+  color: var(--ink);
+}
+/* Le logo officiel (clair) reste lisible sur fond clair : plaque sombre, jamais d'inversion de l'image. */
+:root[data-theme="light"] .bg-logo img { background: #111315; padding: 6px 12px; border-radius: 2px; }
+:root[data-theme="light"] .bg-header .bg-logo { color: var(--ink); }

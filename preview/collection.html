@@ -1,4 +1,4 @@
-<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#050606"><meta name="robots" content="noindex,nofollow"><title>Collection — Breslev Gang · Prévisualisation</title><meta name="description" content="Colliers et Peteks Breslev Gang : filtres par famille, prix et disponibilité. Prévisualisation BRUNFRAME."><script>document.documentElement.classList.add("js")</script><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Manrope:wght@400;500;600&display=swap" media="print" onload="this.media='all'"><link rel="preconnect" href="https://cdn.shopify.com"><link rel="stylesheet" href="../theme/assets/bg-tokens.css"><link rel="stylesheet" href="../theme/assets/bg-base.css"><link rel="icon" href="https://breslevgang.com/cdn/shop/files/2.jpg?crop=center&height=32&v=1691346121&width=32"></head><body><script src="data.js"></script><script src="../theme/assets/bg-cart.js"></script><script src="bg-preview.js"></script><script>BG.preview.header(new URLSearchParams(location.search).get('k') === 'Petek' ? 'Peteks' : 'Colliers');</script>
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#111315"><meta name="robots" content="noindex,nofollow"><title>Collection — Breslev Gang · Prévisualisation</title><meta name="description" content="Colliers et Peteks Breslev Gang : filtres par famille, prix et disponibilité. Prévisualisation BRUNFRAME."><script>document.documentElement.classList.add("js")</script><script src="../theme/assets/bg-theme.js"></script><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Manrope:wght@400;500;600&display=swap" media="print" onload="this.media='all'"><link rel="preconnect" href="https://cdn.shopify.com"><link rel="stylesheet" href="../theme/assets/bg-tokens.css"><link rel="stylesheet" href="../theme/assets/bg-base.css"><link rel="icon" href="https://breslevgang.com/cdn/shop/files/2.jpg?crop=center&height=32&v=1691346121&width=32"></head><body><script src="data.js"></script><script src="../theme/assets/bg-cart.js"></script><script src="bg-preview.js"></script><script>BG.preview.header({ Collier: 'Colliers', Petek: 'Peteks', Bijou: 'Bijoux', Vetement: 'Vêtements', Autre: 'Plus', Tout: 'Collections' }[new URLSearchParams(location.search).get('k')] || 'Colliers');</script>
 <main>
   <div class="bg-wrap bg-coll-head"><p class="bg-kicker" id="ckick">Collection</p><h1 class="bg-display" id="ctitle">Colliers</h1><p class="bg-dim" id="cintro" style="margin-top:18px;max-width:52ch"></p></div>
   <div class="bg-wrap">
@@ -19,21 +19,27 @@
   var D = window.BG_DATA, P = BG.preview, U = new URLSearchParams(location.search);
   var st = { k: U.get('k') || 'Collier', f: U.get('f') || '', q: U.get('q') || '', price: '', avail: false, sort: '', grp: false, n: 24 };
   P.footer();
-  document.getElementById('ctitle').textContent = st.k === 'Petek' ? 'Peteks' : 'Colliers';
+  var INTRO = { Collier: 'Flamme, Maguen David, Hay, Mezouza, Israël, Tsadikim : tous les symboles publiés sur la boutique, par thème dominant.',
+    Petek: 'À perles, à chaîne, cordon, Kids : tous les montages publiés. Couleurs et textures se retrouvent dans la recherche.',
+    Bijou: 'Bracelets, broches Petek bébé, boucles d’oreilles.', Vetement: 'Sweats à capuche, pulls, T-shirts et jogging, en Couleur × Taille.',
+    Autre: 'Maison & objets, kippot, coffrets, maroquinerie et carte cadeau.', Tout: 'Tout le catalogue public : 586 fiches.' };
+  if (!BG.kinds[st.k] && st.k !== 'Tout') st.k = 'Collier';
+  var title = st.k === 'Tout' ? 'Tous les produits' : BG.kinds[st.k];
+  document.getElementById('ctitle').textContent = title; document.title = title + ' — Breslev Gang · Prévisualisation';
   document.getElementById('ckick').textContent = 'Collection · relevé public 29/10/2026';
-  document.getElementById('cintro').textContent = st.k === 'Petek' ? 'Cuirs exotiques, perles, chaînes : toutes les déclinaisons publiées sur la boutique.' : 'Flamme, Maguen David, Hay, Mezouza, Israël, Tsadikim : toutes les familles publiées sur la boutique.';
-  var base = D.products.filter(function (p) { return p.k === st.k; });
+  document.getElementById('cintro').textContent = INTRO[st.k] || '';
+  var base = D.products.filter(function (p) { return st.k === 'Tout' || p.k === st.k; });
   var fams = {}; base.forEach(function (p) { fams[p.f] = (fams[p.f] || 0) + 1; });
-  var famList = Object.keys(fams).filter(function (f) { return f !== 'Autres'; }).sort(function (a, b) { return fams[b] - fams[a]; });
+  var famList = Object.keys(fams).sort(function (a, b) { return fams[b] - fams[a]; });
   var PR = [['', 'Tous prix'], ['lo', '≤ 90 €'], ['mid', '90 – 150 €'], ['hi', '> 150 €']];
   function chip(label, on, fn) { var b = document.createElement('button'); b.type = 'button'; b.className = 'bg-chip'; b.textContent = label; b.setAttribute('aria-pressed', on); b.onclick = function () { fn(); st.n = 24; draw(); }; return b; }
   function draw() {
     var f = document.getElementById('filters'); f.innerHTML = '';
-    if (st.k === 'Collier') famList.forEach(function (x) { f.appendChild(chip(x + ' · ' + fams[x], st.f === x, function () { st.f = st.f === x ? '' : x; })); });
+    if (famList.length > 1) famList.forEach(function (x) { f.appendChild(chip(x + ' · ' + fams[x], st.f === x, function () { st.f = st.f === x ? '' : x; })); });
     PR.slice(1).forEach(function (x) { f.appendChild(chip(x[1], st.price === x[0], function () { st.price = st.price === x[0] ? '' : x[0]; })); });
     f.appendChild(chip('En stock', st.avail, function () { st.avail = !st.avail; }));
     var l = base.filter(function (p) {
-      return (!st.f || p.f === st.f) && (!st.q || p.t.toLowerCase().indexOf(st.q) >= 0) && (!st.avail || p.a) &&
+      return (!st.f || p.f === st.f) && BG.matches(p, st.q) && (!st.avail || p.a) &&
         (!st.price || (st.price === 'lo' ? p.p <= 9000 : st.price === 'mid' ? p.p > 9000 && p.p <= 15000 : p.p > 15000));
     });
     if (st.grp) { var seen = {}; l = l.filter(function (p) { if (!p.g) return true; if (seen[p.g]) return false; seen[p.g] = 1; return true; }); }
