@@ -4,7 +4,10 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#111315">
+  {%- comment -%} Bloquant volontairement : le thème clair/sombre doit être appliqué avant la peinture (sans flash). Script < 2 Ko. {%- endcomment -%}
+  {% # theme-check-disable ParserBlockingScript %}
   <script src="{{ 'bg-theme.js' | asset_url }}"></script>
+  {% # theme-check-enable ParserBlockingScript %}
   <script>document.documentElement.classList.add('js')</script>
   {%- comment -%} Polices : Cormorant (titres du thème officiel) + Manrope. À auto-héberger (OFL) avant production pour le RGPD. {%- endcomment -%}
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
