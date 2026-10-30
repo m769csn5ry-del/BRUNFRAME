@@ -1,0 +1,14 @@
+{
+  "source": "animation-reference.mp4",
+  "durationSeconds": 14.813,
+  "inspection": "16 exact frames at 0.95 s intervals; observed, timings approximate",
+  "phases": {
+    "0–3s": "arc carousel; selected object advances; neighbors darkened",
+    "3–5s": "selected object isolated, background transitions; zoom and tilt",
+    "5–9s": "rotating macro view and successive side copy",
+    "9–10s": "large typography behind object",
+    "10–13s": "neutral studio, FAQ",
+    "13–14.8s": "collection returns"
+  },
+  "limitations": "Single front-view photographs; no accurate rear or 360-degree rotation. Preserve brand monochrome palette instead of orange beverage background."
+}
