@@ -1,61 +1,41 @@
 {
   "sections": {
     "hero": {
-      "type": "hero-orbit",
+      "type": "hero-studio",
       "blocks": {
         "piece_1": {
           "type": "necklace",
           "settings": {
             "product": "necklace-maguen-chrome",
-            "theme_cutout": true,
-            "fy": 89,
-            "c1": "#c9d3dc",
-            "c2": "#5f6c78",
-            "c3": "#0d1114"
+            "fy": 89
           }
         },
         "piece_2": {
           "type": "necklace",
           "settings": {
             "product": "necklace-chrome-fire-26",
-            "theme_cutout": true,
-            "fy": 90,
-            "c1": "#dfe2e5",
-            "c2": "#6b7178",
-            "c3": "#111315"
+            "fy": 90
           }
         },
         "piece_3": {
           "type": "necklace",
           "settings": {
             "product": "petek-croco-black-x-hay-new-season-26",
-            "theme_cutout": true,
-            "fy": 90,
-            "c1": "#a7adb3",
-            "c2": "#3d4349",
-            "c3": "#0c0e10"
+            "fy": 90
           }
         },
         "piece_4": {
           "type": "necklace",
           "settings": {
             "product": "mezouza-pearl-black",
-            "theme_cutout": true,
-            "fy": 90,
-            "c1": "#b7bbc0",
-            "c2": "#4a5057",
-            "c3": "#0e1012"
+            "fy": 90
           }
         },
         "piece_5": {
           "type": "necklace",
           "settings": {
             "product": "necklace-fire-2-0",
-            "theme_cutout": true,
-            "fy": 93,
-            "c1": "#e8eaec",
-            "c2": "#7d838a",
-            "c3": "#141618"
+            "fy": 93
           }
         }
       },
@@ -65,7 +45,8 @@
         "piece_3",
         "piece_4",
         "piece_5"
-      ]
+      ],
+      "settings": {}
     },
     "best": {
       "type": "featured-collection",
@@ -93,20 +74,24 @@
       ]
     },
     "quote": {
-      "type": "brand-quote"
+      "type": "brand-quote",
+      "disabled": true
     },
     "story": {
-      "type": "story"
+      "type": "story",
+      "disabled": true
     },
     "spot": {
-      "type": "spotlight-product"
+      "type": "spotlight-product",
+      "disabled": true
     },
     "social": {
       "type": "social-proof",
       "settings": {
         "url": "https://www.instagram.com/breslev_gang/",
         "text": "Paris · Instagram et TikTok @breslevgang."
-      }
+      },
+      "disabled": true
     },
     "assure": {
       "type": "reassurance",
@@ -121,15 +106,15 @@
         "b": {
           "type": "item",
           "settings": {
-            "title": "Paiement en plusieurs fois",
-            "text": "Klarna dès 120 €, CB, Apple Pay, PayPal — checkout Shopify."
+            "title": "Paiement Shopify",
+            "text": "Les moyens de paiement sont affichés au checkout officiel."
           }
         },
         "c": {
           "type": "item",
           "settings": {
-            "title": "Expédition internationale",
-            "text": "Selon les marchés actifs dans Shopify."
+            "title": "Livraison & retours",
+            "text": "Consultez les conditions officielles de la boutique."
           }
         },
         "d": {
@@ -146,16 +131,21 @@
         "c",
         "d"
       ]
+    },
+    "atelier": {
+      "type": "atelier",
+      "settings": {}
     }
   },
   "order": [
     "hero",
-    "best",
     "tiles",
+    "atelier",
+    "best",
+    "assure",
     "quote",
     "story",
     "spot",
-    "social",
-    "assure"
+    "social"
   ]
 }
