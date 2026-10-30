@@ -16,7 +16,7 @@ window.BG = window.BG || {};
       var sku = root.querySelector('[data-v-sku]'); if (sku) sku.textContent = v.sku || '—';
       var btn = form.querySelector('[type=submit]'); btn.disabled = !v.available;
       btn.querySelector('span').textContent = v.available ? btn.dataset.add : btn.dataset.sold;
-      var url = new URL(location.href); url.searchParams.set('variant', v.id); history.replaceState(null, '', url);
+      try { var url = new URL(location.href); url.searchParams.set('variant', v.id); history.replaceState(null, '', url); } catch (_) { }
       if (v.image) { var img = root.querySelector('[data-main-img]'); if (img) { img.src = v.image; img.srcset = ''; } }
       var tt = root.querySelector('[data-v-title]'); if (tt && v.title_full) tt.textContent = v.title_full;
       var th = root.querySelector('[data-thumbs]');
