@@ -41,3 +41,13 @@ Lien Netlify, puis contrôle des vraies photos sur l'URL. Ensuite : détourages,
 - Les 24 regroupements restent « proposés » (non validés par le propriétaire) ; aucune fusion.
 - Thème Liquid : le bouton de thème et la recherche dédiée sont faits côté preview ; `header.liquid` / `main-search.liquid` à aligner (menu Shopify à créer : Colliers, Peteks, Bijoux, Collections, Univers).
 - Prochain lot : phase 2 (rail 3 colliers, sélection DOM, rail → fiche → panier). Phase 3 attend `REFERENCE_ANIMATION_COLLIERS.mp4` et les détourages/modèles 3D.
+
+## Détourages (30/10, session Claude locale avec accès Chrome / CDN)
+- **FAIT** : 5 détourages transparents des photos officielles (CDN public Shopify, 1200 px) dans `theme/assets/cut-<handle>.webp` : Maguen Chrome, Chrome Fire 26, Petek Croco Black X Haï, Mezouza Maguen à Perles Black, Fire 2.0. Méthode : segmentation rembg (u2net / isnet-general-use), masque limité au métal clair pour les pièces chromées, ajout des perles noires par ouverture morphologique pour le Petek, plaque hexagonale de prise de vue retirée (accessoire, pas le produit). Haut de chaîne coupé à 30 % pour garder le pendentif lisible. Métadonnées : `tools/cutouts.json` (dimensions, `fy` = hauteur du pendentif).
+- Galerie et retour collectif : les 5 pièces détourées pendent sous la lampe ; zoom et poses centrés sur le pendentif (`--fy`). Repli photo fondue conservé pour toute pièce sans détourage.
+- Fonds par collier passés en nuances acier / graphite (brief : interface monochrome, la couleur vient des pièces).
+- Thème : bloc « Collier » → case « Utiliser le détourage fourni avec le thème » + réglage « Hauteur du pendentif ». `templates/index.json` renseigne les 5 pièces.
+- Mobile : titre de galerie masqué visuellement (h1 conservé dans le DOM), il chevauchait les chaînes.
+- **Écartés** : Collier Breslev Necklace Fire (photo à deux chaînes, brin droit perdu au détourage) et Petek Real Croco Black (fond croco collé à l'étui). Ils restent visibles partout ailleurs avec leur photo officielle. Rien n'est un modèle 3D : `supportsTrue360` reste faux.
+- **TESTÉ** : vérification manuelle navigateur (1440 émulé desktop 800 px réel, 390 px), jalons galerie → isolation → gros plan → chapitres → grande typo → FAQ → retour collectif ; clair/sombre ; images chargées (naturalWidth > 0). Theme Check : seule l'erreur ParserBlockingScript préexistante (bg-theme.js volontairement bloquant). `npm test` **non relancé** dans cette session (exécution refusée par la politique locale) : à relancer.
+- **À DÉCIDER** : la signature « It’s a protection » / « Une protection » reprend la bio officielle mais le brief demande de ne pas promettre de protection sans contenu approuvé.
