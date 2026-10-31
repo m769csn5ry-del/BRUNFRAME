@@ -1,0 +1,6 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    { "name": "brg-preview", "runtimeExecutable": "python3", "runtimeArgs": ["-m", "http.server", "4180", "--directory", "dist-preview"], "port": 4180 }
+  ]
+}
