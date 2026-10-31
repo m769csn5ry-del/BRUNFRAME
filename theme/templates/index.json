@@ -1,0 +1,571 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero-video",
+      "settings": {
+        "video_url": "https://cdn.shopify.com/videos/c/o/v/cf1608d983f8495fa50cb0a5a7968a63.mov",
+        "title": "Du caractère.\nÀ porter.",
+        "text": "Colliers et Peteks signés Breslev Gang.",
+        "button_label": "Explorer les colliers",
+        "button_link": "#colliers"
+      }
+    },
+    "float": {
+      "type": "jewel-float",
+      "blocks": {
+        "piece_1": {
+          "type": "piece",
+          "settings": {
+            "product": "necklace-chrome-fire-26",
+            "collection": "colliers-flamme-aesh-cheli-🔥",
+            "family": "Flamme · Aech Cheli",
+            "cutout_asset": "piece-necklace-chrome-fire-26.webp",
+            "split": true,
+            "cutout_w": 346,
+            "cutout_h": 1377,
+            "bail_x": 48.0,
+            "bail_y": 86.7,
+            "pend_l": 32.8,
+            "pend_r": 62.9,
+            "focus_x": 47.9,
+            "focus_y": 93.7,
+            "articulation": 100,
+            "detail_pos": "47.9% 93.7%"
+          }
+        },
+        "piece_2": {
+          "type": "piece",
+          "settings": {
+            "product": "necklace-maguen-chrome",
+            "collection": "https-breslevgang-com-collections-colliers-maguen-david-e2-9c-a1-ef-b8-8f",
+            "family": "Maguen David",
+            "cutout_asset": "piece-necklace-maguen-chrome.webp",
+            "split": true,
+            "cutout_w": 242,
+            "cutout_h": 1150,
+            "bail_x": 50.8,
+            "bail_y": 84.6,
+            "pend_l": 24.0,
+            "pend_r": 78.0,
+            "focus_x": 51.0,
+            "focus_y": 92.0,
+            "articulation": 100,
+            "detail_pos": "51.0% 92.0%"
+          }
+        },
+        "piece_3": {
+          "type": "piece",
+          "settings": {
+            "product": "mezouza-pearl-black",
+            "collection": "colliers-mezouza-maguen-a-perles",
+            "family": "Mezouza Maguen à perles",
+            "cutout_asset": "piece-mezouza-pearl-black.webp",
+            "split": true,
+            "cutout_w": 450,
+            "cutout_h": 1498,
+            "bail_x": 51.8,
+            "bail_y": 84.3,
+            "pend_l": 44.1,
+            "pend_r": 60.1,
+            "focus_x": 52.5,
+            "focus_y": 92.6,
+            "articulation": 100,
+            "detail_pos": "52.5% 92.6%"
+          }
+        },
+        "piece_4": {
+          "type": "piece",
+          "settings": {
+            "product": "necklace-fire-2-0",
+            "collection": "colliers-flamme-aesh-cheli-🔥",
+            "family": "Flamme · Aech Cheli",
+            "cutout_asset": "piece-necklace-fire-2-0.webp",
+            "split": true,
+            "cutout_w": 356,
+            "cutout_h": 1405,
+            "bail_x": 50.0,
+            "bail_y": 89.8,
+            "pend_l": 31.1,
+            "pend_r": 67.5,
+            "focus_x": 50.0,
+            "focus_y": 94.9,
+            "articulation": 100,
+            "detail_pos": "50.0% 94.9%"
+          }
+        },
+        "piece_5": {
+          "type": "piece",
+          "settings": {
+            "product": "petek-croco-black-x-hay-new-season-26",
+            "collection": "capsule-croco-leather-🐊",
+            "family": "Petek · Haï",
+            "cutout_asset": "piece-petek-croco-black-x-hay-new-season-26.webp",
+            "split": true,
+            "cutout_w": 385,
+            "cutout_h": 1546,
+            "bail_x": 22.6,
+            "bail_y": 80.4,
+            "pend_l": 13.3,
+            "pend_r": 74.5,
+            "focus_x": 45.0,
+            "focus_y": 90.9,
+            "articulation": 30,
+            "detail_pos": "45.0% 90.9%"
+          }
+        }
+      },
+      "block_order": [
+        "piece_1",
+        "piece_2",
+        "piece_3",
+        "piece_4",
+        "piece_5"
+      ],
+      "settings": {
+        "anchor": "colliers",
+        "label": "Colliers & Peteks",
+        "heading": "Choisissez votre pièce",
+        "hint": "Glissez ou utilisez les flèches",
+        "cta_label": "Voir la pièce",
+        "drift": true,
+        "sway": 100,
+        "zoom": 210,
+        "track": 420,
+        "all_label": "Voir tous les colliers",
+        "all_link": "/collections/colliers-pendentifs"
+      }
+    },
+    "groups": {
+      "type": "product-groups",
+      "blocks": {
+        "group_1": {
+          "type": "group",
+          "settings": {
+            "title": "Peteks perles",
+            "collection": "petek-perles",
+            "link": "",
+            "link_label": "Voir toute la collection",
+            "products": [
+              "petek-full-black-breslev-necklace-jewish",
+              "petek-black-maguen",
+              "petek-blue-tiger",
+              "petek-grey-autruche-1"
+            ],
+            "count": 4
+          }
+        },
+        "group_2": {
+          "type": "group",
+          "settings": {
+            "title": "Peteks chaîne",
+            "collection": "",
+            "link": "/collections/types?q=Petek%20%C3%A0%20chaine",
+            "link_label": "Voir toute la collection",
+            "products": [
+              "petek-hot-black-croco-necklace-jewish",
+              "petek-breslev-grained-black-necklace-jewish",
+              "petek-breslev-sunset-leopard-safari-necklace-jewish",
+              "petek-breslev-carbon-python-necklace-jewish"
+            ],
+            "count": 4
+          }
+        },
+        "group_3": {
+          "type": "group",
+          "settings": {
+            "title": "Peteks cordon et cuir",
+            "collection": "petek-waxed-edition-cordon",
+            "link": "",
+            "link_label": "Voir toute la collection",
+            "products": [
+              "petek-cordon-chaine-fleur-de-lys",
+              "petek-cordon-chain-tube",
+              "petek-black-grain-leather",
+              "petek-shark-marble"
+            ],
+            "count": 4
+          }
+        },
+        "group_4": {
+          "type": "group",
+          "settings": {
+            "title": "Colliers et pendentifs",
+            "collection": "colliers-pendentifs",
+            "link": "",
+            "link_label": "Voir toute la collection",
+            "products": [
+              "jewel-breslev-necklace-fire-jewish",
+              "collier-mezouza",
+              "double-triangle-maguen-couleur-argent",
+              "jewel-necklace-breslev-hay"
+            ],
+            "count": 4
+          }
+        },
+        "group_5": {
+          "type": "group",
+          "settings": {
+            "title": "Bracelets",
+            "collection": "",
+            "link": "/search?q=bracelet&type=product",
+            "link_label": "Voir toute la collection",
+            "products": [
+              "bracelet-cordon-black",
+              "flame-duo-bracelet-collier-black-silver",
+              "bracelet-maguen",
+              "bracelet-hay"
+            ],
+            "count": 4
+          }
+        },
+        "group_6": {
+          "type": "group",
+          "settings": {
+            "title": "Vêtements",
+            "collection": "hoodies",
+            "link": "",
+            "link_label": "Voir toute la collection",
+            "products": [
+              "pull-modele-classic",
+              "sweat-modele-classic",
+              "tshirt-modele-classic",
+              "t-shirt-manche-longue-logo-na-nah"
+            ],
+            "count": 4
+          }
+        }
+      },
+      "block_order": [
+        "group_1",
+        "group_2",
+        "group_3",
+        "group_4",
+        "group_5",
+        "group_6"
+      ],
+      "settings": {
+        "heading": "Les familles Breslev Gang"
+      }
+    },
+    "others": {
+      "type": "collections-showcase",
+      "blocks": {
+        "u_1": {
+          "type": "collection",
+          "settings": {
+            "collection": "bracelet-de-main-flamme",
+            "title": "Gamme diamants",
+            "text": "Bracelets et pendentifs de la gamme diamants.",
+            "products": [
+              "bracelet-de-main-flamme-or-rose",
+              "flamme-diamant-couleur-argent",
+              "flamme-diamant-couleur-argent-1",
+              "flamme-diamant-couleur-or-rose"
+            ],
+            "link": "",
+            "link_label": ""
+          }
+        },
+        "u_2": {
+          "type": "collection",
+          "settings": {
+            "collection": "petek-kids",
+            "title": "Peteks Kids et bébé",
+            "text": "Peteks Kids, broches bébé et Peteks femme enceinte.",
+            "products": [
+              "petek-kids-rose",
+              "petek-kids-full-black-2",
+              "petek-kids-black-grey",
+              "petek-kids-leopard"
+            ],
+            "link": "",
+            "link_label": ""
+          }
+        },
+        "u_3": {
+          "type": "collection",
+          "settings": {
+            "collection": "",
+            "title": "Pochette en cuir",
+            "text": "La pochette en cuir de la maison.",
+            "products": [
+              "pochette-d-ete-2k26"
+            ],
+            "link": "/products/pochette-d-ete-2k26",
+            "link_label": "Voir la pochette"
+          }
+        },
+        "u_4": {
+          "type": "collection",
+          "settings": {
+            "collection": "objets-deco",
+            "title": "Déco et Chabat",
+            "text": "Objets de décoration et pièces pour Chabat.",
+            "products": [
+              "fire-splatch-by-breslev-gang-full-black",
+              "fire-splatch-by-breslev-gang-full-white",
+              "fire-splatch-by-breslev-gang-mirror",
+              "fire-splatch-by-breslev-gang-pink-gold"
+            ],
+            "link": "",
+            "link_label": ""
+          }
+        },
+        "u_5": {
+          "type": "collection",
+          "settings": {
+            "collection": "kippot",
+            "title": "Kippot",
+            "text": "",
+            "products": [
+              "kippa-zebre-noir-aech-cheli-נ-נח-or-rose",
+              "kippa-velour-noir-rabi-israel-נ-נח",
+              "kippa-velour-noir-aech-cheli-נ-נח",
+              "kippa-zebre-noir-aech-cheli-נ-נח-or-rose-1"
+            ],
+            "link": "",
+            "link_label": ""
+          }
+        },
+        "u_6": {
+          "type": "collection",
+          "settings": {
+            "collection": "box-hanouka",
+            "title": "Box et carte cadeau",
+            "text": "Box Breslev Gang et carte cadeau.",
+            "products": [
+              "box-hanouka-noir",
+              "box-hanouka-beige",
+              "carte-cadeau-breslev-gang"
+            ],
+            "link": "",
+            "link_label": ""
+          }
+        }
+      },
+      "block_order": [
+        "u_1",
+        "u_2",
+        "u_3",
+        "u_4",
+        "u_5",
+        "u_6"
+      ],
+      "settings": {
+        "label": "Aussi chez Breslev Gang",
+        "heading": "Les autres univers"
+      }
+    },
+    "people": {
+      "type": "personalities",
+      "blocks": {
+        "p_9799": {
+          "type": "person",
+          "settings": {
+            "asset": "portrait-9799",
+            "name": ""
+          }
+        },
+        "p_9800": {
+          "type": "person",
+          "settings": {
+            "asset": "portrait-9800",
+            "name": ""
+          }
+        },
+        "p_9801": {
+          "type": "person",
+          "settings": {
+            "asset": "portrait-9801",
+            "name": ""
+          }
+        },
+        "p_9802": {
+          "type": "person",
+          "settings": {
+            "asset": "portrait-9802",
+            "name": ""
+          }
+        },
+        "p_9803": {
+          "type": "person",
+          "settings": {
+            "asset": "portrait-9803",
+            "name": ""
+          }
+        },
+        "p_9804": {
+          "type": "person",
+          "settings": {
+            "asset": "portrait-9804",
+            "name": ""
+          }
+        },
+        "p_9806": {
+          "type": "person",
+          "settings": {
+            "asset": "portrait-9806",
+            "name": ""
+          }
+        },
+        "p_9807": {
+          "type": "person",
+          "settings": {
+            "asset": "portrait-9807",
+            "name": ""
+          }
+        },
+        "p_9808": {
+          "type": "person",
+          "settings": {
+            "asset": "portrait-9808",
+            "name": ""
+          }
+        },
+        "p_9809": {
+          "type": "person",
+          "settings": {
+            "asset": "portrait-9809",
+            "name": ""
+          }
+        },
+        "p_9794": {
+          "type": "person",
+          "settings": {
+            "asset": "portrait-9794",
+            "name": ""
+          }
+        },
+        "p_9796": {
+          "type": "person",
+          "settings": {
+            "asset": "portrait-9796",
+            "name": ""
+          }
+        },
+        "p_9793": {
+          "type": "person",
+          "settings": {
+            "asset": "portrait-9793",
+            "name": ""
+          }
+        }
+      },
+      "block_order": [
+        "p_9799",
+        "p_9800",
+        "p_9801",
+        "p_9802",
+        "p_9803",
+        "p_9804",
+        "p_9806",
+        "p_9807",
+        "p_9808",
+        "p_9809",
+        "p_9794",
+        "p_9796",
+        "p_9793"
+      ],
+      "settings": {
+        "layout": "gallery",
+        "label": "Personnalités",
+        "heading": "Breslev Gang, à leur manière",
+        "page_link": "/pages/personnalites"
+      }
+    },
+    "meaning": {
+      "type": "jewel-meaning",
+      "settings": {
+        "label": "Le sens des bijoux",
+        "heading": "Chaque détail a un sens",
+        "text": "Ce que la maison dit de ses symboles, sources à l'appui.",
+        "link_label": "Lire le sens des bijoux",
+        "link": "/pages/le-sens-des-bijoux"
+      },
+      "blocks": {
+        "m1": {
+          "type": "meaning",
+          "settings": {
+            "title": "La flamme",
+            "text": "La flamme est le symbole emblématique de la maison. Elle exprime ses croyances essentielles, transmises par les paroles du Rabbi Nahman : « Mon feu brûlera jusqu'à la venue du Messie ».",
+            "source_label": "Descriptions des colliers Flamme, breslevgang.com",
+            "source_url": "https://breslevgang.com/collections/colliers-flamme-aesh-cheli-🔥",
+            "link_label": "Voir les colliers Flamme",
+            "link_url": "/collections/colliers-flamme-aesh-cheli-🔥"
+          }
+        },
+        "m2": {
+          "type": "meaning",
+          "settings": {
+            "title": "Le Petek",
+            "text": "Le Petek renvoie à la lettre reçue en 1922 par Rabbi Israël Ber Odesser, que le récit attribue à Rabbi Nahman, et qui porte la formule « Na Na'h Na'hma Nahman Méouman ».",
+            "source_label": "« L'histoire du Petek », journal de breslevgang.com",
+            "source_url": "https://breslevgang.com/blogs/news/lhistoire-du-petek",
+            "link_label": "Voir les Peteks",
+            "link_url": "/collections/petek-perles"
+          }
+        },
+        "m3": {
+          "type": "meaning",
+          "settings": {
+            "title": "Breslev",
+            "text": "Rabbi Na'hman de Breslev, né en 1772, est présenté par la maison comme le fondateur de la dynastie hassidique de Breslev.",
+            "source_label": "« Breslev, c'est quoi ? », journal de breslevgang.com",
+            "source_url": "https://breslevgang.com/blogs/news/breslev-cest-quoi",
+            "link_label": "",
+            "link_url": ""
+          }
+        }
+      },
+      "block_order": [
+        "m1",
+        "m2",
+        "m3"
+      ]
+    },
+    "info": {
+      "type": "purchase-info",
+      "settings": {
+        "heading": "Informations d'achat",
+        "show_shipping": true
+      },
+      "blocks": {
+        "f1": {
+          "type": "fact",
+          "settings": {
+            "title": "Livraison offerte dès 120 €",
+            "text": "D'après le bandeau de la boutique pour la France. En dessous, frais calculés au paiement."
+          }
+        },
+        "f2": {
+          "type": "fact",
+          "settings": {
+            "title": "Échange sous 14 jours",
+            "text": "Pour les colliers, à compter de la réception. Sweats et hoodies, faits à la commande, ne sont ni échangés ni remboursés."
+          }
+        },
+        "f3": {
+          "type": "fact",
+          "settings": {
+            "title": "Une question ?",
+            "text": "WhatsApp +33 7 80 95 18 36 ou formulaire de la page contact."
+          }
+        }
+      },
+      "block_order": [
+        "f1",
+        "f2",
+        "f3"
+      ]
+    }
+  },
+  "order": [
+    "hero",
+    "float",
+    "groups",
+    "others",
+    "people",
+    "meaning",
+    "info"
+  ]
+}

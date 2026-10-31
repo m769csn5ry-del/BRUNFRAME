@@ -1,0 +1,55 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "settings": {
+        "label": "Le sens des bijoux",
+        "intro": "Chaque détail a un sens. Voici ce que la maison en dit, sources à l'appui."
+      }
+    },
+    "chapters": {
+      "type": "meaning-page",
+      "settings": {},
+      "block_order": [
+        "flamme",
+        "petek",
+        "breslev"
+      ],
+      "blocks": {
+        "flamme": {
+          "type": "chapter",
+          "settings": {
+            "title": "La flamme · Aech Cheli",
+            "text": "<p>Dans les descriptions de ses colliers, Breslev Gang présente la flamme comme son symbole emblématique : bien plus qu'un élément esthétique, elle incarne l'identité de la maison et exprime ses croyances essentielles.</p><p>Ces croyances sont résumées par les paroles du Rabbi Nahman que reprend la boutique : « Mon feu brûlera jusqu'à la venue du Messie ».</p>",
+            "source_label": "Descriptions des colliers Flamme, breslevgang.com",
+            "source_url": "https://breslevgang.com/collections/colliers-flamme-aesh-cheli-🔥",
+            "collection": "colliers-flamme-aesh-cheli-🔥"
+          }
+        },
+        "petek": {
+          "type": "chapter",
+          "settings": {
+            "title": "Le Petek",
+            "text": "<p>Le journal de la boutique raconte l'histoire du Petek. En juillet 1922, au lendemain du 17 Tamouz, Rabbi Israël Ber Odesser, alors jeune étudiant, traverse plusieurs jours de profond désespoir.</p><p>Il découvre alors une lettre, le Petek, que le récit présente comme écrite par Rabbi Nahman lui-même, disparu plus d'un siècle auparavant. Elle porte la formule « Na Na'h Na'hma Nahman Méouman », que le journal présente comme le dernier enseignement de Rabbi Nahman.</p>",
+            "source_label": "« L'histoire du Petek », journal de breslevgang.com",
+            "source_url": "https://breslevgang.com/blogs/news/lhistoire-du-petek",
+            "collection": "petek-perles"
+          }
+        },
+        "breslev": {
+          "type": "chapter",
+          "settings": {
+            "title": "Breslev",
+            "text": "<p>Rabbi Na'hman de Breslev est né en 1772. Le journal de la boutique le présente comme le fondateur de la dynastie hassidique de Breslev ; sa mère était la petite-fille du Baal Chem Tov.</p>",
+            "source_label": "« Breslev, c'est quoi ? », journal de breslevgang.com",
+            "source_url": "https://breslevgang.com/blogs/news/breslev-cest-quoi"
+          }
+        }
+      }
+    }
+  },
+  "order": [
+    "main",
+    "chapters"
+  ]
+}

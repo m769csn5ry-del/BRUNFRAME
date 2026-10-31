@@ -1,0 +1,14 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-contact",
+      "settings": {
+        "label": "Une question sur une pièce",
+        "whatsapp": "+33 7 80 95 18 36"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

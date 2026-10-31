@@ -1,0 +1,131 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "settings": {
+        "label": "Personnalités"
+      }
+    },
+    "people": {
+      "type": "personalities",
+      "blocks": {
+        "p_9799": {
+          "type": "person",
+          "settings": {
+            "asset": "portrait-9799",
+            "name": ""
+          }
+        },
+        "p_9800": {
+          "type": "person",
+          "settings": {
+            "asset": "portrait-9800",
+            "name": ""
+          }
+        },
+        "p_9801": {
+          "type": "person",
+          "settings": {
+            "asset": "portrait-9801",
+            "name": ""
+          }
+        },
+        "p_9802": {
+          "type": "person",
+          "settings": {
+            "asset": "portrait-9802",
+            "name": ""
+          }
+        },
+        "p_9803": {
+          "type": "person",
+          "settings": {
+            "asset": "portrait-9803",
+            "name": ""
+          }
+        },
+        "p_9804": {
+          "type": "person",
+          "settings": {
+            "asset": "portrait-9804",
+            "name": ""
+          }
+        },
+        "p_9806": {
+          "type": "person",
+          "settings": {
+            "asset": "portrait-9806",
+            "name": ""
+          }
+        },
+        "p_9807": {
+          "type": "person",
+          "settings": {
+            "asset": "portrait-9807",
+            "name": ""
+          }
+        },
+        "p_9808": {
+          "type": "person",
+          "settings": {
+            "asset": "portrait-9808",
+            "name": ""
+          }
+        },
+        "p_9809": {
+          "type": "person",
+          "settings": {
+            "asset": "portrait-9809",
+            "name": ""
+          }
+        },
+        "p_9794": {
+          "type": "person",
+          "settings": {
+            "asset": "portrait-9794",
+            "name": ""
+          }
+        },
+        "p_9796": {
+          "type": "person",
+          "settings": {
+            "asset": "portrait-9796",
+            "name": ""
+          }
+        },
+        "p_9793": {
+          "type": "person",
+          "settings": {
+            "asset": "portrait-9793",
+            "name": ""
+          }
+        }
+      },
+      "block_order": [
+        "p_9799",
+        "p_9800",
+        "p_9801",
+        "p_9802",
+        "p_9803",
+        "p_9804",
+        "p_9806",
+        "p_9807",
+        "p_9808",
+        "p_9809",
+        "p_9794",
+        "p_9796",
+        "p_9793"
+      ],
+      "settings": {
+        "layout": "grid",
+        "label": "",
+        "heading": "",
+        "page_link": ""
+      }
+    }
+  },
+  "order": [
+    "main",
+    "people"
+  ]
+}
