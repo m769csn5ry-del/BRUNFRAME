@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code | default: 'fr' }}" data-theme="{{ settings.default_theme | default: 'dark' }}" class="no-js">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="{{ settings.dark_bg }}">
+    <link rel="canonical" href="{{ canonical_url }}">
+    {%- if settings.favicon != blank -%}
+      <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 64, height: 64 }}">
+    {%- endif -%}
+    <title>
+      {{- page_title -}}
+      {%- if current_page != 1 %} – {{ 'general.page' | t: page: current_page }}{% endif -%}
+      {%- unless page_title contains shop.name %} – {{ shop.name }}{% endunless -%}
+    </title>
+    {%- if page_description -%}
+      <meta name="description" content="{{ page_description | escape }}">
+    {%- endif -%}
+    {% render 'meta-tags' %}
+    <script>
+      (function () {
+        var d = document.documentElement;
+        try { var t = localStorage.getItem('brg-theme'); if (t === 'light' || t === 'dark') d.setAttribute('data-theme', t); } catch (e) {}
+        d.className = d.className.replace('no-js', 'js');
+      })();
+    </script>
+    {{ 'aileron-latin-900.woff2' | asset_url | preload_tag: as: 'font', type: 'font/woff2', crossorigin: 'anonymous' }}
+    {{ 'aileron-latin-400.woff2' | asset_url | preload_tag: as: 'font', type: 'font/woff2', crossorigin: 'anonymous' }}
+    {% render 'theme-styles' %}
+    {{ 'brg.css' | asset_url | stylesheet_tag }}
+    {{ content_for_header }}
+  </head>
+  <body class="tpl-{{ template.name }}{% if template.suffix %} tpl-{{ template.name }}-{{ template.suffix }}{% endif %}">
+    <a class="skip" href="#main">{{ 'accessibility.skip' | t }}</a>
+    {% sections 'header-group' %}
+    <main id="main" tabindex="-1">
+      {{ content_for_layout }}
+    </main>
+    {% sections 'footer-group' %}
+    {% render 'cart-drawer' %}
+    <p class="sr-only" aria-live="polite" data-live></p>
+    {% render 'theme-config' %}
+    <script src="{{ 'brg-core.js' | asset_url }}" defer></script>
+    {%- if template.name == 'index' -%}
+      <script src="{{ 'brg-float.js' | asset_url }}" defer></script>
+    {%- endif -%}
+  </body>
+</html>
