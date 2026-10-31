@@ -1,0 +1,118 @@
+{
+ "cadrages": {
+  "d accueil": {
+   "images": 62,
+   "recadrees": 0,
+   "exemples": []
+  },
+  "d fiche": {
+   "images": 7,
+   "recadrees": 0,
+   "exemples": []
+  },
+  "d zoom": {
+   "zoom": "matrix(2.4, 0, 0, 2.4, 0, 0)",
+   "apres_reinitialisation": "matrix(1.01179, 0, 0, 1.01179, 0, 0)"
+  },
+  "d panier": {
+   "ligne": "Necklace fire 2.0",
+   "attendu": "Necklace fire 2.0"
+  },
+  "d collection": {
+   "images": 40,
+   "recadrees": 0,
+   "exemples": []
+  },
+  "l accueil": {
+   "images": 62,
+   "recadrees": 0,
+   "exemples": []
+  },
+  "l fiche": {
+   "images": 7,
+   "recadrees": 0,
+   "exemples": []
+  },
+  "l zoom": {
+   "zoom": "matrix(2.4, 0, 0, 2.4, 0, 0)",
+   "apres_reinitialisation": "matrix(1.0118, 0, 0, 1.0118, 0, 0)"
+  },
+  "l panier": {
+   "ligne": "Necklace fire 2.0",
+   "attendu": "Necklace fire 2.0"
+  },
+  "l collection": {
+   "images": 40,
+   "recadrees": 0,
+   "exemples": []
+  },
+  "m accueil": {
+   "images": 62,
+   "recadrees": 0,
+   "exemples": []
+  },
+  "m fiche": {
+   "images": 7,
+   "recadrees": 0,
+   "exemples": []
+  },
+  "m zoom": {
+   "zoom": "matrix(2.4, 0, 0, 2.4, 0, 0)",
+   "apres_reinitialisation": "matrix(1.01181, 0, 0, 1.01181, 0, 0)"
+  },
+  "m panier": {
+   "ligne": "Necklace fire 2.0",
+   "attendu": "Necklace fire 2.0"
+  },
+  "n accueil": {
+   "images": 62,
+   "recadrees": 0,
+   "exemples": []
+  },
+  "n fiche": {
+   "images": 7,
+   "recadrees": 0,
+   "exemples": []
+  },
+  "n zoom": {
+   "zoom": "matrix(2.4, 0, 0, 2.4, 0, 0)",
+   "apres_reinitialisation": "matrix(1.0118, 0, 0, 1.0118, 0, 0)"
+  },
+  "n panier": {
+   "ligne": "Necklace fire 2.0",
+   "attendu": "Necklace fire 2.0"
+  }
+ },
+ "fluidite": {
+  "d défilement de la séquence": {
+   "median": 16.7,
+   "p95": 16.8,
+   "images": 93
+  },
+  "l défilement de la séquence": {
+   "median": 16.7,
+   "p95": 16.8,
+   "images": 92
+  },
+  "m défilement de la séquence": {
+   "median": 16.7,
+   "p95": 16.8,
+   "images": 91
+  },
+  "n défilement de la séquence": {
+   "median": 16.7,
+   "p95": 16.8,
+   "images": 92
+  }
+ },
+ "erreurs": {
+  "d accueil": [],
+  "d fiches": [],
+  "l accueil": [],
+  "l fiches": [],
+  "m accueil": [],
+  "m fiches": [],
+  "n accueil": [],
+  "n fiches": []
+ }
+}
