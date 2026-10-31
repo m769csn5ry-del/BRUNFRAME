@@ -10,3 +10,7 @@ dist-single/
 # cache local des photos produit (régénérable, ~144M) : l’aperçu retombe sur le CDN Shopify
 preview/media/products/
 preview/media-map.js
+
+# aperçu rendu depuis le Liquid (régénérable)
+dist-preview/
+.cache/

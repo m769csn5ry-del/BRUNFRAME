@@ -1,9 +1,12 @@
 # BRESLEV GANG — directives stables (BRUNFRAME)
-- Thème Shopify OS2 natif dans `theme/` (Liquid, sections, JSON templates). Pas de SPA/headless. Prévisualisation locale dans `preview/` (mêmes CSS/JS que le thème, fixtures DÉMO).
-- Direction : sombre minéral, chrome, vert profond/lumineux contrôlé. Aucune dominante blanc/beige (le brief client prime sur la palette par défaut du skill DA). Un CTA dominant par vue.
+- Thème Shopify OS2 natif dans `theme/` (Liquid, sections, JSON templates). Pas de SPA/headless. Prévisualisation = rendu du Liquid du thème dans `dist-preview/` (outil `tools/preview/`, médias dans `preview/media/`).
+- Direction (brief final 30/10/2026) : studio bijoutier graphite (#101216 / #191D23 / #262D35, texte #EEF0F3 / #AEB7C2, filets #38414D), chrome et métal brossé par la matière, titres Aileron Black en capitales. Pas d'accent vert, bleu ou orange. Mode clair blanc lumineux. Sombre par défaut. Un CTA dominant par vue.
+- La proposition Codex est exclue (ni composants, ni styles, ni chorégraphie) ; point de retour : étiquette `avant-refonte-2026-10-31`.
+- Colliers (correctif 31/10) : galerie horizontale de bijoux flottants (`jewel-float` + `brg-float.js`). Interdits : ellipse, orbit, rotation automatique, tringle, crochet, socle. Chaîne articulée seulement sur l'anneau (`tools/piece_rig.py`), jamais d'étirement. Photos produit entières (`contain`) partout.
+- Fiches : nom, prix, 2 phrases (20–40 mots), 3 caractéristiques vérifiées au plus ; textes dans `content/fiches-courtes.json` → `tools/build_product_copy.py`. Livraison : Paramètres du thème (CGV, à confirmer avec Ysahar).
 - Jamais d'invention : logo/typo de marque, prix, stocks, avis, célébrités, significations religieuses, données légales. Marquer `[à fournir]` / « démo ».
 - Interdit sans autorisation : publication, écriture Shopify réelle, achats, analytics non consentis. Pas de clés/secrets en JS ; `.env` ignoré.
 - Animations : reduced-motion respecté, intro passable, jamais bloquante pour l'achat.
 - Quota : lire seulement les fichiers concernés, pas d'agents multiples. Fin de lot : FAIT / TESTÉ / BLOQUÉ / PROCHAIN (<120 mots).
 - Données démo = catalogue public réel (`tools/build_demo_data.py`). Jamais de silhouette inventée présentée comme un bijou.
-- Tests : `npm test` (Playwright, captures dans `captures/`), `node tests/visual.js <préfixe>`, `npm run theme:check`. Démo : `bash tools/build_demo_site.sh` → `dist/` (Netlify, noindex).
+- Aperçu : `node tools/preview/build.js [--fetch]` (rend le Liquid du thème) puis `python3 -m http.server 4180 --directory dist-preview`. Recette : `node tests/float-interactions.js <playwright>` et `node tests/correctif-captures.js <dossier> <playwright>`. Theme Check sur `theme/`. Livraison : `LIVRAISON.md`.

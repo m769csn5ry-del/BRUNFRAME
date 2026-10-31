@@ -7,5 +7,8 @@
     "test": "node tests/e2e.js && node tests/phase1.js",
     "theme:check": "shopify theme check --path theme"
   },
-  "devDependencies": { "@shopify/cli": "^3" }
+  "devDependencies": {
+    "@shopify/cli": "^3",
+    "liquidjs": "10.30.0"
+  }
 }
