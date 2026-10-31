@@ -1,0 +1,72 @@
+{
+ "mezouza-pearl-black": {
+  "bail_x": 51.8,
+  "bail_y": 84.3,
+  "pend_l": 44.1,
+  "pend_r": 60.1,
+  "focus_x": 52.5,
+  "focus_y": 92.6,
+  "art": 1,
+  "removed_px": 362,
+  "pend_w": 72,
+  "pend_h": 236,
+  "w": 450,
+  "h": 1498
+ },
+ "necklace-chrome-fire-26": {
+  "bail_x": 48.0,
+  "bail_y": 86.7,
+  "pend_l": 32.8,
+  "pend_r": 62.9,
+  "focus_x": 47.9,
+  "focus_y": 93.7,
+  "art": 1,
+  "removed_px": 0,
+  "pend_w": 105,
+  "pend_h": 184,
+  "w": 346,
+  "h": 1377
+ },
+ "necklace-fire-2-0": {
+  "bail_x": 50.0,
+  "bail_y": 89.8,
+  "pend_l": 31.1,
+  "pend_r": 67.5,
+  "focus_x": 50.0,
+  "focus_y": 94.9,
+  "art": 1,
+  "removed_px": 0,
+  "pend_w": 130,
+  "pend_h": 144,
+  "w": 356,
+  "h": 1405
+ },
+ "necklace-maguen-chrome": {
+  "bail_x": 50.8,
+  "bail_y": 84.6,
+  "pend_l": 24.0,
+  "pend_r": 78.0,
+  "focus_x": 51.0,
+  "focus_y": 92.0,
+  "art": 1,
+  "removed_px": 0,
+  "pend_w": 131,
+  "pend_h": 178,
+  "w": 242,
+  "h": 1150
+ },
+ "petek-croco-black-x-hay-new-season-26": {
+  "bail_x": 22.6,
+  "bail_y": 80.4,
+  "pend_l": 13.3,
+  "pend_r": 74.5,
+  "focus_x": 45.0,
+  "focus_y": 90.9,
+  "art": 0.3,
+  "removed_px": 7923,
+  "pend_w": 236,
+  "pend_h": 304,
+  "w": 385,
+  "h": 1546
+ }
+}
