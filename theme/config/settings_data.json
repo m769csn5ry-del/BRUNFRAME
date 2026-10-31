@@ -1,0 +1,25 @@
+{
+  "current": {
+    "logo_width": 150,
+    "dark_bg": "#101216",
+    "dark_surface": "#191D23",
+    "dark_raised": "#262D35",
+    "dark_text": "#EEF0F3",
+    "dark_text_2": "#AEB7C2",
+    "dark_line": "#38414D",
+    "light_bg": "#FFFFFF",
+    "light_surface": "#F4F5F7",
+    "light_raised": "#ECEEF1",
+    "light_text": "#1B1F25",
+    "light_text_2": "#58616C",
+    "light_line": "#DCE0E5",
+    "default_theme": "dark",
+    "show_theme_toggle": true,
+    "animations_enabled": true,
+    "animation_intensity": 100,
+    "cart_type": "drawer",
+    "social_instagram": "https://www.instagram.com/breslev_gang/",
+    "social_tiktok": "",
+    "social_facebook": ""
+  }
+}

@@ -1,0 +1,259 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Breslev Gang Studio",
+    "theme_version": "2.0.0",
+    "theme_author": "BRUNFRAME",
+    "theme_documentation_url": "https://github.com/m769csn5ry-del/brunframe",
+    "theme_support_url": "https://github.com/m769csn5ry-del/brunframe"
+  },
+  {
+    "name": "Identité",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "Logo (PNG transparent, clair)"
+      },
+      {
+        "type": "range",
+        "id": "logo_width",
+        "label": "Largeur du logo",
+        "min": 80,
+        "max": 240,
+        "step": 4,
+        "unit": "px",
+        "default": 150
+      },
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon"
+      }
+    ]
+  },
+  {
+    "name": "Couleurs — thème sombre",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Thème par défaut. Les photos des bijoux et des portraits ne sont jamais teintées."
+      },
+      {
+        "type": "color",
+        "id": "dark_bg",
+        "label": "Fond graphite",
+        "default": "#101216"
+      },
+      {
+        "type": "color",
+        "id": "dark_surface",
+        "label": "Surfaces anthracite",
+        "default": "#191D23"
+      },
+      {
+        "type": "color",
+        "id": "dark_raised",
+        "label": "Surfaces relevées",
+        "default": "#262D35"
+      },
+      {
+        "type": "color",
+        "id": "dark_text",
+        "label": "Texte argent clair",
+        "default": "#EEF0F3"
+      },
+      {
+        "type": "color",
+        "id": "dark_text_2",
+        "label": "Texte secondaire",
+        "default": "#AEB7C2"
+      },
+      {
+        "type": "color",
+        "id": "dark_line",
+        "label": "Bordures et séparations",
+        "default": "#38414D"
+      }
+    ]
+  },
+  {
+    "name": "Couleurs — thème clair",
+    "settings": [
+      {
+        "type": "color",
+        "id": "light_bg",
+        "label": "Fond",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "id": "light_surface",
+        "label": "Surfaces",
+        "default": "#F4F5F7"
+      },
+      {
+        "type": "color",
+        "id": "light_raised",
+        "label": "Surfaces relevées",
+        "default": "#ECEEF1"
+      },
+      {
+        "type": "color",
+        "id": "light_text",
+        "label": "Texte anthracite",
+        "default": "#1B1F25"
+      },
+      {
+        "type": "color",
+        "id": "light_text_2",
+        "label": "Texte secondaire",
+        "default": "#58616C"
+      },
+      {
+        "type": "color",
+        "id": "light_line",
+        "label": "Bordures et séparations",
+        "default": "#DCE0E5"
+      }
+    ]
+  },
+  {
+    "name": "Thème clair / sombre",
+    "settings": [
+      {
+        "type": "select",
+        "id": "default_theme",
+        "label": "Thème à l'ouverture",
+        "options": [
+          {
+            "value": "dark",
+            "label": "Sombre"
+          },
+          {
+            "value": "light",
+            "label": "Clair"
+          }
+        ],
+        "default": "dark"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_theme_toggle",
+        "label": "Afficher le bouton de changement de thème",
+        "default": true
+      }
+    ]
+  },
+  {
+    "name": "Animations",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "animations_enabled",
+        "label": "Activer les animations",
+        "info": "Le réglage « réduire les animations » de l'appareil est toujours respecté.",
+        "default": true
+      },
+      {
+        "type": "range",
+        "id": "animation_intensity",
+        "label": "Intensité des déplacements",
+        "min": 0,
+        "max": 150,
+        "step": 10,
+        "unit": "%",
+        "default": 100
+      }
+    ]
+  },
+  {
+    "name": "Panier",
+    "settings": [
+      {
+        "type": "select",
+        "id": "cart_type",
+        "label": "Après un ajout",
+        "options": [
+          {
+            "value": "drawer",
+            "label": "Ouvrir le tiroir panier"
+          },
+          {
+            "value": "page",
+            "label": "Aller à la page panier"
+          }
+        ],
+        "default": "drawer"
+      }
+    ]
+  },
+  {
+    "name": "Livraison et retours",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Libellés repris partout (fiches, panier, infos d'achat). Source actuelle : CGV, section LIVRAISON, et politique de retour (relevé du 31/10/2026). À confirmer avant publication."
+      },
+      {
+        "type": "text",
+        "id": "shipping_title",
+        "label": "Titre du délai",
+        "default": "Livraison sous huit jours"
+      },
+      {
+        "type": "textarea",
+        "id": "shipping_note",
+        "label": "Délai de livraison",
+        "default": "Livraison dans les huit jours suivant la conclusion du contrat, selon nos conditions générales de vente."
+      },
+      {
+        "type": "text",
+        "id": "shipping_link",
+        "label": "Lien vers les conditions",
+        "default": "/policies/terms-of-sale"
+      },
+      {
+        "type": "text",
+        "id": "shipping_link_label",
+        "label": "Libellé du lien",
+        "default": "Lire les CGV"
+      },
+      {
+        "type": "textarea",
+        "id": "returns_note",
+        "label": "Échanges et retours",
+        "default": "Échange possible sous 14 jours après réception, pour les colliers uniquement. Sweats et hoodies, fabriqués à la commande, ne sont ni échangés ni remboursés. Frais de retour à la charge de l'acheteur."
+      },
+      {
+        "type": "text",
+        "id": "returns_link",
+        "label": "Lien vers la politique de retour",
+        "default": "/policies/refund-policy"
+      }
+    ]
+  },
+  {
+    "name": "Réseaux sociaux",
+    "settings": [
+      {
+        "type": "text",
+        "id": "social_instagram",
+        "label": "Instagram",
+        "default": "https://www.instagram.com/breslev_gang/"
+      },
+      {
+        "type": "text",
+        "id": "social_tiktok",
+        "label": "TikTok",
+        "info": "Le lien @breslevgang du site actuel renvoie vers un compte introuvable (relevé du 31/10/2026)."
+      },
+      {
+        "type": "text",
+        "id": "social_facebook",
+        "label": "Facebook",
+        "info": "Le lien du site actuel affiche « contenu indisponible » (relevé du 31/10/2026)."
+      }
+    ]
+  }
+]
