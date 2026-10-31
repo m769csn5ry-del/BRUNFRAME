@@ -1,0 +1,3 @@
+/* Aperçu local uniquement */
+.preview-badge { position: fixed; left: 10px; bottom: 10px; z-index: 30; margin: 0; padding: 6px 10px; border-radius: 3px; background: rgba(16,18,22,.78); color: #aeb7c2; font: 600 10px/1.2 Aileron, Arial, sans-serif; letter-spacing: .08em; pointer-events: none; }
+@media (max-width: 899px) { .preview-badge { bottom: auto; top: 8px; left: 8px; font-size: 9px; opacity: .8; } .tpl-product .preview-badge { display: none; } }
