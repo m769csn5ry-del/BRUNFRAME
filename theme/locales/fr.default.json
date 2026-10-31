@@ -1,0 +1,108 @@
+{
+  "general": {
+    "page": "Page {{ page }}",
+    "home": "Accueil",
+    "close": "Fermer",
+    "previous": "Précédent",
+    "next": "Suivant",
+    "view_all": "Voir toute la collection",
+    "loading": "Chargement…",
+    "viewer": "Visionneuse photo",
+    "menu": "Menu",
+    "search": "Rechercher",
+    "search_placeholder": "Une pièce, un symbole, une couleur…",
+    "no_js": "Activez JavaScript pour profiter des animations ; la boutique reste utilisable sans.",
+    "zoom": "Zoom",
+    "zoom_reset": "Réinitialiser"
+  },
+  "accessibility": {
+    "skip": "Aller au contenu",
+    "account": "Compte client",
+    "favorites": "Favoris",
+    "cart": "Panier",
+    "theme": "Changer de thème clair / sombre",
+    "pause_video": "Mettre la vidéo en pause",
+    "play_video": "Lire la vidéo"
+  },
+  "products": {
+    "add_to_cart": "Ajouter au panier",
+    "sold_out": "Épuisé",
+    "in_stock": "Disponible",
+    "unavailable_combo": "Combinaison indisponible",
+    "choose_options": "Choisissez les options de la pièce.",
+    "adding": "Ajout…",
+    "added": "Ajouté au panier",
+    "quantity": "Quantité",
+    "decrease": "Diminuer la quantité",
+    "increase": "Augmenter la quantité",
+    "description": "Description",
+    "description_missing": "La boutique ne publie pas encore de description pour cette pièce.",
+    "shipping_returns": "Livraison et retours",
+    "payment": "Paiement",
+    "fav_toggle": "Ajouter aux favoris",
+    "from_price": "Dès {{ price }}",
+    "sku": "Réf.",
+    "same_collection": "Dans la même collection",
+    "photo": "Photo {{ number }}",
+    "symbol": "Sens du symbole",
+    "shop_description": "Description de la boutique",
+    "returns_link": "Politique de retour"
+  },
+  "cart": {
+    "title": "Votre panier",
+    "empty": "Votre panier est vide.",
+    "subtotal": "Sous-total",
+    "checkout": "Passer au paiement",
+    "note": "Taxes incluses. Frais de livraison calculés au paiement.",
+    "remove": "Retirer",
+    "error": "La mise à jour du panier a échoué.",
+    "network_error": "Connexion impossible. Réessayez dans un instant.",
+    "continue": "Continuer mes achats",
+    "added": "Ajouté au panier"
+  },
+  "collections": {
+    "filter": "Filtrer",
+    "sort": "Trier",
+    "results": {
+      "one": "{{ count }} pièce",
+      "other": "{{ count }} pièces"
+    },
+    "clear": "Tout effacer",
+    "apply": "Voir les pièces",
+    "no_results": "Aucune pièce ne correspond à ces filtres.",
+    "price_from": "De",
+    "price_to": "À",
+    "all": "Toutes les collections"
+  },
+  "favorites": {
+    "added": "Ajouté aux favoris",
+    "removed": "Retiré des favoris",
+    "empty": "Aucun favori pour l'instant. Touchez le cœur d'une pièce pour la garder ici.",
+    "device_note": "Vos favoris sont enregistrés sur cet appareil. La synchronisation avec votre compte client n'est pas encore branchée."
+  },
+  "orbit": {
+    "discover": "Découvrir la pièce",
+    "back": "Retour à la sélection",
+    "prev": "Collier précédent",
+    "next": "Collier suivant",
+    "all": "Toutes les pièces",
+    "drag": "Glissez ou utilisez les flèches pour choisir"
+  },
+  "contact": {
+    "name": "Nom",
+    "email": "E-mail",
+    "phone": "Téléphone",
+    "message": "Message",
+    "send": "Envoyer",
+    "success": "Merci, votre message a bien été envoyé."
+  },
+  "search": {
+    "results": "Résultats pour « {{ terms }} »",
+    "none": "Aucun résultat pour « {{ terms }} »."
+  },
+  "notfound": {
+    "title": "Page introuvable",
+    "text": "Ce lien ne mène nulle part. Les pièces, elles, sont toujours là.",
+    "cta": "Voir tous les bijoux"
+  }
+}
