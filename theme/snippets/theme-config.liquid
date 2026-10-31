@@ -1,0 +1,45 @@
+{%- liquid
+  assign intensity = settings.animation_intensity | divided_by: 100.0
+-%}
+<script>
+  window.BRG = window.BRG || {};
+  window.BRG.config = {
+    moneyFormat: {{ shop.money_format | json }},
+    cartType: {{ settings.cart_type | json }},
+    animations: {{ settings.animations_enabled | json }},
+    intensity: {{ intensity | json }},
+    themeColors: { dark: {{ settings.dark_bg | json }}, light: {{ settings.light_bg | json }} },
+    routes: {
+      root: {{ routes.root_url | append: '/' | replace: '//', '/' | json }},
+      cart_url: {{ routes.cart_url | json }}
+    },
+    strings: {
+      cart_empty: {{ 'cart.empty' | t | json }},
+      cart_error: {{ 'cart.error' | t | json }},
+      network_error: {{ 'cart.network_error' | t | json }},
+      remove: {{ 'cart.remove' | t | json }},
+      added: {{ 'cart.added' | t | json }},
+      quantity: {{ 'products.quantity' | t | json }},
+      decrease: {{ 'products.decrease' | t | json }},
+      increase: {{ 'products.increase' | t | json }},
+      add_to_cart: {{ 'products.add_to_cart' | t | json }},
+      adding: {{ 'products.adding' | t | json }},
+      sold_out: {{ 'products.sold_out' | t | json }},
+      in_stock: {{ 'products.in_stock' | t | json }},
+      unavailable_combo: {{ 'products.unavailable_combo' | t | json }},
+      choose_options: {{ 'products.choose_options' | t | json }},
+      fav_toggle: {{ 'products.fav_toggle' | t | json }},
+      fav_added: {{ 'favorites.added' | t | json }},
+      fav_removed: {{ 'favorites.removed' | t | json }},
+      fav_empty: {{ 'favorites.empty' | t | json }},
+      loading: {{ 'general.loading' | t | json }},
+      close: {{ 'general.close' | t | json }},
+      previous: {{ 'general.previous' | t | json }},
+      next: {{ 'general.next' | t | json }},
+      viewer: {{ 'general.viewer' | t | json }},
+      zoom: {{ 'general.zoom' | t | json }},
+      zoom_reset: {{ 'general.zoom_reset' | t | json }},
+      discover: {{ 'orbit.discover' | t | json }}
+    }
+  };
+</script>

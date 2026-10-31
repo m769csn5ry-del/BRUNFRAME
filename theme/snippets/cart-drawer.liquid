@@ -1,0 +1,23 @@
+{%- comment -%} Tiroir panier : rempli et mis à jour depuis /cart.js (prix, remises et totaux restent ceux de Shopify). {%- endcomment -%}
+<div class="drawer" id="cart-drawer" hidden role="dialog" aria-modal="true" aria-labelledby="cart-drawer-title">
+  <div class="drawer__veil" data-drawer-close></div>
+  <div class="drawer__panel">
+    <div class="drawer__head">
+      <h2 class="h3" id="cart-drawer-title">{{ 'cart.title' | t }} <span class="muted small">(<span data-cart-count>{{ cart.item_count }}</span>)</span></h2>
+      <button class="icon-btn" type="button" data-drawer-close aria-label="{{ 'general.close' | t }}">{% render 'icon', name: 'close' %}</button>
+    </div>
+    <div class="drawer__body">
+      <div class="cart-ok" data-cart-ok hidden role="status">{% render 'icon', name: 'check' %}<span><strong>{{ 'cart.added' | t }}</strong> — <span data-cart-ok-text></span></span></div>
+      <div data-cart-lines><p class="empty">{{ 'general.loading' | t }}</p></div>
+    </div>
+    <div class="drawer__foot" data-cart-foot{% if cart.item_count == 0 %} hidden{% endif %}>
+      <p class="subtotal"><span>{{ 'cart.subtotal' | t }}</span><span data-cart-subtotal>{{ cart.total_price | money }}</span></p>
+      {%- if settings.shipping_note != blank -%}<p class="small muted ship-note">{{ settings.shipping_note }}</p>{%- endif -%}
+      <p class="cart-note">{{ 'cart.note' | t }}</p>
+      <form action="{{ routes.cart_url }}" method="post">
+        <button class="btn btn--chrome btn--block" type="submit" name="checkout">{{ 'cart.checkout' | t }}</button>
+      </form>
+      <p class="small" style="text-align:center;margin:12px 0 0"><a href="{{ routes.cart_url }}">{{ 'cart.title' | t }}</a></p>
+    </div>
+  </div>
+</div>

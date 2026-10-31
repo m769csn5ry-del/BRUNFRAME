@@ -1,0 +1,261 @@
+{%- comment -%}
+  Fiche courte — GÉNÉRÉ par tools/build_product_copy.py depuis content/fiches-courtes.json (ne pas modifier à la main).
+  part : 'accroche' (2 phrases), 'specs' (<li>, 3 au plus), 'symbol' (sens documenté et source), 'details' (paragraphes propres à la pièce).
+  Priorité : métachamps custom.accroche / custom.caracteristiques, puis textes rédigés, puis données vérifiables uniquement.
+{%- endcomment -%}
+{%- liquid
+  assign acc = product.metafields.custom.accroche.value
+  assign specs = ''
+  if product.metafields.custom.caracteristiques.value != blank
+    assign specs = product.metafields.custom.caracteristiques.value | join: '¦'
+  endif
+  if acc == blank
+    case product.handle
+    when "necklace-chrome-fire-26"
+      assign acc = "Une plaque chromée découpée, suspendue à une chaîne fine et longue qui tombe au milieu du torse. Au centre, la flamme de la maison, son symbole emblématique."
+      assign specs = ""
+    when "necklace-maguen-chrome"
+      assign acc = "Une étoile de David ajourée, aux branches larges, portée bas sur une chaîne fine. Son dessin chromé se lit de loin, sur un t-shirt comme sur une chemise ouverte."
+      assign specs = ""
+    when "mezouza-pearl-black"
+      assign acc = "Deux rangs de perles noires rejoignent une chaîne à gros maillons, d'où pend une mezouza ciselée. Une petite plaque Breslev Gang accompagne la pièce sur le côté."
+      assign specs = ""
+    when "necklace-fire-2-0"
+      assign acc = "Une flamme ajourée, pleine et compacte, au bout d'une chaîne fine qui la laisse tomber bas. Elle reprend l'emblème de la maison, inspiré des paroles du Rabbi Nahman."
+      assign specs = ""
+    when "petek-croco-black-x-hay-new-season-26"
+      assign acc = "Un Petek en cuir noir au motif croco, porté entre une chaîne et un rang de perles noires. Sur la chaîne, les lettres Haï ajoutent un second symbole à la pièce."
+      assign specs = ""
+    when "petek-full-black-breslev-necklace-jewish"
+      assign acc = "Un Petek noir sur deux rangs de perles noires mates, reliés par une courte chaîne. Un modèle entièrement noir, le plus sobre de cette sélection."
+      assign specs = ""
+    when "petek-black-maguen"
+      assign acc = "Un Petek noir monté sur perles noires, avec deux petites étoiles de David qui marquent la jonction avec la chaîne. Le Maguen David s'y invite en détail plutôt qu'en pendentif."
+      assign specs = ""
+    when "petek-blue-tiger"
+      assign acc = "Un Petek bleu nuit au grain marqué, sur un rang de perles noires ponctué de perles bleues. Le bleu revient dans l'étui et dans les perles, pour une pièce assortie."
+      assign specs = ""
+    when "petek-grey-autruche-1"
+      assign acc = "Un Petek au grain autruche, sur des perles noires et gris anthracite. La texture piquée de l'étui accroche la lumière et le distingue des Peteks lisses."
+      assign specs = ""
+    when "petek-hot-black-croco-necklace-jewish"
+      assign acc = "Un Petek en cuir noir au motif croco, porté sur une chaîne fine et longue. Les écailles marquées donnent du relief à une pièce tout en noir et argent."
+      assign specs = ""
+    when "petek-breslev-grained-black-necklace-jewish"
+      assign acc = "Un Petek en cuir noir grainé, sur une chaîne fine et longue. Un grain serré, plus discret que le croco, pour un Petek à porter tous les jours."
+      assign specs = ""
+    when "petek-breslev-sunset-leopard-safari-necklace-jewish"
+      assign acc = "Un Petek en cuir imprimé léopard, aux tons fauve et noir, sur une chaîne fine. Le motif fait de l'étui le point fort de la tenue."
+      assign specs = ""
+    when "petek-breslev-carbon-python-necklace-jewish"
+      assign acc = "Un Petek en cuir au motif python gris carbone, sur une chaîne fine. Les écailles en losange dessinent un relief graphique, entre le gris et le noir."
+      assign specs = ""
+    when "petek-cordon-chaine-fleur-de-lys"
+      assign acc = "Un Petek noir sur cordon ciré, relié par un court tronçon de chaîne et des bagues métalliques. Le cordon rend la pièce souple et légère au porter."
+      assign specs = ""
+    when "petek-cordon-chain-tube"
+      assign acc = "Un Petek sur cordon ciré, rythmé par deux tubes métalliques et un tronçon de chaîne. Les tubes donnent à ce modèle une ligne plus graphique que les autres cordons."
+      assign specs = ""
+    when "petek-black-grain-leather"
+      assign acc = "Un Petek en cuir noir grainé sur un simple cordon ciré noir. La version la plus dépouillée des Peteks cordon : rien que le cuir et le cordon."
+      assign specs = ""
+    when "petek-shark-marble"
+      assign acc = "Un Petek sombre sur cordon ciré noir, encadré de deux perles claires. Une pièce souple et légère, dans la ligne Waxed Édition de la maison."
+      assign specs = ""
+    when "jewel-breslev-necklace-fire-jewish"
+      assign acc = "Une grande flamme ajourée, aux lignes souples, suspendue à une chaîne fine. C'est la flamme de la maison, son symbole emblématique, portée en pendentif."
+      assign specs = ""
+    when "collier-mezouza"
+      assign acc = "Une mezouza en barre fine, portée à la verticale sur une chaîne. Dans la tradition, la mezouza se fixe au montant des portes ; elle devient ici un pendentif sobre."
+      assign specs = ""
+    when "double-triangle-maguen-couleur-argent"
+      assign acc = "Deux triangles côte à côte, ornés de petits symboles, sur une chaîne fine. Ensemble, ils évoquent les deux triangles qui composent l'étoile de David."
+      assign specs = "Couleur argent (indiquée dans le nom)"
+    when "jewel-necklace-breslev-hay"
+      assign acc = "Les lettres hébraïques חי (Haï) en pendentif plein, sur une chaîne fine. Le mot חי signifie « vivant » ; la maison le rattache au nombre 18."
+      assign specs = ""
+    when "bracelet-cordon-black"
+      assign acc = "Un cordon noir noué, fermé par un anneau métallique et une petite flamme en breloque. Un bracelet léger qui porte discrètement l'emblème de la maison."
+      assign specs = ""
+    when "flame-duo-bracelet-collier-black-silver"
+      assign acc = "Un rang de perles noires et argentées, signé d'une petite flamme Breslev Gang. Il se porte en collier court ou enroulé en bracelet double."
+      assign specs = "Collier court ou bracelet double"
+    when "bracelet-maguen"
+      assign acc = "Une chaîne à maillons ovales, avec une petite étoile de David en breloque. Un bracelet métallique net, qui se porte seul ou avec un cordon."
+      assign specs = ""
+    when "bracelet-hay"
+      assign acc = "Une chaîne à maillons ovales, avec les lettres חי (Haï) en breloque. Le même symbole que le collier Hay, en version poignet."
+      assign specs = ""
+    when "pull-modele-classic"
+      assign acc = "Un pull à col rond, avec la flamme Breslev Gang sur la poitrine et une inscription hébraïque au bas du dos. Quatre coloris, du XS au 2XL."
+      assign specs = ""
+    when "sweat-modele-classic"
+      assign acc = "Un sweat à capuche avec poche kangourou, la flamme sur la poitrine et une inscription hébraïque au bas du dos. Quatre coloris, du XS au 2XL."
+      assign specs = ""
+    when "tshirt-modele-classic"
+      assign acc = "Un t-shirt à manches longues, la flamme sur la poitrine et une ligne d'hébreu au bas du dos. Trois coloris, du XS au 2XL."
+      assign specs = ""
+    when "t-shirt-manche-longue-logo-na-nah"
+      assign acc = "Un t-shirt à manches longues, une inscription hébraïque sur la poitrine et une grande flamme dans le dos. Trois coloris, du XS au 2XL."
+      assign specs = ""
+    when "bracelet-de-main-flamme-or-rose"
+      assign acc = "Un bracelet de main couleur or rose : une bague reliée au poignet par une chaîne fine, avec une petite flamme. Une pièce de la gamme diamants de la maison."
+      assign specs = "Couleur or rose (indiquée dans le nom)"
+    when "flamme-diamant-couleur-argent"
+      assign acc = "Une flamme couleur argent sertie de petites pierres, au bout d'une chaîne fine. La boutique la décrit ornée de « mini diamants en zirconium »."
+      assign specs = "Pierres : « mini diamants en zirconium » (description)"
+    when "flamme-diamant-couleur-argent-1"
+      assign acc = "Une flamme couleur argent au dessin plus élancé, sertie de petites pierres, sur une chaîne fine. La boutique la décrit ornée de « mini diamants en zirconium »."
+      assign specs = "Pierres : « mini diamants en zirconium » (description)"
+    when "flamme-diamant-couleur-or-rose"
+      assign acc = "La flamme sertie de petites pierres, en version couleur or rose, sur une chaîne assortie. La boutique la décrit ornée de « mini diamants en zirconium »."
+      assign specs = "Pierres : « mini diamants en zirconium » (description)"
+    when "petek-kids-rose"
+      assign acc = "Un Petek rose vif sur un rang de perles roses et grises. Il appartient à la ligne Petek Kids de la maison, pensée pour les enfants."
+      assign specs = ""
+    when "petek-kids-full-black-2"
+      assign acc = "Un Petek noir sur perles noires mates, prolongé d'une courte chaîne. La version tout en noir de la ligne Petek Kids, pensée pour les enfants."
+      assign specs = ""
+    when "petek-kids-black-grey"
+      assign acc = "Un Petek noir sur un rang de perles noires et grises. Un modèle sobre de la ligne Petek Kids, facile à associer à toutes les tenues."
+      assign specs = ""
+    when "petek-kids-leopard"
+      assign acc = "Un Petek imprimé léopard sur perles noires, ponctuées de perles aux reflets fauves. Une pièce colorée de la ligne Petek Kids, pensée pour les enfants."
+      assign specs = ""
+    when "pochette-d-ete-2k26"
+      assign acc = "Une pochette en cuir lisse noir, marquée au centre du logo flamme « האש שלי ». À l'intérieur, de la place pour ranger jusqu'à huit cartes."
+      assign specs = "Cuir lisse noir¦Jusqu'à 8 cartes"
+    when "fire-splatch-by-breslev-gang-full-black"
+      assign acc = "Une flamme découpée, dressée sur une éclaboussure, en finition noire. Sur la base, une inscription hébraïque et la signature BRESLEV GANG."
+      assign specs = "Objet de décoration"
+    when "fire-splatch-by-breslev-gang-full-white"
+      assign acc = "Une flamme découpée, dressée sur une éclaboussure, en finition blanche. Sur la base, une inscription hébraïque et la signature BRESLEV GANG."
+      assign specs = "Objet de décoration"
+    when "fire-splatch-by-breslev-gang-mirror"
+      assign acc = "Une flamme découpée, dressée sur une éclaboussure, en finition miroir. Sur la base, une inscription hébraïque et la signature BRESLEV GANG."
+      assign specs = "Objet de décoration"
+    when "fire-splatch-by-breslev-gang-pink-gold"
+      assign acc = "Une flamme découpée, dressée sur une éclaboussure, en finition rose doré. Sur la base, une inscription hébraïque et la signature BRESLEV GANG."
+      assign specs = "Objet de décoration"
+    when "kippa-zebre-noir-aech-cheli-נ-נח-or-rose"
+      assign acc = "Une kippa en velours noir zébré, ornée de Rabbi Israël et de l'inscription נ נח en or rose. Un objet du quotidien aux couleurs de la maison."
+      assign specs = ""
+    when "kippa-velour-noir-rabi-israel-נ-נח"
+      assign acc = "Une kippa en velours noir, ornée de Rabbi Israël et de l'inscription נ נח, ton sur ton. Un modèle discret, noir sur noir, pour tous les jours."
+      assign specs = ""
+    when "kippa-velour-noir-aech-cheli-נ-נח"
+      assign acc = "Une kippa en velours noir, ornée de la flamme Aech Cheli et de l'inscription נ נח. Un modèle sobre, en noir et argent."
+      assign specs = ""
+    when "kippa-zebre-noir-aech-cheli-נ-נח-or-rose-1"
+      assign acc = "Une kippa en velours noir zébré, ornée de la flamme Aech Cheli et de l'inscription נ נח en or rose. Le même modèle, en version brodée or rose."
+      assign specs = ""
+    when "box-hanouka-noir"
+      assign acc = "Un coffret noir marqué de la flamme et de la signature BRESLEV GANG. Après la commande, l'équipe vous contacte pour composer avec vous une box personnalisée."
+      assign specs = "Composition personnalisée après la commande"
+    when "box-hanouka-beige"
+      assign acc = "Un coffret beige marqué de la flamme et de la signature BRESLEV GANG. Après la commande, l'équipe vous contacte pour composer avec vous une box personnalisée."
+      assign specs = "Composition personnalisée après la commande"
+    when "carte-cadeau-breslev-gang"
+      assign acc = "La carte cadeau Breslev Gang, utilisable sur la boutique en ligne. Elle laisse à la personne qui la reçoit le choix de son Petek ou de son collier."
+      assign specs = ""
+    endcase
+  endif
+  assign markers = "ne se limitent pas|méticuleusement conçus|Au cœur de cette série|Raffinement et signification spirituelle|En somme, notre série|plus qu'un simple|plus qu’un simple|déclaration de style|tendances éphémères|savoir-faire artisanal|Plongez dans notre collection|Découvrez l'élégance singulière|Découvrez l’élégance singulière|Explorez avec fascination|Redécouvrez le luxe|Découvrez l'éclat captivant|Découvrez l’éclat captivant|Odesser|1922|Na Na'h|Na Na’h" | split: '|'
+  if part == 'accroche' or part == 'details'
+    assign out = ''
+    if product.description != blank
+      assign chunks = product.description | replace: '<br />', '</p>' | replace: '<br/>', '</p>' | replace: '<br>', '</p>' | split: '</p>'
+      for chunk in chunks
+        assign tx = chunk | strip_html | strip
+        assign words = tx | split: ' '
+        if words.size < 8
+          continue
+        endif
+        assign generic = false
+        for m in markers
+          if tx contains m
+            assign generic = true
+            break
+          endif
+        endfor
+        if generic
+          continue
+        endif
+        if part == 'accroche'
+          if acc == blank
+            assign acc = tx | truncatewords: 40, '…'
+          endif
+          break
+        endif
+        assign out = out | append: '<p>' | append: tx | append: '</p>'
+      endfor
+    endif
+    if part == 'accroche'
+      echo acc
+    else
+      echo out
+    endif
+  endif
+  if part == 'specs'
+    assign list = specs
+    assign hs = product.collections | map: 'handle' | join: ' '
+    if hs contains 'petek-perles'
+      assign list = list | append: '¦Petek monté sur perles'
+    elsif product.type == 'Petek à chaine'
+      assign list = list | append: '¦Petek monté sur chaîne'
+    elsif hs contains 'petek-waxed-edition-cordon'
+      assign list = list | append: '¦Petek monté sur cordon ciré'
+    endif
+    if hs contains 'capsule-croco-leather'
+      assign list = list | append: '¦Collection Gamme exotique / Cuir de luxe'
+    endif
+    if product.type == 'Collier en acier'
+      assign list = list | append: '¦Collier en acier'
+    endif
+    for option in product.options_with_values
+      if option.values.size < 2
+        continue
+      endif
+      assign on = option.name | downcase
+      if on == 'taille' or on == 'size' or on == 'tailles'
+        assign list = list | append: '¦Tailles : ' | append: option.values.first | append: ' à ' | append: option.values.last
+      else
+        assign vals = option.values | join: ', '
+        assign list = list | append: '¦' | append: option.name | append: ' : ' | append: vals
+      endif
+    endfor
+    assign items = list | split: '¦'
+    assign n = 0
+    for it in items
+      assign v = it | strip
+      if v == blank
+        continue
+      endif
+      echo '<li>' | append: v | append: '</li>'
+      assign n = n | plus: 1
+      if n >= 3
+        break
+      endif
+    endfor
+  endif
+  if part == 'symbol'
+    assign tt = product.title | downcase
+    assign hs = product.collections | map: 'handle' | join: ' '
+    assign key = ''
+    if tt contains 'petek'
+      assign key = 'petek'
+    elsif tt contains 'flamme' or tt contains 'fire' or tt contains 'flame' or tt contains 'aech' or hs contains 'flamme'
+      assign key = 'flamme'
+    elsif tt contains 'nahman' or tt contains 'נ נח' or tt contains 'na nah'
+      assign key = 'breslev'
+    endif
+    case key
+      when 'petek'
+        echo '<p>Le Petek renvoie à la lettre reçue en 1922 par Rabbi Israël Ber Odesser, que le récit attribue à Rabbi Nahman, et qui porte la formule « Na Na&#39;h Na&#39;hma Nahman Méouman ».</p><p class="source">Symbolique présentée par la maison — <a href="https://breslevgang.com/blogs/news/lhistoire-du-petek">« L&#39;histoire du Petek »</a></p>'
+      when 'flamme'
+        echo '<p>La flamme est le symbole emblématique de la maison. Elle exprime ses croyances essentielles, transmises par les paroles du Rabbi Nahman : « Mon feu brûlera jusqu&#39;à la venue du Messie ».</p><p class="source">Symbolique présentée par la maison — descriptions des colliers Flamme, breslevgang.com</p>'
+      when 'breslev'
+        echo '<p>Rabbi Na&#39;hman de Breslev, né en 1772, est présenté par la maison comme le fondateur de la dynastie hassidique de Breslev.</p><p class="source">Tradition présentée par la maison — <a href="https://breslevgang.com/blogs/news/breslev-cest-quoi">« Breslev, c&#39;est quoi ? »</a></p>'
+    endcase
+  endif
+-%}

@@ -1,0 +1,22 @@
+{%- comment -%} Couleurs des deux thèmes, réglées dans l'éditeur. Les polices sont déclarées dans brg.css (fichiers du thème). {%- endcomment -%}
+{%- style -%}
+  :root, html[data-theme="dark"] {
+    --bg: {{ settings.dark_bg }};
+    --surface: {{ settings.dark_surface }};
+    --raised: {{ settings.dark_raised }};
+    --text: {{ settings.dark_text }};
+    --text-2: {{ settings.dark_text_2 }};
+    --line: {{ settings.dark_line }};
+    --logo-w: {{ settings.logo_width }}px;
+    color-scheme: dark;
+  }
+  html[data-theme="light"] {
+    --bg: {{ settings.light_bg }};
+    --surface: {{ settings.light_surface }};
+    --raised: {{ settings.light_raised }};
+    --text: {{ settings.light_text }};
+    --text-2: {{ settings.light_text_2 }};
+    --line: {{ settings.light_line }};
+    color-scheme: light;
+  }
+{%- endstyle -%}
