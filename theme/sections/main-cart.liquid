@@ -1,0 +1,40 @@
+<div class="wrap page-head">
+  <p class="label label--rule">{{ 'accessibility.cart' | t }}</p>
+  <h1 class="h1" data-anim="title">{{ 'cart.title' | t }}</h1>
+</div>
+<div class="wrap cart-page" style="padding-bottom:clamp(72px,9vw,140px)">
+  <div data-cart-lines>
+    {%- if cart.item_count > 0 -%}
+      <ul class="lines">
+        {%- for item in cart.items -%}
+          <li class="line" data-key="{{ item.key }}">
+            <a class="line__img" href="{{ item.url }}" tabindex="-1">{%- if item.image -%}<img src="{{ item.image | image_url: width: 200 }}" alt="" width="84" height="105" loading="lazy">{%- endif -%}</a>
+            <div>
+              <a class="line__title" href="{{ item.url }}">{{ item.product.title }}</a>
+              <p class="line__opts">{%- unless item.product.has_only_default_variant -%}{%- for o in item.options_with_values -%}{{ o.name }} : {{ o.value }}{%- unless forloop.last %} · {% endunless -%}{%- endfor -%}{%- endunless -%}</p>
+              <div class="qty" role="group" aria-label="{{ 'products.quantity' | t }}"><button type="button" data-q="-1" aria-label="{{ 'products.decrease' | t }}">−</button><input type="number" inputmode="numeric" min="0" value="{{ item.quantity }}" aria-label="{{ 'products.quantity' | t }}" data-q-input><button type="button" data-q="1" aria-label="{{ 'products.increase' | t }}">+</button></div>
+              <button type="button" class="line__remove" data-remove>{{ 'cart.remove' | t }}</button>
+            </div>
+            <p class="line__price">{{ item.final_line_price | money }}</p>
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- else -%}
+      <p class="empty">{{ 'cart.empty' | t }}</p>
+    {%- endif -%}
+  </div>
+  <aside class="cart-sum">
+    <div data-cart-foot{% if cart.item_count == 0 %} hidden{% endif %}>
+      <p class="subtotal"><span>{{ 'cart.subtotal' | t }}</span><span data-cart-subtotal>{{ cart.total_price | money }}</span></p>
+      <p class="cart-note">{{ 'cart.note' | t }}</p>
+      <form action="{{ routes.cart_url }}" method="post">
+        <button class="btn btn--chrome btn--block" type="submit" name="checkout">{{ 'cart.checkout' | t }}</button>
+      </form>
+    </div>
+    <p style="margin:16px 0 0"><a class="link-arrow" href="{{ routes.all_products_collection_url }}">{{ 'cart.continue' | t }}</a></p>
+  </aside>
+</div>
+
+{% schema %}
+{ "name": "Panier", "settings": [] }
+{% endschema %}

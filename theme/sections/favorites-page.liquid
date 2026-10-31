@@ -1,0 +1,9 @@
+<div class="wrap" data-favorites-page style="padding-bottom:clamp(72px,9vw,140px)">
+  <p class="note">{{ 'favorites.device_note' | t }}</p>
+  <div data-fav-results style="margin-top:28px"><p class="muted small">{{ 'general.loading' | t }}</p></div>
+  <noscript><p class="empty">{{ 'general.no_js' | t }}</p></noscript>
+</div>
+
+{% schema %}
+{ "name": "Favoris", "settings": [], "presets": [ { "name": "Favoris" } ] }
+{% endschema %}

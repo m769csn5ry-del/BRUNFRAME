@@ -1,0 +1,99 @@
+{%- paginate collection.products by section.settings.per_page -%}
+<div class="wrap coll-head">
+  <p class="label label--rule" data-anim="fade">{{ section.settings.label }}</p>
+  <h1 class="h1" data-anim="title">{{ collection.title }}</h1>
+  {%- if collection.description != blank -%}<p class="lead" data-anim="title" data-anim-delay="0.1" style="margin-top:18px">{{ collection.description | strip_html | truncatewords: 32 }}</p>{%- endif -%}
+</div>
+
+<div data-collection data-section-id="{{ section.id }}">
+  <div class="toolbar">
+    <div class="wrap" style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+      <button class="btn btn--line btn--sm" type="button" data-drawer-open="filters-drawer" aria-controls="filters-drawer" aria-expanded="false">{% render 'icon', name: 'filter' %} {{ 'collections.filter' | t }}</button>
+      <span class="toolbar__count" data-coll-count>{{ 'collections.results' | t: count: collection.products_count }}</span>
+      <div class="select">
+        <label class="sr-only" for="sort-{{ section.id }}">{{ 'collections.sort' | t }}</label>
+        {%- assign sort_by = collection.sort_by | default: collection.default_sort_by -%}
+        <select id="sort-{{ section.id }}" data-sort data-default="{{ collection.default_sort_by }}">
+          {%- for option in collection.sort_options -%}<option value="{{ option.value }}"{% if option.value == sort_by %} selected{% endif %}>{{ option.name }}</option>{%- endfor -%}
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="chips" data-chips>
+      {%- for filter in collection.filters -%}
+        {%- for value in filter.active_values -%}<a class="chip" href="{{ value.url_to_remove }}" data-filter-link>{{ filter.label }} : {{ value.label }} <span aria-hidden="true">×</span></a>{%- endfor -%}
+        {%- if filter.type == 'price_range' -%}
+          {%- if filter.min_value.value != nil or filter.max_value.value != nil -%}<a class="chip" href="{{ filter.url_to_remove }}" data-filter-link>{{ filter.label }} <span aria-hidden="true">×</span></a>{%- endif -%}
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+    <div class="coll-grid" data-coll-results>
+      {%- if collection.products.size > 0 -%}
+        <div class="grid">
+          {%- for p in collection.products -%}
+            {%- capture d -%}0.{{ forloop.index0 | modulo: 4 }}{%- endcapture -%}
+            {% render 'product-card', product: p, delay: d, eager: forloop.first %}
+          {%- endfor -%}
+        </div>
+        {%- if paginate.pages > 1 -%}
+          <nav class="pagination" aria-label="Pagination">
+            {%- for part in paginate.parts -%}
+              {%- if part.is_link -%}<a href="{{ part.url }}">{{ part.title }}</a>{%- elsif part.title == paginate.current_page -%}<span aria-current="page">{{ part.title }}</span>{%- else -%}<span>{{ part.title }}</span>{%- endif -%}
+            {%- endfor -%}
+          </nav>
+        {%- endif -%}
+      {%- else -%}
+        <p class="empty">{{ 'collections.no_results' | t }}</p>
+      {%- endif -%}
+    </div>
+  </div>
+
+  <div class="drawer" id="filters-drawer" hidden role="dialog" aria-modal="true" aria-labelledby="filters-title-{{ section.id }}">
+    <div class="drawer__veil" data-drawer-close></div>
+    <div class="drawer__panel">
+      <div class="drawer__head">
+        <h2 class="h3" id="filters-title-{{ section.id }}">{{ 'collections.filter' | t }}</h2>
+        <button class="icon-btn" type="button" data-drawer-close aria-label="{{ 'general.close' | t }}">{% render 'icon', name: 'close' %}</button>
+      </div>
+      <form class="drawer__body" data-filters data-filters-body>
+        {%- for filter in collection.filters -%}
+          {%- case filter.type -%}
+            {%- when 'list', 'boolean' -%}
+              <fieldset class="filter-group">
+                <legend>{{ filter.label }}</legend>
+                {%- for value in filter.values -%}
+                  <label class="check"><input type="checkbox" name="{{ value.param_name }}" value="{{ value.value }}"{% if value.active %} checked{% endif %}{% if value.count == 0 and value.active == false %} disabled{% endif %}><span>{{ value.label }}</span><small>{{ value.count }}</small></label>
+                {%- endfor -%}
+              </fieldset>
+            {%- when 'price_range' -%}
+              <fieldset class="filter-group">
+                <legend>{{ filter.label }}</legend>
+                <div class="price-range">
+                  <label class="field"><span>{{ 'collections.price_from' | t }}</span><input type="number" inputmode="numeric" min="0" name="{{ filter.min_value.param_name }}" value="{% if filter.min_value.value %}{{ filter.min_value.value | divided_by: 100 }}{% endif %}" placeholder="0"></label>
+                  <label class="field"><span>{{ 'collections.price_to' | t }}</span><input type="number" inputmode="numeric" min="0" name="{{ filter.max_value.param_name }}" value="{% if filter.max_value.value %}{{ filter.max_value.value | divided_by: 100 }}{% endif %}" placeholder="{{ filter.range_max | divided_by: 100 }}"></label>
+                </div>
+              </fieldset>
+          {%- endcase -%}
+        {%- endfor -%}
+      </form>
+      <div class="drawer__foot" style="display:flex;gap:10px">
+        <a class="btn btn--line btn--sm" href="{{ collection.url }}" data-filter-link>{{ 'collections.clear' | t }}</a>
+        <button class="btn btn--chrome btn--sm" type="button" data-drawer-close style="flex:1">{{ 'collections.apply' | t }}</button>
+      </div>
+    </div>
+  </div>
+</div>
+{%- endpaginate -%}
+
+{% schema %}
+{
+  "name": "Collection",
+  "settings": [
+    { "type": "text", "id": "label", "label": "Sur-titre", "default": "Collection" },
+    { "type": "range", "id": "per_page", "label": "Produits par page", "min": 12, "max": 48, "step": 4, "default": 24 },
+    { "type": "paragraph", "content": "Les filtres affichés sont ceux configurés dans Shopify (Search & Discovery) : seuls les attributs réellement renseignés apparaissent." }
+  ]
+}
+{% endschema %}

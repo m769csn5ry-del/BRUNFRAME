@@ -1,0 +1,12 @@
+<div class="wrap page-head">
+  <p class="label label--rule"><a href="{{ blog.url }}" style="text-decoration:none">{{ blog.title }}</a></p>
+  <h1 class="h1" data-anim="title">{{ article.title }}</h1>
+  <p class="muted small" style="margin-top:14px">{{ article.published_at | date: '%d/%m/%Y' }}</p>
+</div>
+<div class="wrap" style="padding-bottom:clamp(72px,9vw,140px)">
+  <div class="prose" data-anim="fade">{{ article.content }}</div>
+</div>
+
+{% schema %}
+{ "name": "Article", "settings": [] }
+{% endschema %}

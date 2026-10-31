@@ -1,0 +1,182 @@
+{%- comment -%}
+  Galerie de bijoux flottants : les pièces se succèdent latéralement (glisser, flèches, clavier), puis le défilement
+  isole la pièce choisie, la rapproche, montre ses vraies photos et revient à la galerie.
+  Chaque bloc = un produit Shopify + le détourage de sa photo officielle. Avec « chaîne et pendentif séparés »,
+  le thème charge <fichier>-chain.webp et <fichier>-pend.webp (même découpe, voir tools/piece_rig.py) : la chaîne
+  pivote alors légèrement autour de l'anneau du pendentif. Sans ces fichiers, la pièce bouge d'un seul bloc.
+{%- endcomment -%}
+{%- liquid
+  assign first = nil
+  assign sep = ''
+-%}
+{%- capture json -%}[
+  {%- for block in section.blocks -%}
+    {%- assign p = block.settings.product -%}
+    {%- if p == blank -%}{%- continue -%}{%- endif -%}
+    {%- liquid
+      if first == nil
+        assign first = p
+        assign first_block = block
+      endif
+      assign chain = ''
+      assign pend = ''
+      if block.settings.cutout != blank
+        assign cut = block.settings.cutout | image_url: width: 1600
+        assign cw = block.settings.cutout.width
+        assign ch = block.settings.cutout.height
+      elsif block.settings.cutout_asset != blank
+        assign cut = block.settings.cutout_asset | asset_url
+        assign cw = block.settings.cutout_w
+        assign ch = block.settings.cutout_h
+        if block.settings.split
+          assign base = block.settings.cutout_asset | remove: '.webp'
+          assign chain = base | append: '-chain.webp' | asset_url
+          assign pend = base | append: '-pend.webp' | asset_url
+        endif
+      else
+        assign cut = p.featured_image | image_url: width: 1200
+        assign cw = p.featured_image.width
+        assign ch = p.featured_image.height
+      endif
+      assign coll = p.collections.first
+      if block.settings.collection != blank
+        assign coll = block.settings.collection
+      endif
+    -%}
+    {%- capture text -%}{%- render 'product-copy', product: p, part: 'accroche' -%}{%- endcapture -%}
+    {{ sep }}{
+      "handle": {{ p.handle | json }}, "title": {{ p.title | json }}, "url": {{ p.url | json }},
+      "price": {{ p.price | money | strip_html | json }}, "available": {{ p.available | json }},
+      "family": {{ block.settings.family | json }}, "coll_url": {{ coll.url | json }},
+      "text": {{ text | strip | json }},
+      "cut": {{ cut | json }}, "chain": {{ chain | json }}, "pend": {{ pend | json }},
+      "w": {{ cw | default: 400 }}, "h": {{ ch | default: 1200 }},
+      "bx": {{ block.settings.bail_x | default: 50 | divided_by: 100.0 }}, "by": {{ block.settings.bail_y | default: 86 | divided_by: 100.0 }},
+      "pl": {{ block.settings.pend_l | default: 35 | divided_by: 100.0 }}, "pr": {{ block.settings.pend_r | default: 65 | divided_by: 100.0 }},
+      "fx": {{ block.settings.focus_x | default: 50 | divided_by: 100.0 }}, "fy": {{ block.settings.focus_y | default: 92 | divided_by: 100.0 }},
+      "art": {{ block.settings.articulation | default: 100 | divided_by: 100.0 }},
+      "details": [
+        {%- if p.images.size > 1 -%}
+          {%- for im in p.images offset: 1 limit: 2 -%}
+            {%- unless forloop.first -%},{%- endunless -%}{ "src": {{ im | image_url: width: 1100 | json }}, "alt": {{ im.alt | default: p.title | json }} }
+          {%- endfor -%}
+        {%- else -%}
+          { "src": {{ p.featured_image | image_url: width: 1600 | json }}, "alt": {{ p.title | json }}, "crop": true, "pos": {{ block.settings.detail_pos | default: '50% 80%' | json }} }
+        {%- endif -%}
+      ]
+    }
+    {%- assign sep = ',' -%}
+  {%- endfor -%}
+]{%- endcapture -%}
+
+{%- if first != blank -%}
+{%- capture first_text -%}{%- render 'product-copy', product: first, part: 'accroche' -%}{%- endcapture -%}
+<section class="flt" id="{{ section.settings.anchor | default: 'colliers' }}" data-float
+  data-sway="{{ section.settings.sway | divided_by: 100.0 }}" data-drift="{{ section.settings.drift }}" data-zoom="{{ section.settings.zoom | divided_by: 100.0 }}"
+  style="--track: {{ section.settings.track }}svh" aria-label="{{ section.settings.heading | escape }}">
+  <script type="application/json" data-float-data>{{ json }}</script>
+  <div class="flt__sticky">
+    <div class="flt__set" aria-hidden="true">
+      <div class="flt__cyc"></div>
+      <div class="flt__strip flt__strip--l" data-f-par></div>
+      <div class="flt__strip flt__strip--r" data-f-par></div>
+      <div class="flt__niche"><i></i></div>
+      <div class="flt__beam"></div>
+      <div class="flt__floor"></div>
+      <p class="flt__type" data-f-type>{{ first_block.settings.family | default: first.title }}</p>
+    </div>
+    <div class="flt__stage" data-f-stage tabindex="0" role="region" aria-roledescription="carrousel" aria-label="{{ section.settings.heading | escape }} — {{ section.settings.hint | escape }}">
+      <div class="flt__track" data-f-track></div>
+    </div>
+    <figure class="flt__plate" data-f-plate aria-hidden="true">
+      <img alt="" width="1100" height="1375" decoding="async"><img alt="" width="1100" height="1375" decoding="async">
+      <figcaption><span>{{ section.settings.detail_label }}</span> — <b data-f-caption>{{ first.title }}</b></figcaption>
+    </figure>
+    <div class="flt__ui">
+      <header class="flt__head">
+        <p class="label label--rule">{{ section.settings.label }}</p>
+        <h2 class="h2">{{ section.settings.heading }}</h2>
+        <p class="flt__hint">{{ section.settings.hint }}</p>
+      </header>
+      <div class="flt__story">
+        <p class="label label--rule">{{ section.settings.detail_label }}</p>
+        <p class="flt__text" data-f-text>{{ first_text | strip }}</p>
+        <p class="source">{{ section.settings.detail_note }}</p>
+      </div>
+      <div class="flt__sel">
+        <p class="flt__fam" data-f-family>{{ first_block.settings.family }}</p>
+        <p class="flt__name" data-f-name>{{ first.title }}</p>
+        <p class="flt__price" data-f-price>{{ first.price | money }}</p>
+        <a class="btn btn--chrome" data-f-cta href="{{ first.url }}">{{ section.settings.cta_label }}</a>
+      </div>
+      <div class="flt__ctrl">
+        <button class="arrow" type="button" data-f-prev aria-label="{{ 'orbit.prev' | t }}">{% render 'icon', name: 'prev' %}</button>
+        <div class="flt__count"><span data-f-count>01 / {{ section.blocks.size | prepend: '0' | slice: -2, 2 }}</span><div class="flt__dots" data-f-dots></div></div>
+        <button class="arrow" type="button" data-f-next aria-label="{{ 'orbit.next' | t }}">{% render 'icon', name: 'next' %}</button>
+      </div>
+      <button class="btn btn--ghost btn--sm flt__back" type="button" data-f-back>{{ 'orbit.back' | t }}</button>
+      <div class="flt__exit">
+        <p class="label label--rule">{{ section.settings.line_label }}</p>
+        <div class="flt__exit-cta">
+          <a class="btn btn--line" data-f-coll href="{{ first.collections.first.url }}">{{ 'general.view_all' | t }}</a>
+          {%- if section.settings.all_link != blank -%}<a class="btn btn--chrome" href="{{ section.settings.all_link }}">{{ section.settings.all_label }}</a>{%- endif -%}
+        </div>
+      </div>
+    </div>
+    <p class="sr-only" aria-live="polite" data-f-live></p>
+  </div>
+  <ul class="sr-only">
+    {%- for block in section.blocks -%}{%- assign p = block.settings.product -%}{%- if p != blank -%}<li data-f-block="{{ block.id }}" {{ block.shopify_attributes }}><a href="{{ p.url }}">{{ p.title }} — {{ p.price | money }}</a></li>{%- endif -%}{%- endfor -%}
+  </ul>
+</section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Galerie flottante",
+  "max_blocks": 12,
+  "settings": [
+    { "type": "text", "id": "anchor", "label": "Ancre (lien du bouton d'accueil)", "default": "colliers" },
+    { "type": "text", "id": "label", "label": "Sur-titre", "default": "Colliers & Peteks" },
+    { "type": "text", "id": "heading", "label": "Titre", "default": "Choisissez votre pièce" },
+    { "type": "text", "id": "hint", "label": "Aide au geste", "default": "Glissez ou utilisez les flèches" },
+    { "type": "text", "id": "cta_label", "label": "Bouton de la pièce", "default": "Voir la pièce" },
+    { "type": "text", "id": "detail_label", "label": "Sur-titre du détail", "default": "Au plus près" },
+    { "type": "text", "id": "detail_note", "label": "Mention sous le détail", "default": "Photos officielles de la pièce." },
+    { "type": "text", "id": "line_label", "label": "Sur-titre de la sortie", "default": "Toute la ligne" },
+    { "type": "text", "id": "all_label", "label": "Bouton final", "default": "Voir tous les colliers" },
+    { "type": "url", "id": "all_link", "label": "Lien du bouton final" },
+    { "type": "header", "content": "Mouvement" },
+    { "type": "checkbox", "id": "drift", "label": "Flottement lent des pièces", "default": true },
+    { "type": "range", "id": "sway", "label": "Balancement après un geste", "min": 0, "max": 150, "step": 10, "unit": "%", "default": 100 },
+    { "type": "range", "id": "zoom", "label": "Amplitude du rapprochement", "min": 130, "max": 260, "step": 10, "unit": "%", "default": 210 },
+    { "type": "range", "id": "track", "label": "Longueur de la séquence au défilement", "min": 300, "max": 600, "step": 20, "unit": "vh", "default": 420 }
+  ],
+  "blocks": [
+    {
+      "type": "piece",
+      "name": "Pièce",
+      "settings": [
+        { "type": "product", "id": "product", "label": "Produit" },
+        { "type": "collection", "id": "collection", "label": "Collection liée (sortie)" },
+        { "type": "text", "id": "family", "label": "Famille / symbole affiché" },
+        { "type": "image_picker", "id": "cutout", "label": "Détourage PNG/WebP (photo officielle détourée)" },
+        { "type": "text", "id": "cutout_asset", "label": "Ou détourage fourni avec le thème (fichier .webp)" },
+        { "type": "checkbox", "id": "split", "label": "Chaîne et pendentif séparés fournis (-chain / -pend)", "default": false },
+        { "type": "number", "id": "cutout_w", "label": "Largeur du détourage fourni (px)", "default": 400 },
+        { "type": "number", "id": "cutout_h", "label": "Hauteur du détourage fourni (px)", "default": 1400 },
+        { "type": "header", "content": "Articulation (en % de l'image)" },
+        { "type": "number", "id": "bail_x", "label": "Anneau du pendentif — horizontal", "default": 50 },
+        { "type": "number", "id": "bail_y", "label": "Anneau du pendentif — vertical", "default": 86 },
+        { "type": "number", "id": "pend_l", "label": "Pendentif — bord gauche", "default": 35 },
+        { "type": "number", "id": "pend_r", "label": "Pendentif — bord droit", "default": 65 },
+        { "type": "number", "id": "focus_x", "label": "Centre du rapprochement — horizontal", "default": 50 },
+        { "type": "number", "id": "focus_y", "label": "Centre du rapprochement — vertical", "default": 92 },
+        { "type": "range", "id": "articulation", "label": "Liberté de la chaîne", "min": 0, "max": 100, "step": 10, "unit": "%", "default": 100, "info": "Réduire si le pendentif est tenu par deux attaches." },
+        { "type": "text", "id": "detail_pos", "label": "Cadrage du détail si une seule photo", "default": "50% 80%" }
+      ]
+    }
+  ],
+  "presets": [ { "name": "Galerie flottante" } ]
+}
+{% endschema %}

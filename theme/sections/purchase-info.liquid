@@ -1,0 +1,37 @@
+<section class="section section--tight" aria-label="{{ section.settings.heading | escape }}">
+  <div class="wrap">
+    <h2 class="sr-only">{{ section.settings.heading }}</h2>
+    {%- assign n = section.blocks.size -%}
+    {%- if section.settings.show_shipping and settings.shipping_note != blank -%}{%- assign n = n | plus: 1 -%}{%- endif -%}
+    <div class="facts" style="--n: {{ n | at_least: 1 }}">
+      {%- if section.settings.show_shipping and settings.shipping_note != blank -%}
+        <div class="fact" data-anim="rise">
+          <strong>{{ settings.shipping_title }}</strong>
+          <p>{{ settings.shipping_note }}{% if settings.shipping_link != blank %} <a href="{{ settings.shipping_link }}">{{ settings.shipping_link_label }}</a>{% endif %}</p>
+        </div>
+      {%- endif -%}
+      {%- for block in section.blocks -%}
+        <div class="fact" data-anim="rise" data-anim-delay="0.{{ forloop.index0 | times: 15 | at_most: 45 | prepend: '0' | slice: -2, 2 }}" {{ block.shopify_attributes }}>
+          <strong>{{ block.settings.title }}</strong>
+          <p>{{ block.settings.text }}</p>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Infos d'achat",
+  "max_blocks": 4,
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Titre (accessibilité)", "default": "Informations d'achat" },
+    { "type": "paragraph", "content": "N'afficher que des conditions confirmées et en vigueur." },
+    { "type": "checkbox", "id": "show_shipping", "label": "Afficher le délai de livraison (Paramètres du thème)", "default": true }
+  ],
+  "blocks": [
+    { "type": "fact", "name": "Information", "settings": [ { "type": "text", "id": "title", "label": "Titre" }, { "type": "textarea", "id": "text", "label": "Texte" } ] }
+  ],
+  "presets": [ { "name": "Infos d'achat" } ]
+}
+{% endschema %}

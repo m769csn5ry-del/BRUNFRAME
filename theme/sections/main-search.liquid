@@ -1,0 +1,25 @@
+<div class="wrap page-head">
+  <p class="label label--rule">{{ 'general.search' | t }}</p>
+  <h1 class="h1" data-anim="title">{% if search.performed %}{{ 'search.results' | t: terms: search.terms }}{% else %}{{ 'general.search' | t }}{% endif %}</h1>
+  <form class="search-bar" action="{{ routes.search_url }}" method="get" role="search" style="margin-top:26px">
+    <label class="sr-only" for="q">{{ 'general.search' | t }}</label>
+    <input id="q" type="search" name="q" value="{{ search.terms | escape }}" placeholder="{{ 'general.search_placeholder' | t }}" data-autofocus>
+    <input type="hidden" name="type" value="product">
+    <button class="btn btn--chrome" type="submit">{{ 'general.search' | t }}</button>
+  </form>
+</div>
+<div class="wrap" style="padding-bottom:clamp(72px,9vw,140px)" data-search-results>
+  {%- if search.performed -%}
+    {%- paginate search.results by 24 -%}
+      {%- if search.results_count > 0 -%}
+        <div class="grid">{%- for item in search.results -%}{%- if item.object_type == 'product' -%}{% render 'product-card', product: item %}{%- endif -%}{%- endfor -%}</div>
+      {%- else -%}
+        <p class="empty">{{ 'search.none' | t: terms: search.terms }}</p>
+      {%- endif -%}
+    {%- endpaginate -%}
+  {%- endif -%}
+</div>
+
+{% schema %}
+{ "name": "Recherche", "settings": [] }
+{% endschema %}

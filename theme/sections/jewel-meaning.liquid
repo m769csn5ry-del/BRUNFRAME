@@ -1,0 +1,52 @@
+<section class="section surface lightsweep" data-anim="fade" aria-label="{{ section.settings.heading | escape }}">
+  <div class="wrap meaning">
+    <div>
+      <p class="label label--rule" data-anim="fade">{{ section.settings.label }}</p>
+      <h2 class="h1" data-anim="title" style="margin-top:16px">{{ section.settings.heading }}</h2>
+      {%- if section.settings.text != blank -%}<p class="lead" data-anim="title" data-anim-delay="0.1" style="margin-top:22px">{{ section.settings.text }}</p>{%- endif -%}
+      {%- if section.settings.link != blank -%}<p style="margin-top:30px" data-anim="title" data-anim-delay="0.2"><a class="btn btn--line" href="{{ section.settings.link }}">{{ section.settings.link_label }}</a></p>{%- endif -%}
+    </div>
+    <div class="meaning__list">
+      {%- for block in section.blocks -%}
+        <article class="meaning__item" data-anim="slide" data-anim-delay="0.{{ forloop.index0 | times: 2 | at_most: 6 }}" {{ block.shopify_attributes }}>
+          <span class="meaning__num" aria-hidden="true">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
+          <div>
+            <h3>{{ block.settings.title }}</h3>
+            <p>{{ block.settings.text }}</p>
+            {%- if block.settings.source_label != blank -%}<p class="source">Source : {% if block.settings.source_url != blank %}<a href="{{ block.settings.source_url }}">{{ block.settings.source_label }}</a>{% else %}{{ block.settings.source_label }}{% endif %}</p>{%- endif -%}
+            {%- if block.settings.link_url != blank -%}<a class="link-arrow" href="{{ block.settings.link_url }}">{{ block.settings.link_label }} {% render 'icon', name: 'arrow' %}</a>{%- endif -%}
+          </div>
+        </article>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Le sens des bijoux",
+  "max_blocks": 6,
+  "settings": [
+    { "type": "text", "id": "label", "label": "Sur-titre", "default": "Le sens des bijoux" },
+    { "type": "text", "id": "heading", "label": "Titre", "default": "Chaque détail a un sens" },
+    { "type": "textarea", "id": "text", "label": "Texte court" },
+    { "type": "text", "id": "link_label", "label": "Bouton", "default": "Lire le sens des bijoux" },
+    { "type": "text", "id": "link", "label": "Lien de la page dédiée", "default": "/pages/le-sens-des-bijoux" }
+  ],
+  "blocks": [
+    {
+      "type": "meaning",
+      "name": "Symbole",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Symbole" },
+        { "type": "textarea", "id": "text", "label": "Explication (reprise fidèle d'une source officielle)" },
+        { "type": "text", "id": "source_label", "label": "Source (libellé)" },
+        { "type": "text", "id": "source_url", "label": "Source (lien)" },
+        { "type": "text", "id": "link_label", "label": "Lien vers les pièces", "default": "Voir les pièces" },
+        { "type": "text", "id": "link_url", "label": "Adresse des pièces" }
+      ]
+    }
+  ],
+  "presets": [ { "name": "Le sens des bijoux" } ]
+}
+{% endschema %}

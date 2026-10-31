@@ -1,0 +1,31 @@
+<div class="wrap page-head">
+  <p class="label label--rule" data-anim="fade">{{ section.settings.label }}</p>
+  <h1 class="h1" data-anim="title">{{ page.title }}</h1>
+</div>
+<div class="wrap contact-grid" style="padding-bottom:clamp(72px,9vw,140px)">
+  <div class="stack" style="--stack:1.2rem">
+    {%- if page.content != blank -%}<div class="prose">{{ page.content }}</div>{%- endif -%}
+    {%- if section.settings.whatsapp != blank -%}
+      <p><span class="label">WhatsApp</span><br><a class="h3" href="https://wa.me/{{ section.settings.whatsapp | remove: ' ' | remove: '+' }}" rel="noopener" target="_blank">{{ section.settings.whatsapp }}</a></p>
+    {%- endif -%}
+  </div>
+  {%- form 'contact', class: 'form-grid' -%}
+    {%- if form.posted_successfully? -%}<p class="note full" role="status">{{ 'contact.success' | t }}</p>{%- endif -%}
+    {%- if form.errors -%}<div class="note full" role="alert">{{ form.errors | default_errors }}</div>{%- endif -%}
+    <label class="field"><span>{{ 'contact.name' | t }}</span><input type="text" name="contact[name]" autocomplete="name" value="{{ form.name }}"></label>
+    <label class="field"><span>{{ 'contact.email' | t }} *</span><input type="email" name="contact[email]" autocomplete="email" required value="{{ form.email }}"></label>
+    <label class="field full"><span>{{ 'contact.phone' | t }}</span><input type="tel" name="contact[phone]" autocomplete="tel" value="{{ form.phone }}"></label>
+    <label class="field full"><span>{{ 'contact.message' | t }}</span><textarea name="contact[body]" rows="6">{{ form.body }}</textarea></label>
+    <div class="full"><button class="btn btn--chrome" type="submit">{{ 'contact.send' | t }}</button></div>
+  {%- endform -%}
+</div>
+
+{% schema %}
+{
+  "name": "Contact",
+  "settings": [
+    { "type": "text", "id": "label", "label": "Sur-titre", "default": "Une question sur une pièce" },
+    { "type": "text", "id": "whatsapp", "label": "WhatsApp", "default": "+33 7 80 95 18 36" }
+  ]
+}
+{% endschema %}

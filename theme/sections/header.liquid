@@ -1,0 +1,102 @@
+{%- liquid
+  assign over = false
+  if template.name == 'index' and section.settings.transparent_home
+    assign over = true
+  endif
+  assign menu = linklists[section.settings.menu]
+-%}
+{%- capture nav_data -%}
+  {%- if menu.links.size > 0 -%}
+    {%- for link in menu.links -%}{{ link.url }}¦{{ link.title }}¦{{ link.active }}§{%- endfor -%}
+  {%- else -%}
+    {%- assign pages_url = routes.root_url | append: '/pages/' | replace: '//', '/' -%}
+    {{ routes.collections_url }}¦Collections¦{% if template.name == 'list-collections' %}true{% endif %}§
+    {{- routes.all_products_collection_url }}¦Tous les bijoux¦{% if collection.handle == 'all' %}true{% endif %}§
+    {{- routes.collections_url }}/{{ section.settings.clothing_handle }}¦Vêtements¦{% if collection.handle == section.settings.clothing_handle %}true{% endif %}§
+    {{- pages_url }}{{ section.settings.meaning_page }}¦Le sens des bijoux¦{% if page.handle == section.settings.meaning_page %}true{% endif %}§
+    {{- pages_url }}{{ section.settings.people_page }}¦Personnalités¦{% if page.handle == section.settings.people_page %}true{% endif %}§
+  {%- endif -%}
+{%- endcapture -%}
+{%- assign nav_items = nav_data | strip | split: '§' -%}
+{%- comment -%} Toutes les familles réellement présentes (menu du tiroir) : menu choisi dans l'éditeur, sinon liste vérifiée sur la boutique le 31/10/2026 {%- endcomment -%}
+{%- capture fam_data -%}
+  {%- assign fm = linklists[section.settings.families_menu] -%}
+  {%- if fm.links.size > 0 -%}
+    {%- for link in fm.links -%}{{ link.url }}¦{{ link.title }}§{%- endfor -%}
+  {%- else -%}
+    /collections/petek-perles¦Peteks perles§/collections/types?q=Petek%20%C3%A0%20chaine¦Peteks chaîne§/collections/petek-waxed-edition-cordon¦Peteks cordon et cuir§/collections/colliers-pendentifs¦Colliers et pendentifs§/search?q=bracelet&type=product¦Bracelets§/collections/hoodies¦Vêtements§/collections/bracelet-de-main-flamme¦Gamme diamants§/collections/petek-kids¦Peteks Kids et bébé§/products/pochette-d-ete-2k26¦Pochette en cuir§/collections/objets-deco¦Déco§/collections/chabbat¦Chabat§/collections/kippot¦Kippot§/collections/box-hanouka¦Box Breslev Gang§/products/carte-cadeau-breslev-gang¦Carte cadeau
+  {%- endif -%}
+{%- endcapture -%}
+{%- assign fam_items = fam_data | strip | split: '§' -%}
+{%- capture favorites_url -%}{{ routes.root_url | append: '/pages/' | replace: '//', '/' }}{{ section.settings.favorites_page }}{%- endcapture -%}
+
+<header class="hdr{% if over %} hdr--over{% endif %}" data-header>
+  <div class="wrap hdr__in">
+    <a class="hdr__logo" href="{{ routes.root_url }}" aria-label="{{ shop.name | escape }}, {{ 'general.home' | t }}">
+      {%- if settings.logo != blank -%}
+        <img src="{{ settings.logo | image_url: width: 480 }}" alt="{{ shop.name | escape }}" width="{{ settings.logo.width }}" height="{{ settings.logo.height }}">
+      {%- else -%}
+        <span class="wordmark">{{ shop.name }}</span>
+      {%- endif -%}
+    </a>
+    <nav class="nav" aria-label="Navigation principale">
+      {%- for it in nav_items -%}{%- assign f = it | strip | split: '¦' -%}{%- if f[0] != blank -%}<a href="{{ f[0] }}"{% if f[2] == 'true' %} aria-current="page"{% endif %}>{{ f[1] }}</a>{%- endif -%}{%- endfor -%}
+    </nav>
+    <div class="hdr__tools">
+      <a class="icon-btn t-desktop" href="{{ routes.search_url }}" aria-label="{{ 'general.search' | t }}">{% render 'icon', name: 'search' %}</a>
+      {%- if settings.show_theme_toggle -%}
+        <button class="icon-btn theme-toggle" type="button" data-theme-toggle aria-pressed="false" aria-label="{{ 'accessibility.theme' | t }}">{% render 'icon', name: 'theme' %}</button>
+      {%- endif -%}
+      {%- if shop.customer_accounts_enabled -%}
+        <a class="icon-btn t-desktop" href="{{ routes.account_url }}" aria-label="{{ 'accessibility.account' | t }}">{% render 'icon', name: 'account' %}</a>
+      {%- endif -%}
+      <a class="icon-btn t-desktop" href="{{ favorites_url }}" aria-label="{{ 'accessibility.favorites' | t }}">{% render 'icon', name: 'heart' %}<span class="count" data-fav-count data-zero>0</span></a>
+      <a class="icon-btn" href="{{ routes.cart_url }}" data-drawer-open="cart-drawer" aria-controls="cart-drawer" aria-expanded="false" aria-label="{{ 'accessibility.cart' | t }}">{% render 'icon', name: 'cart' %}<span class="count" data-cart-count{% if cart.item_count == 0 %} data-zero{% endif %}>{{ cart.item_count }}</span></a>
+      <button class="icon-btn hdr__burger" type="button" data-drawer-open="menu-drawer" aria-controls="menu-drawer" aria-expanded="false" aria-label="{{ 'general.menu' | t }}">{% render 'icon', name: 'menu' %}</button>
+    </div>
+  </div>
+</header>
+
+<div class="drawer" id="menu-drawer" hidden role="dialog" aria-modal="true" aria-label="{{ 'general.menu' | t }}">
+  <div class="drawer__veil" data-drawer-close></div>
+  <div class="drawer__panel">
+    <div class="drawer__head">
+      <span class="label">{{ 'general.menu' | t }}</span>
+      <button class="icon-btn" type="button" data-drawer-close aria-label="{{ 'general.close' | t }}">{% render 'icon', name: 'close' %}</button>
+    </div>
+    <div class="drawer__body">
+      <nav aria-label="Navigation mobile">
+        <ul class="menu-list">
+          {%- for it in nav_items -%}{%- assign f = it | strip | split: '¦' -%}{%- if f[0] != blank -%}<li style="--i:{{ forloop.index0 }}"><a href="{{ f[0] }}"{% if f[2] == 'true' %} aria-current="page"{% endif %}>{{ f[1] }}</a></li>{%- endif -%}{%- endfor -%}
+        </ul>
+      </nav>
+      <p class="label menu-fam__label">{{ section.settings.families_label }}</p>
+      <ul class="menu-fam">
+        {%- for it in fam_items -%}{%- assign f = it | strip | split: '¦' -%}{%- if f[0] != blank -%}<li><a href="{{ f[0] }}">{{ f[1] }}</a></li>{%- endif -%}{%- endfor -%}
+      </ul>
+      <div class="menu-sub">
+        <a href="{{ routes.search_url }}">{{ 'general.search' | t }}</a>
+        {%- if shop.customer_accounts_enabled -%}<a href="{{ routes.account_url }}">{{ 'accessibility.account' | t }}</a>{%- endif -%}
+        <a href="{{ favorites_url }}">{{ 'accessibility.favorites' | t }} (<span data-fav-count>0</span>)</a>
+        <a href="{{ routes.cart_url }}">{{ 'accessibility.cart' | t }}</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "En-tête",
+  "class": "hdr-section",
+  "settings": [
+    { "type": "link_list", "id": "families_menu", "label": "Menu des familles (tiroir)", "info": "Vide : liste des familles vérifiée sur la boutique." },
+    { "type": "text", "id": "families_label", "label": "Titre des familles", "default": "Toutes les familles" },
+    { "type": "link_list", "id": "menu", "label": "Menu (facultatif)", "info": "Laisser vide pour le menu validé : Collections, Tous les bijoux, Vêtements, Le sens des bijoux, Personnalités." },
+    { "type": "checkbox", "id": "transparent_home", "label": "Transparent au-dessus de la vidéo d'accueil", "default": true },
+    { "type": "text", "id": "clothing_handle", "label": "Collection Vêtements (identifiant)", "default": "hoodies" },
+    { "type": "text", "id": "meaning_page", "label": "Page « Le sens des bijoux » (identifiant)", "default": "le-sens-des-bijoux" },
+    { "type": "text", "id": "people_page", "label": "Page « Personnalités » (identifiant)", "default": "personnalites" },
+    { "type": "text", "id": "favorites_page", "label": "Page « Favoris » (identifiant)", "default": "favoris" }
+  ]
+}
+{% endschema %}

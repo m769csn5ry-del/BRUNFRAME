@@ -1,0 +1,53 @@
+{%- liquid
+  assign lines = section.settings.title | newline_to_br | split: '<br />'
+  if section.settings.poster != blank
+    assign poster_url = section.settings.poster | image_url: width: 1920
+  else
+    assign poster_url = 'hero-poster.webp' | asset_url
+  endif
+-%}
+<section class="hero" data-hero aria-label="{{ section.settings.title | newline_to_br | replace: '<br />', ' ' | strip_newlines | escape }}">
+  <div class="hero__media">
+    {%- if section.settings.video != blank -%}
+      {{ section.settings.video | video_tag: autoplay: true, loop: true, muted: true, controls: false, playsinline: true, preload: 'metadata', image_size: '1920x', data-hero-video: '' }}
+    {%- elsif section.settings.video_url != blank -%}
+      <video autoplay muted loop playsinline preload="metadata" poster="{{ poster_url }}" data-hero-video aria-hidden="true">
+        {%- if section.settings.video_url_mobile != blank -%}<source src="{{ section.settings.video_url_mobile }}" type="video/mp4" media="(max-width: 749px)">{%- endif -%}
+        <source src="{{ section.settings.video_url }}" type="video/mp4">
+      </video>
+    {%- else -%}
+      <img src="{{ poster_url }}" alt="" width="1920" height="1080" fetchpriority="high">
+    {%- endif -%}
+  </div>
+  <div class="wrap hero__in hero__fade">
+    <h1 class="display hero__title">
+      {%- for line in lines -%}<span>{{ line | strip }}</span>{%- endfor -%}
+    </h1>
+    {%- if section.settings.text != blank -%}<p class="hero__sub">{{ section.settings.text }}</p>{%- endif -%}
+    <div class="hero__row">
+      {%- if section.settings.button_label != blank -%}
+        <a class="btn btn--chrome" href="{{ section.settings.button_link | default: '#colliers' }}">{{ section.settings.button_label }}</a>
+      {%- endif -%}
+    </div>
+  </div>
+  <button class="icon-btn hero__toggle" type="button" data-video-toggle aria-pressed="false" aria-label="{{ 'accessibility.pause_video' | t }}" data-label-play="{{ 'accessibility.play_video' | t }}" data-label-pause="{{ 'accessibility.pause_video' | t }}">
+    <span data-icon-pause>{% render 'icon', name: 'pause' %}</span><span data-icon-play hidden>{% render 'icon', name: 'play' %}</span>
+  </button>
+</section>
+
+{% schema %}
+{
+  "name": "Vidéo d'ouverture",
+  "settings": [
+    { "type": "video", "id": "video", "label": "Vidéo (fichiers Shopify)", "info": "Choisir la vidéo déjà utilisée sur la boutique : Shopify la sert alors en versions optimisées." },
+    { "type": "text", "id": "video_url", "label": "Ou adresse de la vidéo", "default": "https://cdn.shopify.com/videos/c/o/v/cf1608d983f8495fa50cb0a5a7968a63.mov", "info": "Vidéo actuelle du site (4K HEVC, 61 Mo). Préférer le choix ci-dessus pour une version légère." },
+    { "type": "text", "id": "video_url_mobile", "label": "Adresse d'une version mobile (facultatif)" },
+    { "type": "image_picker", "id": "poster", "label": "Image d'attente (poster)" },
+    { "type": "textarea", "id": "title", "label": "Accroche (une ligne par retour)", "default": "Du caractère.\nÀ porter." },
+    { "type": "text", "id": "text", "label": "Texte de soutien", "default": "Colliers et Peteks signés Breslev Gang." },
+    { "type": "text", "id": "button_label", "label": "Bouton", "default": "Explorer les colliers" },
+    { "type": "text", "id": "button_link", "label": "Lien du bouton", "default": "#colliers", "info": "« #colliers » mène au début de la séquence des colliers." }
+  ],
+  "presets": [ { "name": "Vidéo d'ouverture" } ]
+}
+{% endschema %}

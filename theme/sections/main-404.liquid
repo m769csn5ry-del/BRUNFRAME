@@ -1,0 +1,12 @@
+<div class="p404">
+  <div>
+    <p class="label" style="justify-content:center">{{ 'notfound.title' | t }}</p>
+    <h1 class="display">404</h1>
+    <p class="lead" style="margin:0 auto 30px">{{ 'notfound.text' | t }}</p>
+    <a class="btn btn--chrome" href="{{ routes.all_products_collection_url }}">{{ 'notfound.cta' | t }}</a>
+  </div>
+</div>
+
+{% schema %}
+{ "name": "Page introuvable", "settings": [] }
+{% endschema %}

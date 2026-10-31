@@ -1,0 +1,27 @@
+{
+  "type": "header",
+  "name": "En-tête",
+  "sections": {
+    "announcement": {
+      "type": "announcement-bar",
+      "settings": {
+        "text": "Livraison offerte à partir de 120 € d'achats"
+      }
+    },
+    "header": {
+      "type": "header",
+      "settings": {
+        "transparent_home": true,
+        "clothing_handle": "hoodies",
+        "meaning_page": "le-sens-des-bijoux",
+        "people_page": "personnalites",
+        "favorites_page": "favoris",
+        "families_label": "Toutes les familles"
+      }
+    }
+  },
+  "order": [
+    "announcement",
+    "header"
+  ]
+}

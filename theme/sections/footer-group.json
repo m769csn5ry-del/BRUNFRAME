@@ -1,0 +1,8 @@
+{
+  "type": "footer",
+  "name": "Pied de page",
+  "sections": {
+    "footer": { "type": "footer", "settings": { "title_1": "Collections", "title_2": "La maison", "title_3": "Mon espace", "title_4": "Suivre", "whatsapp": "+33 7 80 95 18 36" } }
+  },
+  "order": ["footer"]
+}

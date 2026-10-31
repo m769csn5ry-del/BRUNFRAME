@@ -1,0 +1,24 @@
+<div class="wrap page-head">
+  <p class="label label--rule">Journal</p>
+  <h1 class="h1" data-anim="title">{{ blog.title }}</h1>
+</div>
+<div class="wrap" style="padding-bottom:clamp(72px,9vw,140px)">
+  {%- paginate blog.articles by 12 -%}
+    <div class="meaning__list">
+      {%- for article in blog.articles -%}
+        <article class="meaning__item" data-anim="slide">
+          <span class="meaning__num" aria-hidden="true">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
+          <div>
+            <h2 class="h3"><a href="{{ article.url }}" style="text-decoration:none">{{ article.title }}</a></h2>
+            <p class="muted small">{{ article.published_at | date: '%d/%m/%Y' }}</p>
+            <p>{{ article.excerpt_or_content | strip_html | truncatewords: 30 }}</p>
+          </div>
+        </article>
+      {%- endfor -%}
+    </div>
+  {%- endpaginate -%}
+</div>
+
+{% schema %}
+{ "name": "Journal", "settings": [] }
+{% endschema %}

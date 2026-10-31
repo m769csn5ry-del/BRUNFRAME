@@ -1,0 +1,157 @@
+{%- liquid
+  assign current = product.selected_or_first_available_variant
+  assign only_default = product.has_only_default_variant
+  assign coll = collection
+  if coll == blank
+    for c in product.collections
+      if c.handle contains 'soldes' or c.handle == 'best-sellers' or c.handle contains 'nouvelle-collection'
+        continue
+      endif
+      assign coll = c
+      break
+    endfor
+  endif
+  if coll == blank
+    assign coll = product.collections.first
+  endif
+-%}
+<div class="wrap" data-product>
+  <nav class="crumbs" aria-label="Fil d'Ariane">
+    <a href="{{ routes.root_url }}">{{ 'general.home' | t }}</a> /
+    {% if coll != blank %}<a href="{{ coll.url }}">{{ coll.title }}</a> / {% endif %}
+    <span aria-current="page">{{ product.title }}</span>
+  </nav>
+  <div class="pdp">
+    <div>
+      <div class="gallery" data-gallery>
+        {%- for media in product.media -%}
+          {%- assign im = media.preview_image -%}
+          <figure class="gallery__item" data-media-id="{{ media.id }}">
+            <span class="ph-bg" style="background-image:url('{{ im | image_url: width: 40 }}')" aria-hidden="true"></span>
+            <img src="{{ im | image_url: width: 1100 }}" srcset="{{ im | image_url: width: 600 }} 600w, {{ im | image_url: width: 1100 }} 1100w, {{ im | image_url: width: 1600 }} 1600w" sizes="(min-width: 900px) 56vw, 86vw" data-full="{{ im | image_url: width: 2048 }}" alt="{{ im.alt | default: product.title | escape }}" width="{{ im.width }}" height="{{ im.height }}"{% if forloop.first %} fetchpriority="high"{% else %} loading="lazy"{% endif %}>
+          </figure>
+        {%- else -%}
+          <figure class="gallery__item">{{ 'product-1' | placeholder_svg_tag }}</figure>
+        {%- endfor -%}
+      </div>
+      {%- if product.media.size > 1 -%}<div class="gallery__dots" aria-hidden="true">{% for m in product.media %}<i{% if forloop.first %} class="on"{% endif %}></i>{% endfor %}</div>{%- endif -%}
+    </div>
+
+    <div class="info">
+      <p class="label label--rule">{% if coll != blank %}{{ coll.title }}{% else %}{{ product.type }}{% endif %}</p>
+      <h1 class="h1">{{ product.title }}</h1>
+      <p class="price"><span data-price>{{ current.price | money }}</span> <s data-compare{% unless current.compare_at_price > current.price %} hidden{% endunless %}>{{ current.compare_at_price | money }}</s></p>
+      {%- capture lead -%}{%- render 'product-copy', product: product, part: 'accroche' -%}{%- endcapture -%}
+      {%- if lead != blank -%}<p class="pdp__lead">{{ lead | strip }}</p>{%- endif -%}
+      {%- capture specs -%}{%- render 'product-copy', product: product, part: 'specs' -%}{%- endcapture -%}
+      {%- if specs != blank -%}<ul class="pdp__specs">{{ specs }}</ul>{%- endif -%}
+
+      <form action="{{ routes.cart_add_url }}" method="post" data-add-form>
+        <input type="hidden" name="id" value="{{ current.id }}">
+        {%- unless only_default -%}
+          {%- for option in product.options_with_values -%}
+            {%- assign oi = forloop.index0 -%}
+            <fieldset class="opt">
+              <legend>{{ option.name }} <span data-opt-value="{{ oi }}">{{ option.selected_value }}</span></legend>
+              <div class="opt__row">
+                {%- for value in option.values -%}
+                  <label class="opt__btn"><input type="radio" name="option-{{ oi }}" value="{{ value | escape }}" data-opt="{{ oi }}"{% if option.selected_value == value %} checked{% endif %}><span>{{ value }}</span></label>
+                {%- endfor -%}
+              </div>
+            </fieldset>
+          {%- endfor -%}
+        {%- endunless -%}
+        <p class="stock" data-stock data-state="{% if current.available %}in{% else %}out{% endif %}">{% if current.available %}{{ 'products.in_stock' | t }}{% else %}{{ 'products.sold_out' | t }}{% endif %}</p>
+        <div class="buy">
+          <div class="qty" role="group" aria-label="{{ 'products.quantity' | t }}">
+            <button type="button" data-qty-step="-1" aria-label="{{ 'products.decrease' | t }}">−</button>
+            <input type="number" name="quantity" value="1" min="1" inputmode="numeric" data-qty aria-label="{{ 'products.quantity' | t }}">
+            <button type="button" data-qty-step="1" aria-label="{{ 'products.increase' | t }}">+</button>
+          </div>
+          <button class="btn btn--chrome" type="submit" data-buy-btn{% unless current.available %} disabled{% endunless %}><span>{% if current.available %}{{ 'products.add_to_cart' | t }}{% else %}{{ 'products.sold_out' | t }}{% endif %}</span></button>
+        </div>
+        <p class="form-msg" data-form-msg role="alert"></p>
+      </form>
+      <div class="share-row">
+        <button class="btn btn--line btn--sm" type="button" data-fav="{{ product.handle }}" aria-pressed="false">{% render 'icon', name: 'heart' %} {{ 'accessibility.favorites' | t }}</button>
+        {%- unless only_default -%}<span class="small muted">{{ 'products.sku' | t }} <span data-sku>{{ current.sku | default: '—' }}</span></span>{%- endunless -%}
+      </div>
+
+      <div class="acc">
+        <details>
+          <summary>{{ 'products.shipping_returns' | t }}</summary>
+          <div class="acc__body">
+            <p>{{ settings.shipping_note }}{% if settings.shipping_link != blank %} <a href="{{ settings.shipping_link }}">{{ settings.shipping_link_label }}</a>{% endif %}</p>
+            {%- if settings.returns_note != blank -%}<p>{{ settings.returns_note }}{% if settings.returns_link != blank %} <a href="{{ settings.returns_link }}">{{ 'products.returns_link' | t }}</a>{% endif %}</p>{%- endif -%}
+          </div>
+        </details>
+        {%- capture sym -%}{%- render 'product-copy', product: product, part: 'symbol' -%}{%- endcapture -%}
+        {%- if sym != blank -%}
+          <details>
+            <summary>{{ 'products.symbol' | t }}</summary>
+            <div class="acc__body">{{ sym }}</div>
+          </details>
+        {%- endif -%}
+        {%- capture det -%}{%- render 'product-copy', product: product, part: 'details' -%}{%- endcapture -%}
+        {%- if det != blank -%}
+          <details>
+            <summary>{{ 'products.shop_description' | t }}</summary>
+            <div class="acc__body prose">{{ det }}</div>
+          </details>
+        {%- endif -%}
+        {%- if shop.enabled_payment_types.size > 0 -%}
+          <details>
+            <summary>{{ 'products.payment' | t }}</summary>
+            <div class="acc__body"><div class="pay">{%- for type in shop.enabled_payment_types -%}{{ type | payment_type_svg_tag }}{%- endfor -%}</div></div>
+          </details>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+
+  <script type="application/json" data-product-json>
+    {
+      "handle": {{ product.handle | json }},
+      "options": {{ product.options | json }},
+      "only_default": {{ only_default | json }},
+      "selected": {{ current.id | json }},
+      "variants": [
+        {%- for v in product.variants -%}
+          { "id": {{ v.id }}, "title": {{ v.title | json }}, "options": {{ v.options | json }}, "price": {{ v.price }}, "compare_at_price": {{ v.compare_at_price | default: 0 }}, "available": {{ v.available | json }}, "sku": {{ v.sku | json }}, "media_id": {{ v.featured_media.id | default: 'null' }} }{%- unless forloop.last -%},{%- endunless -%}
+        {%- endfor -%}
+      ]
+    }
+  </script>
+</div>
+
+<div class="sticky-buy" data-sticky-buy>
+  <div class="sticky-buy__meta"><strong>{{ product.title }}</strong><span data-sticky-variant>{{ current.price | money }}</span></div>
+  <button class="btn btn--chrome btn--sm" type="button" data-sticky-submit data-buy-btn{% unless current.available %} disabled{% endunless %}><span>{% if current.available %}{{ 'products.add_to_cart' | t }}{% else %}{{ 'products.sold_out' | t }}{% endif %}</span></button>
+</div>
+
+{%- if section.settings.show_related and coll != blank -%}
+  <section class="section">
+    <div class="wrap">
+      <div class="sec-head"><div><h2 class="h2" data-anim="title">{{ 'products.same_collection' | t }}</h2></div><a class="link-arrow" href="{{ coll.url }}">{{ 'general.view_all' | t }} {% render 'icon', name: 'arrow' %}</a></div>
+      <div class="grid">
+        {%- assign shown = 0 -%}
+        {%- for p in coll.products -%}
+          {%- if p.id == product.id -%}{%- continue -%}{%- endif -%}
+          {%- if shown >= 4 -%}{%- break -%}{%- endif -%}
+          {% render 'product-card', product: p, delay: '0.1' %}
+          {%- assign shown = shown | plus: 1 -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Fiche produit",
+  "settings": [
+    { "type": "paragraph", "content": "Livraison et retours : Paramètres du thème → Livraison et retours. Textes courts : content/fiches-courtes.json (voir LIVRAISON.md)." },
+    { "type": "checkbox", "id": "show_related", "label": "Afficher « Dans la même collection »", "default": true }
+  ]
+}
+{% endschema %}

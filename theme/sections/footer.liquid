@@ -1,0 +1,81 @@
+{%- liquid
+  assign pages = routes.root_url | append: '/pages/' | replace: '//', '/'
+  assign m1 = linklists[section.settings.menu_1]
+  assign m2 = linklists[section.settings.menu_2]
+-%}
+<footer class="ftr">
+  <div class="wrap">
+    <p class="ftr__mark" aria-hidden="true" data-anim="title">{{ shop.name }}</p>
+    <div class="ftr__cols">
+      <div>
+        <h2>{{ section.settings.title_1 }}</h2>
+        <ul>
+          {%- if m1.links.size > 0 -%}
+            {%- for l in m1.links -%}<li><a href="{{ l.url }}">{{ l.title }}</a></li>{%- endfor -%}
+          {%- else -%}
+            <li><a href="{{ routes.collections_url }}/petek-perles">Peteks perles</a></li>
+            <li><a href="{{ routes.collections_url }}/collection-collier-petek-en-cuir">Peteks chaîne</a></li>
+            <li><a href="{{ routes.collections_url }}/colliers-pendentifs">Colliers et pendentifs</a></li>
+            <li><a href="{{ routes.collections_url }}/bracelet-de-main-flamme">Gamme diamants</a></li>
+            <li><a href="{{ routes.collections_url }}">{{ 'collections.all' | t }}</a></li>
+          {%- endif -%}
+        </ul>
+      </div>
+      <div>
+        <h2>{{ section.settings.title_2 }}</h2>
+        <ul>
+          {%- if m2.links.size > 0 -%}
+            {%- for l in m2.links -%}<li><a href="{{ l.url }}">{{ l.title }}</a></li>{%- endfor -%}
+          {%- else -%}
+            <li><a href="{{ pages }}le-sens-des-bijoux">Le sens des bijoux</a></li>
+            <li><a href="{{ pages }}personnalites">Personnalités</a></li>
+            <li><a href="{{ pages }}contact">Contact</a></li>
+            {%- if shop.refund_policy -%}<li><a href="{{ shop.refund_policy.url }}">Échanges et retours</a></li>{%- endif -%}
+          {%- endif -%}
+        </ul>
+      </div>
+      <div>
+        <h2>{{ section.settings.title_3 }}</h2>
+        <ul>
+          {%- if shop.customer_accounts_enabled -%}<li><a href="{{ routes.account_url }}">{{ 'accessibility.account' | t }}</a></li>{%- endif -%}
+          <li><a href="{{ pages }}favoris">{{ 'accessibility.favorites' | t }}</a></li>
+          <li><a href="{{ routes.cart_url }}">{{ 'accessibility.cart' | t }}</a></li>
+          <li><a href="{{ routes.search_url }}">{{ 'general.search' | t }}</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>{{ section.settings.title_4 }}</h2>
+        <ul>
+          {%- if settings.social_instagram != blank -%}<li><a href="{{ settings.social_instagram }}" rel="noopener" target="_blank">Instagram</a></li>{%- endif -%}
+          {%- if settings.social_tiktok != blank -%}<li><a href="{{ settings.social_tiktok }}" rel="noopener" target="_blank">TikTok</a></li>{%- endif -%}
+          {%- if settings.social_facebook != blank -%}<li><a href="{{ settings.social_facebook }}" rel="noopener" target="_blank">Facebook</a></li>{%- endif -%}
+          {%- if section.settings.whatsapp != blank -%}<li><a href="https://wa.me/{{ section.settings.whatsapp | remove: ' ' | remove: '+' }}" rel="noopener" target="_blank">WhatsApp {{ section.settings.whatsapp }}</a></li>{%- endif -%}
+        </ul>
+      </div>
+    </div>
+    <div class="ftr__legal">
+      <span>© {{ 'now' | date: '%Y' }} {{ shop.name }}</span>
+      <ul>
+        {%- for policy in shop.policies -%}<li><a href="{{ policy.url }}">{{ policy.title }}</a></li>{%- endfor -%}
+      </ul>
+      {%- if shop.enabled_payment_types.size > 0 -%}
+        <div class="pay" aria-label="Moyens de paiement">{%- for type in shop.enabled_payment_types -%}{{ type | payment_type_svg_tag }}{%- endfor -%}</div>
+      {%- endif -%}
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Pied de page",
+  "settings": [
+    { "type": "text", "id": "title_1", "label": "Titre colonne 1", "default": "Collections" },
+    { "type": "link_list", "id": "menu_1", "label": "Menu colonne 1 (facultatif)" },
+    { "type": "text", "id": "title_2", "label": "Titre colonne 2", "default": "La maison" },
+    { "type": "link_list", "id": "menu_2", "label": "Menu colonne 2 (facultatif)" },
+    { "type": "text", "id": "title_3", "label": "Titre colonne 3", "default": "Mon espace" },
+    { "type": "text", "id": "title_4", "label": "Titre colonne 4", "default": "Suivre" },
+    { "type": "text", "id": "whatsapp", "label": "WhatsApp", "default": "+33 7 80 95 18 36", "info": "Numéro publié sur la page contact du site actuel (relevé du 31/10/2026)." }
+  ]
+}
+{% endschema %}

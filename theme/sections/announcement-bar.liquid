@@ -1,0 +1,15 @@
+{%- if section.settings.text != blank -%}
+  <div class="announce" role="region" aria-label="{{ section.settings.text | escape }}">
+    {%- if section.settings.link != blank -%}<a href="{{ section.settings.link }}">{{ section.settings.text }}</a>{%- else -%}{{ section.settings.text }}{%- endif -%}
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Bandeau d'annonce",
+  "settings": [
+    { "type": "text", "id": "text", "label": "Texte", "default": "Livraison offerte à partir de 120 € d'achats", "info": "Reprend le bandeau du site actuel (relevé du 31/10/2026). Ne publier que des conditions en vigueur." },
+    { "type": "url", "id": "link", "label": "Lien (facultatif)" }
+  ]
+}
+{% endschema %}
